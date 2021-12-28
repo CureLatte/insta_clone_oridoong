@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <title>Duckstagram</title>
     <link rel="stylesheet" href="../static/css/log_style.css">
+
+    <script>
+        function log_in() {
+            let user_id = $('#user-id').val()
+            let user_pwd = $('#user-pwd').val()
+            $.ajax({
+                type: "POST",
+                url: "/user",
+                data: {
+                    id_give: user_id,
+                    pwd_give: user_pwd
+                },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+
+    </script>
 </head>
 <body>
 <div id="main">
@@ -13,13 +33,11 @@
         <div id="log-container">
             <img id="log-img" src="../static/images/log_duck.png"/>
             <div id="log-box">
-                <input type="text" id="user-name" placeholder="아이디"/>
+                <input type="text" id="user-id" placeholder="아이디"/>
                 <input type="text" id="user-pwd" placeholder="비밀번호"/>
             </div>
-
-                <button>로그인</button>
-                <a href="">가입하기</a>
-
+            <button id="log_in">로그인</button>
+            <a href="">가입하기</a>
         </div>
     </div>
 </div>
