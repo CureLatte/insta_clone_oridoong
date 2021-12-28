@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/edit_profile_css.css">
+    <link rel="stylesheet" href="../static/css/no.css">
+    <title>팀 오리둥둥이1</title>
+</head>
+
+<body>
+    <div class="edit_profile_container">
+        <div class="image_container">
+            <img style="width:170px; height: 170px; border: 1px solid #ddd;" id="preview_image"
+                src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
+            <input style="display: block;" class="input_image" type="file" id="input_image" <input type="file"
+                accept=".jpg, .png">
+        </div>
+        <form class="bot_content">
+            <ul>
+                <li>
+                    <label for="nickName">닉네임</label>
+                    <input id="nickName" type="text" minlength="4" maxlength="9" placeholder="닉네임" required>
+                </li>
+                <li>
+                    <label for="email">이메일</label>
+                    <input id="email" type="email" placeholder="이메일" minlength="1" maxlength="35" required>
+                </li>
+                <li>
+                    <label for="number">전화번호</label>
+                    <input id="number" type="number" maxlength="9" placeholder="전화번호" required>
+                </li>
+            </ul>
+        </form>
+
+        <div class="submit_form">
+            <a href="#">회원탈퇴</a>
+            <div>
+                <a href="#">취소</a>
+                <input type='submit' value='변경'>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+<script>
+    //사진 미리보기
+    function readImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader()
+            reader.onload = e => {
+                const previewImage = document.getElementById("preview_image")
+                previewImage.src = e.target.result
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    }
+    const inputImage = document.getElementById("input_image")
+    inputImage.addEventListener("change", e => {
+        readImage(e.target)
+    })
+    //인풋 기본값 삭제
+    const reader = new FileReader();
+
+    reader.onload = (readerEvent) => {
+        document.querySelector("#img_section").setAttribute("src", readerEvent.target.result);
+    };
+
+    document.querySelector("#upload_file").addEventListener("change", (changeEvent) => {
+
+        const imgFile = changeEvent.target.files[0];
+        reader.readAsDataURL(imgFile);
+    })
+</script>

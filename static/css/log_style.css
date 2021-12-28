@@ -1,0 +1,46 @@
+body {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#container {
+    background-color: white;
+    margin-top: 100px;
+}
+
+#container #log-container {
+    width: 400px;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid lightgray;
+}
+
+#log-container > img {
+    width: 300px;
+}
+
+#log-container #log-box{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+#log-container #log-box > input {
+    margin-top: 5px;
+    width: 200px;
+    height: 30px;
+}
+
+#log-container > button {
+    margin-top: 20px;
+    width: 208px;
+    height: 30px;
+}
+
+#log-container > a {
+    margin-top:40px;
+    font-size: 11px;
+}

@@ -1,0 +1,85 @@
+
+.main_wrap{
+    width : 720px;
+    height : auto;
+    margin: 0 auto;
+    padding: 60px 10px 0 10px;
+
+}
+
+/*프로필 설정 컨테이너*/
+
+.my_container{
+    background-color: whitesmoke;
+    width : 720px;
+    height : 480px;
+    margin :0 auto;
+    display : flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px lightgray solid
+}
+
+.my_container  .profile_container{
+    margin-left: 40px;
+    height : 300px;
+}
+
+.my_container .profile_container .profile_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.my_container .profile_container .profile_wrapper .profile_nickname{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px auto ;
+    width : 200px;
+    text-align: center;
+}
+
+.my_container  .options_container{
+    margin-top : 40px;
+    width : 180px;
+    height : 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-right: 150px;
+}
+
+.my_container .options_container button{
+    margin-top : 30px;
+    width : 200px;
+    height : 40px;
+}
+
+
+
+/*content 컨테이너*/
+
+.content_container{
+    background-color: lightgray;
+    border: 1px lightgray solid;
+}
+
+.content_container .content_wrapper{
+    margin-top : 10px;
+}
+
+.content_container .content_wrapper .content_row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+
+
+
+
+
+
+
