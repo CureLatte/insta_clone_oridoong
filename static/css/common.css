@@ -1,0 +1,31 @@
+#header {
+    background-color: #fff;
+    width: 1100px;
+    height: 50px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #c8c8c8;
+    position: fixed;
+    z-index: 1;
+}
+
+#header input {
+
+}
+
+#header #head_icon > img {
+    width: 20px;
+}
+
+#header .logo {
+    width: 100px;
+}
+
+#title {
+    font-size: 40px;
+    letter-spacing: -8px;
+}

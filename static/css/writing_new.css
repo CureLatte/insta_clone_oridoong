@@ -1,0 +1,55 @@
+#container{
+    display: flex;
+    justify-content: center;
+}
+
+#imageCanvas{
+    position: center;
+    left: 0;
+    top: 0;
+    pointer-events:none;
+}
+
+#img-id{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#id-text{
+    width: 400px;
+    height: 200px;
+}
+
+#submit-btn {
+    background: #3897f0;
+    border-color: #3897f0;
+    color: #fff;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 28px;
+    outline: none;
+    width: 150px;
+    height: 45px;
+    padding: 0;
+    margin-top: 10px;
+}
+#cancel-btn {
+    background: #3897f0;
+    border-color: #3897f0;
+    color: #fff;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 28px;
+    outline: none;
+    width: 150px;
+    height: 45px;
+    padding: 0;
+    margin-top: 10px;
+    margin-left: 90px;
+}
