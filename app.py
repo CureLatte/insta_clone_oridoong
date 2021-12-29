@@ -17,19 +17,23 @@ app = Flask(__name__)
 SECRET_KEY = 'TEST'
 
 
-@app.route('/')     # token 획득을 확인
-def login_page():
+@app.route('/profile_main/homepage')
+def profile_main_sign_up():
     return render_template('login.html')
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/profile_main/login', methods=['POST'])
 def login_check():
     user_id = request.form['id']
     user_password = request.form['password']
 
-    user_check = list(db.user.find({'user_id': user_id}, {'_id': False}))
-    print(user_check)
-    return jsonify({'user': user_check})
+    user_check = db.user.find_one({'id': user_id, 'pw': user_password})
+    if user_check is not None:
+        payload = {'id': user_id}
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        return jsonify({'result': 'success', 'token': token})
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다. ' })
 
 
 @app.route('/profile_main')
