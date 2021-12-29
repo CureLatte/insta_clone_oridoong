@@ -5,6 +5,7 @@
     <title>Sign Up</title>
     <link rel="stylesheet" href="../static/css/sign_up.css">
     <link rel="stylesheet" href="../static/css/common.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../static/javascript/sign_up.js"></script>
 
 </head>
@@ -20,17 +21,44 @@
                 </div>
                 <div id="sign-up-body">
                     <div id="input-wrapper">
-                        <input type="text" onchange="check_dup(this)" id="email-phone" placeholder="휴대폰 번호 또는 이메일 주소"/>
-                        <input type="text" id="name" placeholder="성명"/>
+                        <div id="id-box">
+                            <input type="text" onchange="check_user_id(this)" id="user-id" placeholder="아이디"/>
+                            <!-- 이미지 변경 해야함. -->
+                            <img id="user-id-yes" src="../static/images/like@3x.png" />
+                            <img id="user-id-no" src="../static/images/home@3x.png" />
+                        </div>
+                        <div id="pwd-box">
+                            <input type="text" onchange="check_pwd(this)" id="pwd" placeholder="비밀번호"/>
+                            <img id="pwd-yes" src="../static/images/like@3x.png" />
+                            <img id="pwd-no" src="../static/images/home@3x.png" />
+                        </div>
+                        <div id="user-name-box">
+                            <input type="text" id="user-name" placeholder="사용자 이름(별칭)"/>
+                            <img id="user-name-yes" src="../static/images/like@3x.png" />
+                            <img id="user-name-no" src="../static/images/home@3x.png" />
+                        </div>
+                        <div id="name-box">
+                            <input type="text" id="name" placeholder="성명"/>
+                            <img id="name-yes" src="../static/images/like@3x.png" />
+                            <img id="name-no" src="../static/images/home@3x.png" />
+                        </div>
                         <select id="gender" required>
                             <option value="">-- 성별을 선택해주세요 --</option>
                             <option value="female">여성</option>
                             <option value="male">남성</option>
                         </select>
-                        <input type="text" id="user-name" placeholder="사용자 이름"/>
-                        <input type="text" id="pwd" placeholder="비밀번호"/>
+                        <div id="phone-number-box">
+                            <input type="text" id="phone-number" placeholder="휴대폰 번호"/>
+                            <img id="phone-number-yes" src="../static/images/like@3x.png" />
+                            <img id="phone-number-no" src="../static/images/home@3x.png" />
+                        </div>
+                        <div id="email-box">
+                            <input type="text" id="email" placeholder="이메일 주소"/>
+                            <img id="email-yes" src="../static/images/like@3x.png" />
+                            <img id="email-no" src="../static/images/home@3x.png" />
+                        </div>
                     </div>
-                    <input type="button" value="가입">
+                    <input type="button" disabled="disabled" value="가입">
                 </div>
             </div>
         </div>
