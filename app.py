@@ -17,21 +17,7 @@ db = client.instaClone
 app = Flask(__name__)
 
 
-
-
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-
-
-
-@app.route('/profile_main/homepage')
-def profile_main_sign_up():
-    return render_template('login.html')
-
-#
+SECRET_KEY = 'test'
 
 
 @app.route('/profile_main')
@@ -48,17 +34,15 @@ def load_info():
 
 @app.route('/profile_main/move_edit')
 def move_edit_page():
-    print('hello!')
-
     # 수정 필요!
-    return redirect(url_for('profile_main_page'))
+    return redirect(url_for('edit_profile'))
 
 
 @app.route('/profile_main/move_add')
 def move_addpage():
 
     # 수정 필요!
-    return redirect(url_for('profile_main_page'))
+    return redirect(url_for('edit_profile'))
 
 
 @app.route('/edit_profile')
