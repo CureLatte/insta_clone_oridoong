@@ -1,0 +1,113 @@
+body {
+    background-color: #f5f5f5;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* html 공간 만드는 부분 */
+#sign-up-container {
+    width: 380px;
+    height: 560px;
+    margin: 30px auto 0 auto;
+    border: 1px solid lightgray;
+    background-color: white;
+}
+
+/* container 에서 margin 주고 실질적으로 이미지 및 데이터 들어가는 부분*/
+#sign-up-container #sign-up-wrapper {
+    margin: 20px 40px 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+#sign-up-container #sign-up-header {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+
+}
+
+#sign-up-wrapper #sign-up-header > p {
+    font-size: 18px;
+    font-weight: 400;
+    color: gray;
+    text-align: center;
+    margin: 0;
+
+}
+
+#sign-up-container #sign-up-body {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+}
+
+#sign-up-container #sign-up-body > input {
+    width: 300px;
+    margin-top: 20px;
+    height: 30px;
+    background-color: #c7c7ff;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper input {
+    margin-top: 10px;
+    height: 30px;
+    width: 292px;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper > select {
+    margin-top: 10px;
+    height: 35px;
+}
+
+/* 중복확인 yes or no 이미지 */
+#sign-up-wrapper #sign-up-body #input-wrapper img {
+    position: fixed;
+    margin: 15px -35px;
+    width: 30px;
+    display: none
+}
+
+/* sign-up-footer */
+#sign-up-footer-container {
+    width: 380px;
+    height: 80px;
+    margin: 10px auto;
+    border: 1px solid lightgray;
+    background-color: white;
+}
+
+#sign-up-footer-container #footer-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2vh;
+}
+
+#sign-up-footer-container #footer-button-wrapper > p {
+    margin-right: 5px;
+}
+
+
