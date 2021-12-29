@@ -32,26 +32,12 @@ function load_info(){
 
 }
 
-function move_edit(){
-    $.ajax({
-        type: 'GET',
-        url: '/profile_main/move_edit',
-        data: {},
-        success: function (response) {
-
-        }
-    })
+function move_edit() {
+    window.location.href='/edit_profile'
 }
 
 function move_add(){
-    $.ajax({
-        type: 'GET',
-        url: '/profile_main/move_add',
-        data: {},
-        success: function (response) {
-            alert('이동!')
-        }
-    })
+    window.location.href='/wr'
 
 }
 
