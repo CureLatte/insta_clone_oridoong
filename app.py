@@ -11,7 +11,6 @@ db = client.instaClone
 app = Flask(__name__)
 
 
-<<<<<<< HEAD
 @app.route('/edit_profile')
 def edit_profile():
     return render_template('edit_profile.html')
@@ -54,6 +53,3 @@ def edit_profile_post():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-=======
-
->>>>>>> f6514bd8ac8a875a83759c08616f6a6986c56957
