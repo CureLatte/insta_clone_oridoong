@@ -5,26 +5,8 @@
     <title>Log In</title>
     <link rel="stylesheet" href="../static/css/log_style.css">
     <link rel="stylesheet" href="../static/css/common.css">
+    <script src="../static/javascript/login.js"></script>
 
-    <script>
-        function sign_in() {
-            let user_id = $('#user-id').val()
-            let user_pwd = $('#user-pwd').val()
-            $.ajax({
-                type: "POST",
-                url: "/sign_in",
-                data: {
-                    id_give: user_id,
-                    pwd_give: user_pwd
-                },
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.reload()
-                }
-            });
-        }
-
-    </script>
 </head>
 <body>
 <div id="main">
