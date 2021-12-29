@@ -1,3 +1,8 @@
+$('textarea:first').click(function(){
+    $t = $(this).val().replace(/<br\s*\/?>/img,"x");
+    $(this).html($t)
+});
+
 var fileInput = document.querySelector("#id-photo");
 
 fileInput.addEventListener('change', handleImage, false);

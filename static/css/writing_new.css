@@ -1,5 +1,10 @@
+#container{
+    display: flex;
+    justify-content: center;
+}
+
 #imageCanvas{
-    position: absolute;
+    position: center;
     left: 0;
     top: 0;
     pointer-events:none;
@@ -10,96 +15,10 @@
     left: 0;
     top: 0;
 }
-
-.post-form-container{
-    max-width: 720px;
-    margin: 0 auto;
+#id-text{
+    width: 400px;
+    height: 200px;
 }
-
-
-.post-form{
-    padding: 40px;
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
-    margin: 0 0 10px;
-}
-
-.post-form .title{
-    margin: 0 10px 40px;
-    font-weight: 400;
-    font-size: 30px;
-    text-align: center;
-}
-
-
-.post-form .preview{
-    margin-bottom: 30px;
-}
-
-.post-form .preview .upload{
-    max-width: 300px;
-    height: 300px;
-    border: 1px solid #e6e6e6;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.plus-icon{
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-    border: 1px solid dodgerblue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.plus-icon span{
-    position: absolute;
-    display: block;
-    width: 2px;
-    height: 30px;
-    background: dodgerblue;
-
-}
-
-.plus-icon span:nth-child(2){
-    transform:rotate(90deg);
-}
-
-.post-form p{
-    margin-bottom: 20px;
-}
-
-.post-form input[type=file]{
-    width: 100%;
-    background: 0 0;
-    border: 1px solid #efefef;
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: #262626;
-    font-size: 14px;
-    padding: 7px 8px 7px;
-}
-
-
-.post-form textarea{
-    width: 100%;
-    background: 0 0;
-    border: 1px solid #efefef;
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: #262626;
-    font-size: 14px;
-    padding: 7px 8px 7px;
-}
-
-
 
 #submit-btn {
     background: #3897f0;
@@ -112,7 +31,8 @@
     font-weight: 600;
     line-height: 28px;
     outline: none;
-    width: 50%;
+    width: 150px;
+    height: 45px;
     padding: 0;
     margin-top: 10px;
 }
@@ -127,7 +47,9 @@
     font-weight: 600;
     line-height: 28px;
     outline: none;
-    width: 50%;
+    width: 150px;
+    height: 45px;
     padding: 0;
     margin-top: 10px;
+    margin-left: 90px;
 }
