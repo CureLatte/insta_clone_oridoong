@@ -1,30 +1,32 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
-from pymongo import MongoClient
+import hashlib
+import datetime
 import certifi
 import jwt
-import datetime
-import hashlib
+from pymongo import MongoClient
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 
 ca = certifi.where()
 client = MongoClient(
-    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    tlsCAFile=ca)
+    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.instaClone
 
 app = Flask(__name__)
 
-SECRET_KEY = 'SPARTA'
+# !!!!!!!!!!!!!!!!!!!! JWT 패키지를 사용합니다. (설치해야할 패키지 이름: PyJWT) vsc쓰시는 분은 (Pip3 install PyJWT)  !!!!!!!!!!!!!!!!!!!!!!!! 매우 중요
+
+# JWT 토큰을 만들 때 필요한 비밀문자열입니다. 아무거나 입력해도 괜찮습니다.
+# 이 문자열은 서버만 알고있기 때문에, 내 서버에서만 토큰을 인코딩(=만들기)/디코딩(=풀기) 할 수 있습니다.
+SECRET_KEY = 'TEST'
 
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
 
 
 @app.route('/')
 def home():
-    return render_template('index.html')
-
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
     try:
@@ -40,16 +42,16 @@ def home():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
-@app.route("/api/sign_in", methods=["POST"])
+@app.route('/api/login', methods=['POST'])
 def api_login():
     id_receive = request.form['id_give']
-    pwd_receive = request.form['pwd_give']
+    pw_receive = request.form['pw_give']
 
     # 회원가입 때와 같은 방법으로 pw를 암호화합니다.
-    pw_hash = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
+    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     # id, 암호화된pw을 가지고 해당 유저를 찾습니다.
-    result = db.user.find_one({'user_id': id_receive, 'password': pw_hash})
+    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
 
     # 찾으면 JWT 토큰을 만들어 발급합니다.
     if result is not None:
@@ -58,8 +60,8 @@ def api_login():
         # 아래에선 id와 exp를 담았습니다. 즉, JWT 토큰을 풀면 유저ID 값을 알 수 있습니다.
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
-            'user_id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=300)
+            'id': id_receive,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -95,4 +97,4 @@ def api_valid():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
