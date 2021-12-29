@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="../static/css/log_style.css">
 
     <script>
-        function log_in() {
+        function sign_in() {
             let user_id = $('#user-id').val()
             let user_pwd = $('#user-pwd').val()
             $.ajax({
                 type: "POST",
-                url: "/user",
+                url: "/sign_in",
                 data: {
                     id_give: user_id,
                     pwd_give: user_pwd
@@ -36,7 +36,7 @@
                 <input type="text" id="user-id" placeholder="아이디"/>
                 <input type="text" id="user-pwd" placeholder="비밀번호"/>
             </div>
-            <button id="log_in">로그인</button>
+            <button id="sign_in">로그인</button>
             <a href="">가입하기</a>
         </div>
     </div>
