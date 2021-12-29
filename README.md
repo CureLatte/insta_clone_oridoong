@@ -10,7 +10,6 @@
   * [팀프로젝트 블로그 주소](https://jscript.tistory.com/)
   * [Github 관련](#Github)
   * [데이터 DB 관련](#DataBase)
-  * [API 정리](#API)
   * [css 공통](#css-및-공통 )
   * [기능 모음](#기능들)
   * [공통 스타일 관련](#Frontend-관련)
@@ -119,6 +118,7 @@
 
 
 ***
+
 
 
 ### css 및 공통 

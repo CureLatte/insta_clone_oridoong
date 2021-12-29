@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     load_info()
 

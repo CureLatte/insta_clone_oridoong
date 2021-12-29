@@ -33,19 +33,6 @@
     align-items: center;
 }
 
-.my_container .profile_container .profile_wrapper .profile_picture{
-    width : 300px;
-    height : 300px;
-    object-fit: scale-down;
-
-}
-
-.my_container .profile_container .profile_wrapper .profile_picture img{
-    width : 100%;
-    height: 100%;
-
-}
-
 .my_container .profile_container .profile_wrapper .profile_nickname{
     font-size: 18px;
     font-weight: bold;
@@ -54,54 +41,19 @@
     text-align: center;
 }
 
-
-.my_container .info_container{
-
-}
-
-.my_container .info_container .info_wrap{
-    width : 340px;
-    height : 200px;
+.my_container  .options_container{
+    margin-top : 40px;
+    width : 180px;
+    height : 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.my_container .info_container .info_wrap .info_box{
-    width : 300px;
-    height : 50px;
-    display: flex;
-    flex-direction: row;
     justify-content: start;
-    align-items: center;
-}
-
-.my_container .info_container .info_wrap .info_box .type{
-    width : 100px;
-}
-
-.my_container .info_container .info_wrap .info_box .answer{
-    width : 200px;
-
-}
-
-.my_container .options_container{
-
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    margin-right: 150px;
 }
 
 .my_container .options_container button{
-
-    margin-right: 20px;
-}
-
-.my_container .info_container .options_container button{
-    margin-top : 0;
-    width : 150px;
+    margin-top : 30px;
+    width : 200px;
     height : 40px;
 }
 
