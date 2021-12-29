@@ -17,46 +17,52 @@
     <style>
     </style>
     <script>
-
+        function save_new_writing(){
+            let new_img = $('#photo').val()
+            let new_text = $('#desc').val()
+            $.ajax({
+                type: 'POST',
+                url: "/writing_new",
+                data: {img_give:new_img, text_give:new_text},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            })
+        }
     </script>
 </head>
 
 <body>
-    <section id="container">
+<section id="container">
     <div id="main-container">
-
         <div class="post-form-container">
-            <form action="#" class="post-form">
-                <div class="title">
-                    NEW POST
-                </div>
-                <div class="preview">
-                    <div class="upload">
-                        <div class="post-btn">
-                            <div class="plus-icon">
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <p>포스트 이미지 추가</p>
-                            <canvas id="imageCanvas"></canvas>
-                            <!--<p><img id="img_id" src="#" style="width: 300px; height: 300px; object-fit: cover" alt="thumbnail"></p>-->
-                        </div>
+            <div class="title">
+                NEW POST
+            </div>
+            <div class="preview">
+                <div class="upload">
+                    <div class="post-btn">
+                        <p>포스트 이미지 추가</p>
+                        <canvas id="imageCanvas"></canvas>
                     </div>
                 </div>
-                <p>
-                    <input type="file" name="photo" id="id-photo" required="required">
-                </p>
-                <p>
-                    <textarea name="content" id="text-field" cols="50" rows="5" placeholder="140자 까지 등록 가능합니다."></textarea>
+            </div>
+            <p>
+                <input type="file" name="photo" id="id-photo" required="required">
+            </p>
+            <p>
+                <textarea name="content" id="text-field" cols="50" rows="5" wrap="hard" placeholder="140자 까지 등록 가능합니다."></textarea>
 
-                </p>
-                <input id="submit-btn" type="submit" value="저장">
-                <input id="cancel-btn" type="button" value="취소">
-            </form>
-
+            </p>
+            <button onclick="save_new_writing()" type="button" id="submit-btn" >저장</button>
+            <a href="index.html">
+                <button id="cancel-btn">되돌아가기</button>
+            </a>
         </div>
 
     </div>
-    </section>
+</section>
+<script src="..\static\javascript\writing_new_js.js"></script>
 </body>
 </html>
