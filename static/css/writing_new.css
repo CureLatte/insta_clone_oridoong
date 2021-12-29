@@ -1,6 +1,15 @@
 #container{
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+#main-container{
+    display: flex;
+    justify-content: center;
+    position: center;
+    width: 720px;
+
 }
 
 #imageCanvas{
@@ -53,3 +62,4 @@
     margin-top: 10px;
     margin-left: 90px;
 }
+
