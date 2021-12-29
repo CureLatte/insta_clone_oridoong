@@ -1,4 +1,4 @@
-function sign_in() {
+function login() {
     $.ajax({
         type: "POST",
         url: "/api/sign_in",

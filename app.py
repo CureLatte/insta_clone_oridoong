@@ -13,17 +13,35 @@ db = client.instaClone
 
 app = Flask(__name__)
 
-SECRET_KEY = 'DUCKIEST'
+SECRET_KEY = 'SPARTA'
 
 
 @app.route('/login')
 def login():
-    return render_template('login.html', )
+    return render_template('login.html')
 
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+    # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
+    token_receive = request.cookies.get('mytoken')
+    try:
+        # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"id": payload['id']})
+        return render_template('index.html', nickname=user_info["nick"])
+        # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route("/api/sign_in", methods=["POST"])
-def sign_in():
+def api_login():
     id_receive = request.form['id_give']
     pwd_receive = request.form['pwd_give']
 
@@ -31,7 +49,7 @@ def sign_in():
     pw_hash = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
 
     # id, 암호화된pw을 가지고 해당 유저를 찾습니다.
-    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
+    result = db.user.find_one({'user_id': id_receive, 'password': pw_hash})
 
     # 찾으면 JWT 토큰을 만들어 발급합니다.
     if result is not None:
@@ -40,7 +58,7 @@ def sign_in():
         # 아래에선 id와 exp를 담았습니다. 즉, JWT 토큰을 풀면 유저ID 값을 알 수 있습니다.
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
-            'id': id_receive,
+            'user_id': id_receive,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=300)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
@@ -77,4 +95,4 @@ def api_valid():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
