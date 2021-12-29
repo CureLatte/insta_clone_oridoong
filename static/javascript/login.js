@@ -1,16 +1,20 @@
 function sign_in() {
-            let user_id = $('#user-id').val()
-            let user_pwd = $('#user-pwd').val()
-            $.ajax({
-                type: "POST",
-                url: "/sign_in",
-                data: {
-                    id_give: user_id,
-                    pwd_give: user_pwd
-                },
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.reload()
+    $.ajax({
+        type: "POST",
+        url: "/api/sign_in",
+        data: {id_give: $('#user-id').val(), pwd_give: $('#user-pwd').val()},
+        success: function (response) {
+            if (response['result'] == 'success') {
+                        // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
+                        // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
+                        $.cookie('mytoken', response['token']);
+
+                        alert('로그인 완료!')
+                        window.location.href = '/'
+                    } else {
+                        // 로그인이 안되면 에러메시지를 띄웁니다.
+                        alert(response['msg'])
+                    }
                 }
-            });
+            })
         }
