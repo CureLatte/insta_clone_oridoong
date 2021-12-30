@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: lightgray;
 }
 
 #main-container{
@@ -9,7 +10,16 @@
     justify-content: center;
     position: center;
     width: 720px;
+    background-color: white;
+    border: 1px solid #0095f6;
 
+}
+#img-size{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    border: 1px solid #3897f0 ;
 }
 
 #imageCanvas{
@@ -17,12 +27,14 @@
     left: 0;
     top: 0;
     pointer-events:none;
+
 }
 
 #img-id{
     position: absolute;
     left: 0;
     top: 0;
+
 }
 #id-text{
     width: 400px;

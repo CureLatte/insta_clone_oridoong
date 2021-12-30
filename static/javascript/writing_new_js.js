@@ -1,5 +1,6 @@
-$('textarea:first').click(function(){
-    $t = $(this).val().replace(/<br\s*\/?>/img,"x");
+
+$('textarea:first').click(function () {
+    $t = $(this).val().replace(/<br\s*\/?>/img, "x");
     $(this).html($t)
 });
 
@@ -8,8 +9,6 @@ var fileInput = document.querySelector("#id-photo");
 fileInput.addEventListener('change', handleImage, false);
 var canvas = document.getElementById('imageCanvas');
 var ctx = canvas.getContext('2d');
-
-
 function handleImage(e) {
     var reader = new FileReader();
     reader.onload = function (event) {
