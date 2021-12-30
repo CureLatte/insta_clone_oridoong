@@ -187,36 +187,41 @@ def check_user_id():
 # 글작성 페이지
 @app.route("/writing_new")
 def writing():
-    # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
-    token_receive = request.cookies.get('mytoken')
-    try:
-        # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']})
-        print(user_info)
-        return render_template('writing_new.html', user=user_info['user_id'])
-        # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
-        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+    return render_template('writing_new.html')
 
 
 @app.route("/writing_new", methods=["POST"])
 def new_writing():
-    desc_receive = request.form['desc_give']
-    photo = request.files['photo_give']
-    extension = photo.filename.split('.')[-1]
-    today = datetime.datetime.now()
-    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-    filename = f'{mytime}'
-    save_to = f'static/images/post-contents/{filename}.{extension}'
-    photo.save(save_to)
-    doc = {'desc': desc_receive, 'img': f'{filename}.{extension}'}
-    db.post_content.insert_one(doc)
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']})
 
-    return jsonify({'msg': '등록완료'})
+        desc_receive = request.form['desc_give']
+        photo = request.files['photo_give']
+        # comment, like 미구현상태
+        comment = []
+        like = 0
+        extension = photo.filename.split('.')[-1]
+        today = datetime.datetime.now()
+        mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+        filename = f'{mytime}'
+        save_to = f'static/images/post-contents/{filename}.{extension}'
+        photo.save(save_to)
+        doc = {
+            'user_id': user_info["user_id"],
+            'desc': desc_receive,
+            'img': f'{filename}.{extension}',
+            'comment': comment,
+            'like': like,
+        }
+        db.post_content.insert_one(doc)
+
+        return jsonify({'msg': '등록완료'})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route('/sign_up/save', methods=['POST'])
