@@ -1,3 +1,7 @@
+body {
+    background-color: #f5f5f5;
+}
+
 #container {
     display: flex;
     flex-direction: column;
@@ -6,7 +10,7 @@
 /* html 공간 만드는 부분 */
 #sign-up-container {
     width: 380px;
-    height: 480px;
+    height: 560px;
     margin: 30px auto 0 auto;
     border: 1px solid lightgray;
     background-color: white;
@@ -23,7 +27,7 @@
 }
 
 #sign-up-container #sign-up-header {
-    width: 32vw;
+    width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,29 +49,30 @@
 }
 
 #sign-up-container #sign-up-body {
-    width: 34vw;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 #sign-up-container #sign-up-body > input {
-    width: 34vw;
+    width: 300px;
     margin-top: 20px;
     height: 30px;
     background-color: #c7c7ff;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper {
-    width: 34vw;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#sign-up-wrapper #sign-up-body #input-wrapper > input {
+#sign-up-wrapper #sign-up-body #input-wrapper input {
     margin-top: 10px;
     height: 30px;
+    width: 292px;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper > select {
@@ -81,8 +86,6 @@
     margin: 13px -35px;
     width: 30px;
     display: none
-
-    height: 30px;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper .yes-image {
@@ -102,7 +105,7 @@
     background-color: white;
 }
 
-#sign-up-footer-container #footer-button-wrapper{
+#sign-up-footer-container #footer-button-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
