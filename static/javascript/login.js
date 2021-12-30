@@ -4,16 +4,14 @@ function login() {
 
     if (username == "") {
         $("#help-id-login").text("아이디를 입력해주세요.")
-        alert("아이디를 입력해주세요.")
         $("#input-username").focus()
         return;
     } else {
         $("#help-id-login").text("")
     }
 
-    if (password == "" && username != "") {
+    if (password == "") {
         $("#help-password-login").text("비밀번호를 입력해주세요.")
-        alert("비밀번호를 입력해주세요.")
         $("#input-password").focus()
         return;
     } else {
