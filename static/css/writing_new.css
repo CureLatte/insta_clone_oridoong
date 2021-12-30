@@ -3,6 +3,11 @@
     justify-content: center;
     align-items: center;
     background-color: lightgray;
+    height: auto;
+    padding: 60px 10px 0 10px;
+}
+.title{
+    margin-top: 20px;
 }
 
 #main-container{
@@ -10,8 +15,14 @@
     justify-content: center;
     position: center;
     width: 720px;
+    max-width: 720px;
+    height: auto;
     background-color: white;
     border: 1px solid #0095f6;
+
+}
+#photo-name{
+    width: 400px;
 
 }
 #img-size{
