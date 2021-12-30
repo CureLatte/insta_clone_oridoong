@@ -85,6 +85,8 @@
 
 `SECREKEY=['TEST']`
 
+
+
 <br>
 
 * ```user```  : 회원 테이블
@@ -105,7 +107,15 @@
   * ```comment```: 　　&nbsp;　`<List>`댓글 내용
   * ```like```: 　　　&nbsp;&nbsp;&nbsp;　`<int>` 좋아요
 
+* test DB
+  * user
+    * `ID`: testid
+    * `PW` : qwer1234!
+
 ***
+
+
+
 
 ### API
 

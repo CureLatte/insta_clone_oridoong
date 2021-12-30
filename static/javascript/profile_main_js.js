@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 function load_info(){
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/profile_main/load_info",
         data: {user_id: 'kyoung'},
         success: function(response){
