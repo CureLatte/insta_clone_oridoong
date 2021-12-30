@@ -31,7 +31,7 @@ function login() {
                 window.location.href = '/index_page'
             } else {
                 // 로그인이 안되면 에러메시지를 띄웁니다.
-                $("#help-login").text('아이디 또는 비밀번호가 잘못 입력 되었습니다.\n 아이디와 비밀번호를 정확히 입력해 주세요.')
+                $("#help-login").text('아이디 또는 비밀번호가 잘못 입력 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.')
             }
         }
     })
