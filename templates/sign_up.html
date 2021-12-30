@@ -20,24 +20,52 @@
                 </div>
                 <div id="sign-up-body">
                     <div id="input-wrapper">
-                        <input type="text" onchange="check_dup(this)" id="email-phone" placeholder="휴대폰 번호 또는 이메일 주소"/>
-                        <input type="text" id="name" placeholder="성명"/>
-                        <select id="gender" required>
+                      <div id="id-box">
+                            <input type="text" onchange="check_user_id(this)" id="user-id" placeholder="아이디"/>
+                            <img id="user-id-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="user-id-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="pwd-box">
+                            <input type="password" onchange="check_pwd(this)" id="pwd" placeholder="비밀번호"/>
+                            <img id="pwd-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="pwd-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="user-name-box">
+                            <input type="text" onchange="check_empty(this)" id="user-name" placeholder="사용자 이름(별칭)"/>
+                            <img id="user-name-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="user-name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="name-box">
+                            <input type="text" onchange="check_empty(this)" id="name" placeholder="성명"/>
+                            <img id="name-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <select id="gender" onchange="check_sign_up_button()">
+
                             <option value="">-- 성별을 선택해주세요 --</option>
                             <option value="female">여성</option>
                             <option value="male">남성</option>
                         </select>
-                        <input type="text" id="user-name" placeholder="사용자 이름"/>
-                        <input type="text" id="pwd" placeholder="비밀번호"/>
+                        <div id="phone-number-box">
+                            <input type="text" onchange="check_phone(this)" id="phone-number" placeholder="휴대폰 번호"/>
+                            <img id="phone-number-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="phone-number-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="email-box">
+                            <input type="text" onchange="check_email(this)" id="email" placeholder="이메일 주소"/>
+                            <img id="email-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="email-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
                     </div>
-                    <input type="button" value="가입">
+                    <input id="sign-up-button" onclick="sign_up()" type="button" disabled="disabled" value="가입">
+
                 </div>
             </div>
         </div>
         <div id="sign-up-footer-container">
             <div id="footer-button-wrapper">
                 <p>계정이 있으신가요?</p>
-                <a href="">로그인</a>
+                <a href="/">로그인</a>
             </div>
         </div>
     </div>
