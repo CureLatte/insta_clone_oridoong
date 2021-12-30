@@ -18,17 +18,27 @@
 <body>
 <div id="main">
     <div id="container">
+        <div id="phone-img">
+            <div class="slide">
+                <ul>
+                    <li><img src="../static/images/instar_1.jpg"/></li>
+                    <li><img src="../static/images/instar_2.jpg"></li>
+                    <li><img src="../static/images/instar_3.jpg"></li>
+                    <li><img src="../static/images/instar_4.jpg"></li>
+                </ul>
+            </div>
+        </div>
         <div id="log-container">
             <p id="title">𝓓𝓾𝓬𝓴𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
-            <img id="log-img" src="../static/images/log_duck.png"/>
+
             <div id="log-box">
                 <input type="text" id="user_id" placeholder="아이디"/>
                 <input type="text" id="user_pw" placeholder="비밀번호"/>
             </div>
-            <button onclick="login()">로그인</button>
+            <button id="log_button" onclick="login()">로그인</button>
             <div id="sign-up-box">
                 <p>계정이 없으신가요?</p>
-                <a href="">가입하기</a>
+                <a href="sign_up.html">가입하기</a>
             </div>
         </div>
     </div>
