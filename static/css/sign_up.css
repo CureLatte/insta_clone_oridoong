@@ -86,6 +86,7 @@ body {
     margin: 13px -35px;
     width: 30px;
     display: none
+    height: 30px;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper .yes-image {
