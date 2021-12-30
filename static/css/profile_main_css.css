@@ -1,3 +1,6 @@
+body{
+    background-color: whitesmoke;
+}
 
 .main_wrap{
     width : 720px;
@@ -5,12 +8,14 @@
     margin: 0 auto;
     padding: 60px 10px 0 10px;
     max-width: 720px;
+
+
 }
 
 /*프로필 설정 컨테이너*/
 
 .my_container{
-    background-color: whitesmoke;
+    background-color: white;
     width : 720px;
     margin :0 auto;
     display : flex;
@@ -45,7 +50,7 @@
 
 
 .my_container .info_container{
-    margin: 70px 70px 30px 30px;
+    margin: 70px 70px 10px 30px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -58,8 +63,6 @@
     justify-content: space-between;
     align-items: center;
 }
-
-
 
 
 .my_container .info_container .info_row:nth-child(1) {
@@ -99,7 +102,7 @@
 
 .my_container .info_container .info_row_more{
     width: 300px;
-    height: 300px;
+    height: 150px;
     display: none;
     flex-direction: column;
     justify-content: space-evenly;
@@ -127,17 +130,20 @@
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
+
 }
 
 .my_container .info_container .info_row:nth-child(4) .info_name{
     margin-top : 20px;
     width : 300px;
     height : 30px;
+    font-weight: bold;
 }
 
 .my_container .info_container .info_row:nth-child(4) .info_bio{
+    margin-top: 10px;
     width : 300px;
-    height : 80px;
+    height : 60px;
 }
 
 /*.my_container .info_container{*/
@@ -190,7 +196,7 @@
 /*content 컨테이너*/
 
 .content_container{
-    background-color: lightgray;
+    background-color: white;
     border: 1px lightgray solid;
 }
 

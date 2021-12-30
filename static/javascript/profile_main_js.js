@@ -1,12 +1,11 @@
 
 $(document).ready(function() {
     load_info()
-
 });
 
 function load_info(){
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/profile_main/load_info",
         data: {user_id: 'kyoung'},
         success: function(response){
@@ -18,7 +17,7 @@ function load_info(){
             $("#avatar").attr("src", new_file_path);
 
             let username = response['user_info'][0]['username']
-            $("#nickname").append(`<p>${username}</p>`);
+            $("#nickname").append(`<p><b>${username}</b></p>`);
 
             let name = response['user_info'][0]['name']
             $("#name").append(`<p>${name}</p>`);
@@ -40,31 +39,16 @@ function load_info(){
 }
 
 function move_edit(){
-    $.ajax({
-        type: 'GET',
-        url: '/profile_main/move_edit',
-        data: {},
-        success: function (response) {
-
-        }
-    })
+   window.location.href='/edit_profile'
 }
-
-function move_add(){
-    $.ajax({
-        type: 'GET',
-        url: '/profile_main/move_add',
-        data: {},
-        success: function (response) {
-            alert('이동!')
-        }
-    })
-
-}
-
 
 function more(){
-    if ($("#more_info").display == none){
-        alert('hide')
+
+    if($("#more_info").css("display") == "none"){
+        $("#more_info").show();
+    }
+    else{
+        $("#more_info").hide();
+
     }
 }
