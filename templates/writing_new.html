@@ -19,18 +19,25 @@
     </style>
     <script>
         function save_update_text() {
-        let text = $("#text-field").val();
-        console.log(text)
-        $.ajax({
-            type: "POST",
-            url: "/writing_new",
-            data: {text_receive: text},
-            success: function (response) {
-                alert(response["msg"])
-                window.location.reload()
-            }
-        });
-    }
+            let text = $("#text-field").val()
+            let post_photo_file = $('#id-photo')[0].files[0]
+            let post_photo_name = $('#photo-name').val()
+            let form_data = new FormData()
+            form_data.append("photo_file_give", post_photo_file)
+            form_data.append("photo_name_give", post_photo_name)
+            $.ajax({
+                type: "POST",
+                url: "/writing_new",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: {text_receive: text},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
 
 
     </script>
@@ -41,12 +48,14 @@
     <div id="main-container">
         <div class="post-form-container">
             <div class="title">
-                NEW POST
+                <p style="text-align: center">NEW POST</p>
             </div>
             <div class="preview">
                 <div class="upload">
                     <div class="post-btn">
-                        <p>포스트 이미지 추가</p>
+                        <p>
+                            <input type="text" id="photo-name" placeholder="사진 이름을 입력하세요" >
+                        </p>
                         <div id="img-size">
                             <canvas id="imageCanvas"></canvas>
                         </div>
@@ -70,5 +79,6 @@
 <script src="..\static\javascript\writing_new_js.js"></script>
 </body>
 </html>
+
 
 
