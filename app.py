@@ -100,7 +100,6 @@ def edit_profile_post():
     return jsonify({'msg': 'DB등록 완료!'})
 
 
-
 @app.route("/sign_in", methods=["POST"])
 def user():
 
