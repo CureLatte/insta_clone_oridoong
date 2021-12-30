@@ -31,8 +31,8 @@ def index_page():
 
 @app.route('/login', methods=['POST'])
 def login_check():
-    user_id = request.form['id']
-    user_password = request.form['password']
+    user_id = request.form['user_id']
+    user_password = request.form['pwd']
 
     user_check = list(db.user.find({'user_id': user_id}, {'_id': False}))
     print(user_check)
@@ -148,7 +148,7 @@ def api_login():
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
     # id, 암호화된pw을 가지고 해당 유저를 찾습니다.
-    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
+    result = db.user.find_one({'user_id': id_receive, 'pwd': pw_hash})
 
     # 찾으면 JWT 토큰을 만들어 발급합니다.
     if result is not None:
@@ -157,8 +157,8 @@ def api_login():
         # 아래에선 id와 exp를 담았습니다. 즉, JWT 토큰을 풀면 유저ID 값을 알 수 있습니다.
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
-            'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
+            'user_id': id_receive,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -166,7 +166,7 @@ def api_login():
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
     else:
-        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+        return jsonify({'result': 'fail'})
 
 
 # 회원가입 페이지

@@ -66,18 +66,24 @@ body {
 }
 
 #log-box > input {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 250px;
     height: 40px;
 }
 
-#help-id, #help-password {
-    font-size: 5px;
+#log-box > p {
+    color: blue;
+    font-size: 12px;
+}
+
+.help > p {
+    color: red;
+    font-size: 12px;
 }
 
 #sign-in-box #log_button {
     margin-top: 20px;
-    width: 208px;
+    width: 250px;
     height: 30px;
 }
 
