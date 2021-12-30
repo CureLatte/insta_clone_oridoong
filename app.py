@@ -185,10 +185,10 @@ def api_login():
             'user_id': id_receive,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
         }
+        print('try : token.decode')
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
         # token을 줍니다.
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success', 'token': token.decode('utf-8')})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail'})
