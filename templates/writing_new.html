@@ -47,6 +47,7 @@
             });
         })
 
+
     </script>
 </head>
 
@@ -56,37 +57,31 @@
         <div id="main-container">
             <div class="post-form-container">
                 <div class="title">
-                    <p style="text-align: center">NEW POST</p>
+                    NEW POST
                 </div>
                 <div class="preview">
                     <div class="upload">
                         <div class="post-btn">
-                            <p>
-                                <input type="text" id="photo-name" placeholder="사진 이름을 입력하세요" >
-                            </p>
+                            <p>포스트 이미지 추가</p>
                             <div id="img-size">
                                 <canvas id="imageCanvas"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p>
-                    <input type="file" name="photo" id="id-photo" accept=".jpg,.png" required="required">
-                </p>
-                <p>
-                    <textarea name="text-field" id="text-field" cols="50" rows="5" wrap="hard" placeholder="140자 까지 등록 가능합니다."></textarea>
-                </p>
-                <button onclick="save_update_text()" type="button" id="submit-btn" >저장</button>
+                <div class="file-upload">
+                    <textarea name="text-field" id="text-field" cols="50" rows="5" wrap="hard"
+                        placeholder="140자 까지 등록 가능합니다."></textarea>
+                    <input type="file" id="file">
+                </div>
+                <button onclick="posting()" type="button" id="submit-btn">저장</button>
                 <a href="index.html">
-                    <button id="cancel-btn" type="button" >되돌아가기</button>
+                    <button id="cancel-btn" type="button">되돌아가기</button>
                 </a>
             </div>
 
         </div>
     </section>
-    <script src="..\static\javascript\writing_new_js.js"></script>
 </body>
+
 </html>
-
-
-

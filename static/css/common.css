@@ -115,11 +115,11 @@ a {
   width: 20px;
 }
 
-
-#header .logo {
+#header #logo {
   height: 40px;
   margin-top: 25px;
   font-size: 30px;
+  cursor: pointer;
 }
 
 #title {

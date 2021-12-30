@@ -234,25 +234,36 @@ def writing():
 
 @app.route("/writing_new", methods=["POST"])
 def new_writing():
-    text_receive = request.form['text_receive']
-    photo_name = request.form['photo_name_give']
-    photo_file = request.files['photo_file_give']
-    extension = photo_file.filename.split('.')[-1]
-    today = datetime.now()
-    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-    filename = f'{photo_name}-{mytime}'
-    save_to = f'static/images/user/{filename}.{extension}'
-    photo_file.save(save_to)
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']})
 
-    doc = {
-        "desc": text_receive,
-        'title': photo_name,
-        'img': f'{filename}.{extension}'
-    }
-    db.post_content.insert_one(doc)
+        desc_receive = request.form['desc_give']
+        photo = request.files['photo_give']
+        # comment, like 미구현상태
+        comment = []
+        like = 0
+        extension = photo.filename.split('.')[-1]
+        today = datetime.datetime.now()
+        mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+        filename = f'{mytime}'
+        save_to = f'static/images/post-contents/{filename}.{extension}'
+        photo.save(save_to)
+        doc = {
+            'user_id': user_info["user_id"],
+            'desc': desc_receive,
+            'img': f'{filename}.{extension}',
+            'comment': comment,
+            'like': like,
+        }
+        db.post_content.insert_one(doc)
 
-    return jsonify({'msg': '등록완료'})
-################################################################################
+        return jsonify({'msg': '등록완료'})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
 # 회원 탈퇴
