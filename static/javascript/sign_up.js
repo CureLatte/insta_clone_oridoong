@@ -122,4 +122,4 @@ function sign_up() {
         }
     });
 
-
+}
