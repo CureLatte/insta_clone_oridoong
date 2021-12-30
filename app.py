@@ -196,7 +196,7 @@ def api_login():
 
 # 회원 가입 페이지
 @app.route('/sign_up')
-def sign_up_test():
+def sign_up():
     return render_template('sign_up.html')
 
 
@@ -207,6 +207,23 @@ def check_user_id():
     check_id = not bool(db.user.find_one({'user_id': user_id_receive}))
 
     return jsonify({'check_id': check_id})
+
+
+@app.route('/sign_up/save', methods=['POST'])
+def sign_up_save():
+    # 회원가입
+    user_dict_receive = request.form.to_dict()
+
+    # 비밀번호 해쉬256으로 암호화
+    user_dict_receive['pwd'] = hashlib.sha256(
+        user_dict_receive['pwd'].encode('utf-8')).hexdigest()
+
+    user_dict_receive['bio'] = ""
+    user_dict_receive['avatar'] = ""
+
+    db.user.insert_one(user_dict_receive)
+
+    return jsonify({'msg': '회원가입 완료'})
 
 
 ##########################글작성 페이지########################################
@@ -236,22 +253,6 @@ def new_writing():
 
     return jsonify({'msg': '등록완료'})
 ################################################################################
-
-@app.route('/sign_up/save', methods=['POST'])
-def sign_up():
-    # 회원가입
-    user_dict_receive = request.form.to_dict()
-
-    # 비밀번호 해쉬256으로 암호화
-    user_dict_receive['pwd'] = hashlib.sha256(
-        user_dict_receive['pwd'].encode('utf-8')).hexdigest()
-
-    user_dict_receive['bio'] = ""
-    user_dict_receive['avatar'] = ""
-
-    db.user.insert_one(user_dict_receive)
-
-    return jsonify({'msg': '회원가입 완료'})
 
 
 # 회원 탈퇴
