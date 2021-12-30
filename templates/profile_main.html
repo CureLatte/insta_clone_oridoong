@@ -38,7 +38,7 @@
                 </div>
                 <div class="info_row">
                     <div class="content_count">
-                        <p>게시글 {{ len(user['feed']) }}</p>
+                        <p>게시글 {{ user['feed']|length }}</p>
                     </div>
                     <div class="follower_count">
                         <p>팔로워 0</p>
@@ -73,20 +73,15 @@
         </div>
         <div class="content_container">
             <div class="content_wrapper">
-                {% set total = len(user['feed'])  %}
-                {% rowcnt = total // 3 %}
+                {% set row = user['feed'] %}
+                {% set total = user['feed'] | length  %}
+                {% set rowcnt = total // 3 %}
                 {% for i in range(rowcnt) %}
                 <div class="content_row">
                     {% for j in range(3) %}
-
                     <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
+                        {% set file = '../static/images/post-contents/' + row[i*3+j]  %}
+                        <img src="{{ file }}">
                     </div>
                     {% endfor %}
                 </div>
