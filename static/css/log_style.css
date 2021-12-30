@@ -2,6 +2,10 @@ body {
     margin: 0 auto;
 }
 
+.is-hidden {
+    display: none;
+}
+
 #container {
     background-color: white;
     margin-top: 100px;
@@ -58,12 +62,17 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 100px;
+    width: 250px;
 }
 
-#sign-in-box #log-box > input {
+#log-box > input {
     margin-top: 5px;
-    width: 200px;
-    height: 30px;
+    width: 250px;
+    height: 40px;
+}
+
+#help-id, #help-password {
+    font-size: 5px;
 }
 
 #sign-in-box #log_button {
