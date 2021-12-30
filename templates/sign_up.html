@@ -2,26 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Duckstagram 회원가입</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="../static/css/sign_up.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/common.css">
     <script src="../static/javascript/sign_up.js"></script>
+
 </head>
 <body>
 <div id="main">
-    <div id="header">
-    </div>
     <div id="container">
         <div id="sign-up-container">
             <div id="sign-up-wrapper">
+                <p id="title">𝓓𝓾𝓬𝓴𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
                 <div id="sign-up-header">
-<!--                    <img> 로고 이미지 박을 부분-->
-                    <h1>로오오오오오오오고!</h1>
+                    <!--<img> 로고 이미지 박을 부분-->
                     <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
                 </div>
                 <div id="sign-up-body">
                     <div id="input-wrapper">
-                        <div id="id-box">
+                      <div id="id-box">
                             <input type="text" onchange="check_user_id(this)" id="user-id" placeholder="아이디"/>
                             <img id="user-id-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
                             <img id="user-id-no" class="no-image" src="../static/images/times-circle-regular.svg" />
@@ -42,6 +41,7 @@
                             <img id="name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
                         <select id="gender" onchange="check_sign_up_button()">
+
                             <option value="">-- 성별을 선택해주세요 --</option>
                             <option value="female">여성</option>
                             <option value="male">남성</option>
@@ -58,6 +58,7 @@
                         </div>
                     </div>
                     <input id="sign-up-button" onclick="sign_up()" type="button" disabled="disabled" value="가입">
+
                 </div>
             </div>
         </div>
