@@ -1,11 +1,40 @@
 body {
-    max-width: 400px;
+
     margin: 0 auto;
 }
 
 #container {
     background-color: white;
     margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+#phone-img {
+    width: 450px;
+    height: 618px;
+    background-image: url("../images/iphone.png");
+}
+
+.slide {
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    width: 243px;
+    margin: 100px 150px;
+}
+.slide ul{position:relative;}
+.slide li{position:absolute;left:0;right:0;top:0;bottom:0;opacity:0;animation:fade 12s infinite;}
+.slide li:nth-child(1){background:#ffa;animation-delay:0s}
+.slide li:nth-child(2){background:#faa;animation-delay:3s}
+.slide li:nth-child(3){background:#afa;animation-delay:6s}
+.slide li:nth-child(4){background:#aaf;animation-delay:9s}
+@keyframes fade {
+    0% {opacity:0;}
+    5% {opacity:1;}
+    25% {opacity:1;}
+    30% {opacity:0;}
+    100% {opacity:0;}
 }
 
 #container #log-container {
@@ -22,7 +51,7 @@ body {
     width: 300px;
 }
 
-#log-container #log-box{
+#log-container #log-box {
     display: flex;
     flex-direction: column;
     margin-top: 50px;
@@ -34,13 +63,21 @@ body {
     height: 30px;
 }
 
-#log-container > button {
+#log-container #log_button {
     margin-top: 20px;
     width: 208px;
     height: 30px;
 }
 
-#log-container > a {
-    margin-top:40px;
+#sign-up-box {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
+    border-top: 1px solid lightgray;
+}
+
+#log-container #sign-up-box > a {
+    margin-top: 40px;
     font-size: 11px;
 }

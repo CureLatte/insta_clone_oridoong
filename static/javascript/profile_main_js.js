@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     load_info()
 
@@ -54,5 +55,4 @@ function move_add(){
     })
 
 }
-
 

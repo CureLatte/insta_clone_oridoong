@@ -2,42 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Duckstagram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Log In</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="../static/css/log_style.css">
     <link rel="stylesheet" href="../static/css/common.css">
 
-    <script>
-        function sign_in() {
-            let user_id = $('#user-id').val()
-            let user_pwd = $('#user-pwd').val()
-            $.ajax({
-                type: "POST",
-                url: "/sign_in",
-                data: {
-                    id_give: user_id,
-                    pwd_give: user_pwd
-                },
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.reload()
-                }
-            });
-        }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="../static/javascript/login.js"></script>
 
-    </script>
 </head>
 <body>
 <div id="main">
     <div id="container">
+        <div id="phone-img">
+            <div class="slide">
+                <ul>
+                    <li><img src="../static/images/instar_1.jpg"/></li>
+                    <li><img src="../static/images/instar_2.jpg"></li>
+                    <li><img src="../static/images/instar_3.jpg"></li>
+                    <li><img src="../static/images/instar_4.jpg"></li>
+                </ul>
+            </div>
+        </div>
         <div id="log-container">
             <p id="title">𝓓𝓾𝓬𝓴𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
-            <img id="log-img" src="../static/images/log_duck.png"/>
+
             <div id="log-box">
-                <input type="text" id="user-id" placeholder="아이디"/>
-                <input type="text" id="user-pwd" placeholder="비밀번호"/>
+                <input type="text" id="user_id" placeholder="아이디"/>
+                <input type="text" id="user_pw" placeholder="비밀번호"/>
             </div>
-                <button onclick="submit()">로그인</button>
-                <a href="">가입하기</a>
+            <button id="log_button" onclick="login()">로그인</button>
+            <div id="sign-up-box">
+                <p>계정이 없으신가요?</p>
+                <a href="sign_up.html">가입하기</a>
+            </div>
         </div>
     </div>
 </div>

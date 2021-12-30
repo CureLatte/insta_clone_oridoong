@@ -4,18 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Duckstagram</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/no.css">
     <link rel="stylesheet" href="../static/css/style.css">
-    <title>Duckstagram</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="../static/javascript/index.js"></script>
 </head>
 
 <body>
 <div id="header">
-    <img class="logo" src="../static/images/insta-logo.png">
+    <p id="title">𝓓𝓾𝓬𝓴𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
     <input type="text" placeholder="검색">
     <div id="head_icon">
+        <button class="button is-danger" onclick="logout()">로그아웃</button>
         <img src="../static/images/home@3x.png">
         <img src="../static/images/dm@3x.png">
         <img src="../static/images/trending@3x.png">
