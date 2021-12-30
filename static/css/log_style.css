@@ -1,5 +1,4 @@
 body {
-
     margin: 0 auto;
 }
 
@@ -20,8 +19,8 @@ body {
     display: flex;
     list-style: none;
     flex-direction: column;
-    width: 243px;
-    margin: 100px 150px;
+    width: 240px;
+    margin: 100px 151px;
 }
 .slide ul{position:relative;}
 .slide li{position:absolute;left:0;right:0;top:0;bottom:0;opacity:0;animation:fade 12s infinite;}
@@ -37,9 +36,13 @@ body {
     100% {opacity:0;}
 }
 
-#container #log-container {
-    width: 400px;
-    height: 550px;
+#sign-in-up {
+    width: 350px;
+    margin-top: 30px;
+}
+
+#sign-in-box {
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,23 +50,23 @@ body {
     border: 1px solid lightgray;
 }
 
-#log-container > img {
-    width: 300px;
+#sign-in-box > p {
+    font-size: 45px;
 }
 
-#log-container #log-box {
+#sign-in-box #log-box {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
-#log-container #log-box > input {
+#sign-in-box #log-box > input {
     margin-top: 5px;
     width: 200px;
     height: 30px;
 }
 
-#log-container #log_button {
+#sign-in-box #log_button {
     margin-top: 20px;
     width: 208px;
     height: 30px;
@@ -71,13 +74,9 @@ body {
 
 #sign-up-box {
     display: flex;
-    width: 100%;
     margin-top: 10px;
+    padding: 20px;
     justify-content: center;
-    border-top: 1px solid lightgray;
-}
-
-#log-container #sign-up-box > a {
-    margin-top: 40px;
-    font-size: 11px;
+    border: 1px solid lightgray;
+    font-size: 13px;
 }
