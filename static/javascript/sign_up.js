@@ -123,4 +123,4 @@ function sign_up() {
     });
 }
 
-
+}
