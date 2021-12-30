@@ -1,4 +1,3 @@
-
 // 아이디 중복 체크
 function check_user_id(obj) {
     let user_id = $(obj).val();
@@ -122,5 +121,6 @@ function sign_up() {
         }
     });
 }
+
 
 }
