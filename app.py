@@ -17,25 +17,6 @@ app = Flask(__name__)
 
 SECRET_KEY = 'TEST'
 
-@app.route("/writing_new")
-def writing():
-    return render_template('writing_new.html')
-
-
-@app.route("/writing_new", methods=["POST"])
-def new_writing():
-    text_receive = request.form['text_receive']
-
-    doc = {
-        "desc": text_receive,
-    }
-    db.post_content.insert_one(doc)
-
-    return jsonify({'msg': '등록완료'})
-
-
-if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=True)
 
 # 홈 페이지
 @app.route('/')  # token 획득을 확인
@@ -69,7 +50,7 @@ def profile_main_page():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         print(user_info)
-        return render_template('profile_main.html', user=user_info['user_id'])
+        return render_template('profile_main.html', user=user_info)
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))

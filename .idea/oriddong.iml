@@ -4,11 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-<<<<<<< HEAD
-    <orderEntry type="jdk" jdkName="Python 3.10" jdkType="Python SDK" />
-=======
-    <orderEntry type="inheritedJdk" />
->>>>>>> af903924c5ffe7802bb41949d876d7ef52946f4d
+    <orderEntry type="jdk" jdkName="Python 3.10 (oriddong)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="TIL" />
   </component>
