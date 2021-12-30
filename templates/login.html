@@ -2,22 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Duckstagram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Log In</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="../static/css/log_style.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="../static/javascript/login.js"></script>
+
 </head>
 <body>
 <div id="main">
-    <div id="header">
-    </div>
     <div id="container">
-        <div id="log-container">
-            <img id="log-img" src="../static/images/log_duck.png"/>
-            <div id="log-box">
-                <input type="text" id="user-name" placeholder="아이디"/>
-                <input type="text" id="user-pwd" placeholder="비밀번호"/>
+        <div id="phone-img">
+            <div class="slide">
+                <ul>
+                    <li><img src="../static/images/instar_1.jpg"/></li>
+                    <li><img src="../static/images/instar_2.jpg"></li>
+                    <li><img src="../static/images/instar_3.jpg"></li>
+                    <li><img src="../static/images/instar_4.jpg"></li>
+                </ul>
             </div>
-                <button>로그인</button>
-                <a href="">가입하기</a>
+        </div>
+        <div id="sign-in-up">
+            <div id="sign-in-box">
+                <p id="title">𝓞𝓻𝓲𝓼𝓽𝓪𝓻𝓰𝓻𝓪𝓶</p>
+                <div id="log-box">
+                    <input type="text" id="user_id" placeholder="아이디"/>
+                    <p id="help-id-login"></p>
+                    <input type="text" id="user_pw" placeholder="비밀번호"/>
+                    <p id="help-password-login"></p>
+                </div>
+                <button id="log_button" onclick="login()">로그인</button>
+                <div id="help-box">
+                    <p id="help-login"></p>
+                </div>
+            </div>
+
+            <div id="sign-up-box">
+                <p>계정이 없으신가요? <a href="/sign_up"><b>가입하기</b></a></p>
+            </div>
         </div>
     </div>
 </div>

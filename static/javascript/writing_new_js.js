@@ -24,4 +24,3 @@ function handleImage(e) {
     };
     reader.readAsDataURL(e.target.files[0]);
 }
-

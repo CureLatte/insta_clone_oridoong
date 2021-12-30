@@ -4,30 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Duckstagram</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+
     <link rel="stylesheet" href="../static/css/no.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/main_page_css.css">
     <link rel="stylesheet" href="../static/css/style.css">
-    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="../static/javascript/index.js"></script>
 </head>
 
 <body>
-    <div class="wrap">
-        <ul class="des_top_gnb">
-            <img src="../static/images/insta-logo.png" alt="1">
+    <div id="header">
+        <div class="header_inner_wrap">
+            <img class="logo" src="../static/images/insta-logo.png">
             <input type="text" placeholder="검색">
-            <div>
-                <li><img src="../static/images/home@3x.png" alt="1"></li>
-                <li><img src="../static/images/dm@3x.png" alt="1"></li>
-                <li><img src="../static/images/trending@3x.png" alt="1"></li>
-                <li><img src="../static/images/like@3x.png" alt="1"></li>
-                <li><img src="../static/images/more@3x.png" alt="1"></li>
-            </div>
-        </ul>
-        <ul class="top_gnb">
-            <li><img src="../static/images/camera@3x.png" alt="1"></li>
-            <li><img src="../static/images/insta-logo.png" alt="1"></li>
-            <li><img src="../static/images/dm@3x.png" alt="1"></li>
-        </ul>
+            <ul id="head_icon">
+                <li>
+                    <a href="#">
+                        <img src="../static/images/home@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/dm@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/trending@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/like@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/more@3x.png">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="wrap">
         <ul class="story">
             <li>
                 <img src="../static/images/8.jpeg" alt="2">
@@ -61,18 +92,24 @@
                 <img src="../static/images/8.jpeg" alt="2">
                 <p>아이고난</p>
             </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
         </ul>
         <div class="content">
             <section class="con">
                 <div class="userInfo">
-                    <h4>최진우</h4>
-                    <div>
+                    <a href="#">
+                        <h4>최진우</h4>
+                    </a>
+                    <div class="is_pointer">
                         <img src="../static/images/more@3x.png" alt="">
                     </div>
                 </div>
                 <div class="image_box"></div>
                 <ul>
-                    <li><img src="../static/images/like@3x.png" alt="1"></li>
+                    <li class="is_pointer"><img src="../static/images/like@3x.png" alt="1"></li>
                     <li><img src="../static/images/comment@3x.png" alt="1"></li>
                     <li><img src="../static/images/dm@3x.png" alt="1"></li>
                     <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
@@ -87,14 +124,16 @@
         <div class="content">
             <section class="con">
                 <div class="userInfo">
-                    <h4>최진우</h4>
-                    <div>
+                    <a href="#">
+                        <h4>최진우</h4>
+                    </a>
+                    <div class="is_pointer">
                         <img src="../static/images/more@3x.png" alt="">
                     </div>
                 </div>
                 <div class="image_box"></div>
                 <ul>
-                    <li><img src="../static/images/like@3x.png" alt="1"></li>
+                    <li class="is_pointer"><img src="../static/images/like@3x.png" alt="1"></li>
                     <li><img src="../static/images/comment@3x.png" alt="1"></li>
                     <li><img src="../static/images/dm@3x.png" alt="1"></li>
                     <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
@@ -109,14 +148,16 @@
         <div class="content">
             <section class="con">
                 <div class="userInfo">
-                    <h4>최진우</h4>
-                    <div>
+                    <a href="#">
+                        <h4>최진우</h4>
+                    </a>
+                    <div class="is_pointer">
                         <img src="../static/images/more@3x.png" alt="">
                     </div>
                 </div>
                 <div class="image_box"></div>
                 <ul>
-                    <li><img src="../static/images/like@3x.png" alt="1"></li>
+                    <li class="is_pointer"><img src="../static/images/like@3x.png" alt="1"></li>
                     <li><img src="../static/images/comment@3x.png" alt="1"></li>
                     <li><img src="../static/images/dm@3x.png" alt="1"></li>
                     <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
@@ -128,13 +169,6 @@
                 </div>
             </section>
         </div>
-        <ul class="bot_gnb">
-            <li><img src="../static/images/home@3x.png" alt="1"></li>
-            <li><img src="../static/images/search@3x.png" alt="1"></li>
-            <li><img src="../static/images/trending@3x.png" alt="1"></li>
-            <li><img src="../static/images/like@3x.png" alt="1"></li>
-            <li><img src="../static/images/home@3x.png" alt="1"></li>
-        </ul>
     </div>
     <div class="hi">
         <div class="recommend">

@@ -1,9 +1,3 @@
-body {
-  margin: 0 auto;
-  max-width: 450px;
-  color: #fff;
-}
-
 ul {
   padding-inline-start: 0px;
 }
@@ -14,7 +8,6 @@ li {
 .wrap {
   position: relative;
   width: 100%;
-  background-color: #000;
 }
 
 .top_gnb,
@@ -24,7 +17,6 @@ li {
   max-width: 500px;
   position: fixed;
   padding: 0.7rem 1.2rem;
-  background-color: #121212;
   z-index: 10;
 }
 .top_gnb img,
@@ -53,7 +45,6 @@ li {
 }
 
 .content {
-  background-color: #000;
   border-top: 0.1px solid rgb(82, 82, 82);
 }
 
@@ -79,6 +70,8 @@ li {
 }
 
 .story li p {
+  margin-top: 7px;
+  font-weight: 500;
   font-size: 0.7rem;
   text-align: center;
 }
@@ -90,50 +83,12 @@ li {
   padding-top: 0.8rem;
 }
 
-.userInfo h4 {
-  position: relative;
-  color: #ddd;
-  padding-left: 3rem;
-  font-size: 0.9rem;
-  line-height: 35px;
-  height: 35px;
-}
-.userInfo h4:before {
-  position: absolute;
-  content: "";
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("../images/8.jpeg");
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-}
 .userInfo div {
   height: 35px;
   line-height: 35px;
 }
 .userInfo div img {
   height: 0.3rem;
-}
-.userInfo div > img,
-.con ul img,
-.favorite img {
-  filter: brightness(0) invert(1);
-}
-
-.image_box {
-  width: 100%;
-  margin: 8px 0;
-  background-image: url("../images/image.gif");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  height: 400px;
-  border-top: 1px solid rgb(56, 56, 56);
-  border-bottom: 1px solid rgb(56, 56, 56);
 }
 
 .con ul {
@@ -161,7 +116,7 @@ li {
 }
 
 .comment {
-  padding: 0 0.7rem;
+  padding: 0 0.9rem;
 }
 
 .comment h4 {
@@ -192,11 +147,6 @@ li {
   font-weight: 600;
 }
 
-.comment p {
-  font-size: 0.8rem;
-  color: #ddd;
-  margin-top: 7px;
-}
 .comment p strong {
   font-weight: 600;
 }
@@ -249,7 +199,6 @@ li {
     margin-top: 7px;
     height: 30px;
     width: 268px;
-    background-color: #161615;
     padding-left: 10px;
     border: none;
     border: 0.1px solid rgb(82, 82, 82);
@@ -266,44 +215,16 @@ li {
   .contain {
     position: relative;
   }
-  body {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    max-width: 1100px;
-    color: #fff;
-    background-color: #161615;
-  }
-  .wrap {
-    position: relative;
-    width: 700px;
-    background-color: #161615;
-  }
+
   .hi {
     width: 350px;
   }
-  .recommend {
-    position: fixed;
-    top: 0;
-    margin-top: 80px;
-    padding: 20px 15px;
-    box-sizing: border-box;
-    width: 350px;
-    height: 450px;
-    border: 0.1px solid rgb(82, 82, 82);
-  }
-  .story {
-    background-color: #000;
-    padding: 20px 15px;
-    margin-top: 80px;
-    margin-bottom: 25px;
-    border: 0.1px solid rgb(82, 82, 82);
-  }
+
   .recommend > h5 {
     position: relative;
     font-size: 16px;
     color: rgb(130, 130, 130);
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
   }
   .recommend > h5 span {
@@ -312,7 +233,7 @@ li {
     top: 50%;
     transform: translateY(-50%);
     font-size: 14px;
-    color: #fff;
+    color: #232323;
   }
 
   .recommend ul {
@@ -341,11 +262,10 @@ li {
   .recommend ul li h5 {
     font-size: 16px;
     font-weight: 600;
-    color: #fff;
   }
   .recommend ul li p {
     font-size: 14px;
-    color: #ddd;
+    color: #8f8f8f;
     padding-top: 4px;
   }
   .recommend ul li span {
@@ -359,28 +279,13 @@ li {
   .content:nth-of-type(1) {
     margin-top: 0px;
   }
-  .content {
-    margin-top: 40px;
-    border: 0.1px solid rgb(82, 82, 82);
-  }
-  .image_box {
-    height: 600px;
-  }
   .userInfo {
     height: 42px;
   }
-  .userInfo h4 {
-    font-size: 17px;
-    height: 42px;
-    line-height: 42px;
-  }
+
   .comment h4 {
     font-size: 16px;
     margin-top: 10px;
-  }
-  .comment p {
-    font-size: 15px;
-    margin-top: 5px;
   }
   .comment span {
     margin-top: 25px;
@@ -388,18 +293,8 @@ li {
 }
 
 @media screen and (max-width: 1100px) {
-  body {
-    max-width: 800px;
-    display: block;
-    margin: 0 auto;
-    background-color: #161615;
-  }
   .recommend {
     display: none;
-  }
-  .wrap {
-    max-width: 800px;
-    background-color: #161615;
   }
   .des_top_gnb {
     box-sizing: border-box;
@@ -440,7 +335,7 @@ li {
   .des_top_gnb input {
     height: 30px;
     width: 268px;
-    background-color: #161615;
+    background-color: white;
     border: none;
     border: 0.1px solid rgb(82, 82, 82);
   }

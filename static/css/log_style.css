@@ -1,16 +1,52 @@
 body {
-    max-width: 400px;
     margin: 0 auto;
+}
+
+.is-hidden {
+    display: none;
 }
 
 #container {
     background-color: white;
     margin-top: 100px;
+    display: flex;
+    justify-content: center;
 }
 
-#container #log-container {
-    width: 400px;
-    height: 550px;
+#phone-img {
+    width: 450px;
+    height: 618px;
+    background-image: url("../images/iphone.png");
+}
+
+.slide {
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    width: 240px;
+    margin: 100px 151px;
+}
+.slide ul{position:relative;}
+.slide li{position:absolute;left:0;right:0;top:0;bottom:0;opacity:0;animation:fade 12s infinite;}
+.slide li:nth-child(1){background:#ffa;animation-delay:0s}
+.slide li:nth-child(2){background:#faa;animation-delay:3s}
+.slide li:nth-child(3){background:#afa;animation-delay:6s}
+.slide li:nth-child(4){background:#aaf;animation-delay:9s}
+@keyframes fade {
+    0% {opacity:0;}
+    5% {opacity:1;}
+    25% {opacity:1;}
+    30% {opacity:0;}
+    100% {opacity:0;}
+}
+
+#sign-in-up {
+    width: 350px;
+    margin-top: 30px;
+}
+
+#sign-in-box {
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,29 +54,50 @@ body {
     border: 1px solid lightgray;
 }
 
-#log-container > img {
-    width: 300px;
+#sign-in-box > p {
+    font-size: 45px;
 }
 
-#log-container #log-box{
+#sign-in-box #log-box {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 100px;
+    width: 250px;
 }
 
-#log-container #log-box > input {
-    margin-top: 5px;
-    width: 200px;
-    height: 30px;
+#log-box > input {
+    margin-top: 10px;
+    width: 250px;
+    height: 40px;
 }
 
-#log-container > button {
+#log-box > p {
+    color: red;
+    font-size: 12px;
+}
+
+#help-box {
+    width: 250px;
+    height: 50px;
+    padding-top: 30px;
+}
+
+#help-box > p {
+    color: red;
+    font-size: 12px;
+}
+
+#sign-in-box #log_button {
     margin-top: 20px;
-    width: 208px;
+    width: 250px;
     height: 30px;
 }
 
-#log-container > a {
-    margin-top:40px;
-    font-size: 11px;
+#sign-up-box {
+    display: flex;
+    margin-top: 10px;
+    padding: 20px;
+    justify-content: center;
+    border: 1px solid lightgray;
+    font-size: 13px;
 }
