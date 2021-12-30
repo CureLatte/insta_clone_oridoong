@@ -130,6 +130,12 @@
 
 <br>
 
+.input_style_text				(input type=“text”쓰시면 input에  클레스 이걸로 주시면됨)
+.input_style_textarea 			(textarea쓰시면 textarea에  클레스 이걸로 주시면됨)
+.input_style_select			(select쓰시면 select에  클레스 이걸로 주시면됨)
+.is_pointer 					마우스 호버했을때 그냥 커서포인트로 바꾸기 (게시물에 좋아요 같은곳에 쓰임)
+.common_btn					버튼같은거에 쓰시면되는데 백그라운드 색이랑 폰트색상만 바뀝니다, 크기는 스스로 정하시면 됩니다!
+
 * ```class```
   * ```header``` : 머릿말 
   * ```sumbit button```: 제출시 버튼
