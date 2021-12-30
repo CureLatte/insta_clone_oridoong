@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="../static/css/sign_up.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../static/javascript/sign_up.js"></script>
-
-
 </head>
 <body>
 <div id="main">
@@ -25,49 +23,48 @@
                     <div id="input-wrapper">
                         <div id="id-box">
                             <input type="text" onchange="check_user_id(this)" id="user-id" placeholder="아이디"/>
-                            <!-- 이미지 변경 해야함. -->
-                            <img id="user-id-yes" src="../static/images/like@3x.png" />
-                            <img id="user-id-no" src="../static/images/home@3x.png" />
+                            <img id="user-id-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="user-id-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
                         <div id="pwd-box">
-                            <input type="text" onchange="check_pwd(this)" id="pwd" placeholder="비밀번호"/>
-                            <img id="pwd-yes" src="../static/images/like@3x.png" />
-                            <img id="pwd-no" src="../static/images/home@3x.png" />
+                            <input type="password" onchange="check_pwd(this)" id="pwd" placeholder="비밀번호"/>
+                            <img id="pwd-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="pwd-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
                         <div id="user-name-box">
-                            <input type="text" id="user-name" placeholder="사용자 이름(별칭)"/>
-                            <img id="user-name-yes" src="../static/images/like@3x.png" />
-                            <img id="user-name-no" src="../static/images/home@3x.png" />
+                            <input type="text" onchange="check_empty(this)" id="user-name" placeholder="사용자 이름(별칭)"/>
+                            <img id="user-name-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="user-name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
                         <div id="name-box">
-                            <input type="text" id="name" placeholder="성명"/>
-                            <img id="name-yes" src="../static/images/like@3x.png" />
-                            <img id="name-no" src="../static/images/home@3x.png" />
+                            <input type="text" onchange="check_empty(this)" id="name" placeholder="성명"/>
+                            <img id="name-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
-                        <select id="gender" required>
+                        <select id="gender" onchange="check_sign_up_button()">
                             <option value="">-- 성별을 선택해주세요 --</option>
                             <option value="female">여성</option>
                             <option value="male">남성</option>
                         </select>
                         <div id="phone-number-box">
-                            <input type="text" id="phone-number" placeholder="휴대폰 번호"/>
-                            <img id="phone-number-yes" src="../static/images/like@3x.png" />
-                            <img id="phone-number-no" src="../static/images/home@3x.png" />
+                            <input type="text" onchange="check_phone(this)" id="phone-number" placeholder="휴대폰 번호"/>
+                            <img id="phone-number-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="phone-number-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
                         <div id="email-box">
-                            <input type="text" id="email" placeholder="이메일 주소"/>
-                            <img id="email-yes" src="../static/images/like@3x.png" />
-                            <img id="email-no" src="../static/images/home@3x.png" />
+                            <input type="text" onchange="check_email(this)" id="email" placeholder="이메일 주소"/>
+                            <img id="email-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="email-no" class="no-image" src="../static/images/times-circle-regular.svg" />
                         </div>
                     </div>
-                    <input type="button" disabled="disabled" value="가입">
+                    <input id="sign-up-button" onclick="sign_up()" type="button" disabled="disabled" value="가입">
                 </div>
             </div>
         </div>
         <div id="sign-up-footer-container">
             <div id="footer-button-wrapper">
                 <p>계정이 있으신가요?</p>
-                <a href="">로그인</a>
+                <a href="/">로그인</a>
             </div>
         </div>
     </div>
