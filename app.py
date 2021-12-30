@@ -130,6 +130,10 @@ def api_login():
 
     return jsonify({'msg': '등록 완료!'})
 
+@app.route('/sign_up')
+def sign_up_test():
+    return render_template('sign_up.html')
+
 
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_user_id():
@@ -147,6 +151,9 @@ def sign_up():
 
     # 비밀번호 해쉬256으로 암호화
     user_dict_receive['pwd'] = hashlib.sha256(user_dict_receive['pwd'].encode('utf-8')).hexdigest()
+
+    user_dict_receive['bio'] = ""
+    user_dict_receive['avatar'] = ""
 
     db.user.insert_one(user_dict_receive)
 
