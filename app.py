@@ -8,8 +8,8 @@ from flask import Flask, render_template, jsonify, request, session, redirect, u
 ca = certifi.where()
 
 client = MongoClient(
-    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', tlsCAFile=ca)
-
+    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    tlsCAFile=ca)
 
 db = client.instaClone
 
@@ -149,7 +149,6 @@ def edit_profile_post():
 
 @app.route("/sign_in", methods=["POST"])
 def user():
-
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
     try:
@@ -210,7 +209,7 @@ def check_user_id():
     return jsonify({'check_id': check_id})
 
 
-# 글작성 페이지
+##########################글작성 페이지########################################
 @app.route("/writing_new")
 def writing():
     return render_template('writing_new.html')
@@ -219,14 +218,24 @@ def writing():
 @app.route("/writing_new", methods=["POST"])
 def new_writing():
     text_receive = request.form['text_receive']
+    photo_name = request.form['photo_name_give']
+    photo_file = request.files['photo_file_give']
+    extension = photo_file.filename.split('.')[-1]
+    today = datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+    filename = f'{photo_name}-{mytime}'
+    save_to = f'static/images/user/{filename}.{extension}'
+    photo_file.save(save_to)
 
     doc = {
         "desc": text_receive,
+        'title': photo_name,
+        'img': f'{filename}.{extension}'
     }
     db.post_content.insert_one(doc)
 
     return jsonify({'msg': '등록완료'})
-
+################################################################################
 
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
