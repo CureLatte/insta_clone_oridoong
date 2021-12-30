@@ -10,6 +10,7 @@ ca = certifi.where()
 client = MongoClient(
     'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', tlsCAFile=ca)
 
+
 db = client.instaClone
 
 app = Flask(__name__)
@@ -49,7 +50,7 @@ def profile_main_page():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         print(user_info)
-        return render_template('profile_main.html', user=user_info['user_id'])
+        return render_template('profile_main.html', user=user_info)
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
