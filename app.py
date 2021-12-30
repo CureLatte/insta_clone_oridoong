@@ -100,7 +100,6 @@ def edit_profile_post():
     return jsonify({'msg': 'DB등록 완료!'})
 
 
-
 @app.route("/sign_in", methods=["POST"])
 def user():
 
@@ -138,6 +137,23 @@ def check_user_id():
     check_id = not bool(db.user.find_one({'user_id': user_id_receive}))
 
     return jsonify({'check_id': check_id})
+
+
+@app.route("/writing_new")
+def writing():
+    return render_template('writing_new.html')
+
+
+@app.route("/writing_new", methods=["POST"])
+def new_writing():
+    text_receive = request.form['text_receive']
+
+    doc = {
+        "desc": text_receive,
+    }
+    db.post_content.insert_one(doc)
+
+    return jsonify({'msg': '등록완료'})
 
 
 @app.route('/sign_up/save', methods=['POST'])
