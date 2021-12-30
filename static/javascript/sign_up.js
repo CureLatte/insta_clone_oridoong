@@ -121,6 +121,3 @@ function sign_up() {
         }
     });
 }
-
-
-}
