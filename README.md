@@ -8,6 +8,7 @@
 * [정리 문서](#정리-문서)
   * [팀프로젝트 Github 주소](https://github.com/CureLatte/insta_clone_oridoong.git)
   * [팀프로젝트 블로그 주소](https://jscript.tistory.com/)
+  * [팀프로젝트 공개서버](http://13.209.22.134:5001/)
   * [Github 관련](#Github)
   * [데이터 DB 관련](#DataBase)
   * [css 공통](#css-및-공통 )
