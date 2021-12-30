@@ -128,7 +128,7 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=300)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -164,18 +164,26 @@ def api_valid():
 
 
 
-@app.route("/sign_up/check_dup", methods=['POST'])
-def check_dup():
-    # ID 중복확인
+@app.route('/sign_up/check_dup', methods=['POST'])
+def check_user_id():
+    # 아이디 중복 체크
     user_id_receive = request.form['user_id_give']
-    check_id = db.user.find_one({'user_id': user_id_receive})
-
-    if check_id:
-        check_id = False
-    else:
-        check_id = True
+    check_id = not bool(db.user.find_one({'user_id': user_id_receive}))
 
     return jsonify({'check_id': check_id})
+
+
+@app.route('/sign_up/save', methods=['POST'])
+def sign_up():
+    # 회원가입
+    user_dict_receive = request.form.to_dict()
+
+    # 비밀번호 해쉬256으로 암호화
+    user_dict_receive['pwd'] = hashlib.sha256(user_dict_receive['pwd'].encode('utf-8')).hexdigest()
+
+    db.user.insert_one(user_dict_receive)
+
+    return jsonify({'msg': '회원가입 완료'})
 
 
 if __name__ == '__main__':
