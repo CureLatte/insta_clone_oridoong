@@ -72,11 +72,17 @@ body {
 }
 
 #log-box > p {
-    color: blue;
+    color: red;
     font-size: 12px;
 }
 
-.help > p {
+#help-box {
+    width: 250px;
+    height: 50px;
+    padding-top: 30px;
+}
+
+#help-box > p {
     color: red;
     font-size: 12px;
 }
