@@ -85,6 +85,31 @@ def edit_profile():
     return render_template('edit_profile.html')
 
 
+@app.route('/edit_profile_get', methods=["GET"])
+def edit_profile_get():
+    # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
+    token_receive = request.cookies.get('mytoken')
+
+    try:
+        # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        del user_info['pwd']
+
+        # 비효율적인 코드이므로 리팩토링 하실꺼면 하세요
+        user_info['username'] = user_info['user_name']
+
+        del user_info['user_name']
+
+        return jsonify({'user_info': user_info})
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
 @app.route("/edit_profile", methods=["POST"])
 def edit_profile_post():
     username_receive = request.form['username_receive']
@@ -217,6 +242,26 @@ def sign_up():
     db.user.insert_one(user_dict_receive)
 
     return jsonify({'msg': '회원가입 완료'})
+
+
+# 회원 탈퇴
+@app.route('/sign_out', methods=['GET'])
+def sign_out():
+    # 쿠키에서 토큰 가져옴
+    token_receive = request.cookies.get('mytoken')
+
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        db.user.delete_one({'user_id': user_info['user_id']})
+
+        return jsonify({'msg': '회원탈퇴 완료!'})
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 if __name__ == '__main__':
