@@ -83,15 +83,17 @@
 
 #### [DB 접속 Link](https://cloud.mongodb.com/v2/61ca8ce0f602e3226b610deb#metrics/replicaSet/61ca8fb3026f400ffdd9a9ae/explorer/instaClone/user/find)
 
+`SECREKEY=['TEST']`
+
 <br>
 
 * ```user```  : 회원 테이블
   * ```user_id``` :　　 　`<string> ` 로그인 ID
   * ```name``` :  　　&nbsp;&nbsp;　　`<string>` 실제 이름
-  * ```username```:　　　 `<string>` 별칭
+  * ```user_name```:　　　 `<string>` 별칭
   * ```gender```: 　　　　`<string>` 성별
   * ```email```: 　　&nbsp;&nbsp;　　`<string>` 이메일 주소
-  * ```photo_number```:　 `<string>` 전화 번호
+  * ```photo_number```:　 `<string>` 전화 번호  000-000-000
   * ```bio```: 　　　&nbsp;&nbsp;　　`<string>` 자기 소개
   * ```avatar```:　　　　 `<string>` 프로필 사진
 
@@ -100,7 +102,7 @@
   * ```user_id``` :　　　 ```<string>``` 작성자
   * ```photo``` :　　　　 ```<string>``` 사진
   * ```desc``` : 　　　　&nbsp;&nbsp;```<string>``` 설명
-  * ```comment```: 　　&nbsp;　`<List>`댓글내용
+  * ```comment```: 　　&nbsp;　`<List>`댓글 내용
   * ```like```: 　　　&nbsp;&nbsp;&nbsp;　`<int>` 좋아요
 
 ***
@@ -321,6 +323,9 @@
 * ~~이미지 저장 - 폴더에 파일 자체 저장하는 식~~
 * 유저가 올리는 이미지를 users 폴더에 어떻게 넣을지? - 테스트 필요
 * ~~이미지 제목을 어떻게 따로 빼서?~~
+* 라우트 저장 
+* 이미지 처리 방법 
+* DB 수정 - column 
 
 
 ***
