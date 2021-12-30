@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10" project-jdk-type="Python SDK" />
+</project>
+=======
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (oriddong)" project-jdk-type="Python SDK" />
   <component name="PyPackaging">
     <option name="earlyReleasesAsUpgrades" value="true" />
   </component>
 </project>
+>>>>>>> af903924c5ffe7802bb41949d876d7ef52946f4d
