@@ -1,0 +1,74 @@
+body {
+  max-width: 1100px;
+}
+.story {
+  background-color: #fff;
+  padding: 20px 15px;
+  margin-top: 90px;
+  margin-bottom: 25px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.wrap {
+  position: relative;
+  width: 700px;
+  background-color: #efefef;
+}
+
+.content {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-top: 40px;
+}
+
+.userInfo h4 {
+  position: relative;
+  color: #232323;
+  padding-left: 3rem;
+  font-weight: 600;
+  height: 42px;
+  line-height: 42px;
+}
+.userInfo h4:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/static/images/8.jpeg");
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.image_box {
+  width: 100%;
+  margin: 8px 0;
+  background-image: url(../images/image.gif);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 600px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.comment p {
+  font-size: 15px;
+  color: #232323;
+  margin-top: 7px;
+}
+
+.recommend {
+  position: fixed;
+  top: 0;
+  margin-top: 80px;
+  padding: 20px 15px;
+  box-sizing: border-box;
+  width: 350px;
+  height: 450px;
+}

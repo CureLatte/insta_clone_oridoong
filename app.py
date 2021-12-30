@@ -8,8 +8,7 @@ from flask import Flask, render_template, jsonify, request, session, redirect, u
 ca = certifi.where()
 
 client = MongoClient(
-    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    tlsCAFile=ca)
+    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', tlsCAFile=ca)
 
 db = client.instaClone
 
@@ -21,6 +20,12 @@ SECRET_KEY = 'TEST'
 @app.route('/')  # token 획득을 확인
 def login_page():
     return render_template('login.html')
+
+
+# 내가 작업한거~~
+@app.route('/index_page')
+def index_page():
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['POST'])
@@ -162,7 +167,8 @@ def sign_up():
     user_dict_receive = request.form.to_dict()
 
     # 비밀번호 해쉬256으로 암호화
-    user_dict_receive['pwd'] = hashlib.sha256(user_dict_receive['pwd'].encode('utf-8')).hexdigest()
+    user_dict_receive['pwd'] = hashlib.sha256(
+        user_dict_receive['pwd'].encode('utf-8')).hexdigest()
 
     db.user.insert_one(user_dict_receive)
 
@@ -171,4 +177,3 @@ def sign_up():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
-

@@ -4,13 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Duckstagram</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="../static/css/common.css">
+
     <link rel="stylesheet" href="../static/css/no.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/main_page_css.css">
     <link rel="stylesheet" href="../static/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,203 +25,222 @@
 </head>
 
 <body>
-<div id="header">
-    <p id="title">𝓓𝓾𝓬𝓴𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
-    <input type="text" placeholder="검색">
-    <div id="head_icon">
-        <button class="button is-danger" onclick="logout()">로그아웃</button>
-        <img src="../static/images/home@3x.png">
-        <img src="../static/images/dm@3x.png">
-        <img src="../static/images/trending@3x.png">
-        <img src="../static/images/like@3x.png">
-        <img src="../static/images/more@3x.png">
-    </div>
-</div>
-<div class="wrap">
-    <ul class="top_gnb">
-        <li><img src="../static/images/camera@3x.png" alt="1"></li>
-        <li><img src="../static/images/insta-logo.png" alt="1"></li>
-        <li><img src="../static/images/dm@3x.png" alt="1"></li>
-    </ul>
-    <ul class="story">
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-        <li>
-            <img src="../static/images/8.jpeg" alt="2">
-            <p>아이고난</p>
-        </li>
-    </ul>
-    <div class="content">
-        <section class="con">
-            <div class="userInfo">
-                <h4>최진우</h4>
-                <div>
-                    <img src="../static/images/more@3x.png" alt="">
-                </div>
-            </div>
-            <div class="image_box"></div>
-            <ul>
-                <li><img src="../static/images/like@3x.png" alt="1"></li>
-                <li><img src="../static/images/comment@3x.png" alt="1"></li>
-                <li><img src="../static/images/dm@3x.png" alt="1"></li>
-                <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
+    <div id="header">
+        <div class="header_inner_wrap">
+            <img class="logo" src="../static/images/insta-logo.png">
+            <input type="text" placeholder="검색">
+            <ul id="head_icon">
+                <li>
+                    <a href="#">
+                        <img src="../static/images/home@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/dm@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/trending@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/like@3x.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../static/images/more@3x.png">
+                    </a>
+                </li>
             </ul>
-            <div class="comment">
-                <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
-                <p><strong>돈통</strong> : 안녕하세요</p>
-                <span>2시간 전</span>
-            </div>
-        </section>
+        </div>
     </div>
-    <div class="content">
-        <section class="con">
-            <div class="userInfo">
-                <h4>최진우</h4>
-                <div>
-                    <img src="../static/images/more@3x.png" alt="">
+    <div class="wrap">
+        <ul class="story">
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+            <li>
+                <img src="../static/images/8.jpeg" alt="2">
+                <p>아이고난</p>
+            </li>
+        </ul>
+        <div class="content">
+            <section class="con">
+                <div class="userInfo">
+                    <a href="#">
+                        <h4>최진우</h4>
+                    </a>
+                    <div class="is_pointer">
+                        <img src="../static/images/more@3x.png" alt="">
+                    </div>
                 </div>
-            </div>
-            <div class="image_box"></div>
+                <div class="image_box"></div>
+                <ul>
+                    <li class="is_pointer"><img src="../static/images/like@3x.png" alt="1"></li>
+                    <li><img src="../static/images/comment@3x.png" alt="1"></li>
+                    <li><img src="../static/images/dm@3x.png" alt="1"></li>
+                    <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
+                </ul>
+                <div class="comment">
+                    <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
+                    <p><strong>돈통</strong> : 안녕하세요</p>
+                    <span>2시간 전</span>
+                </div>
+            </section>
+        </div>
+        <div class="content">
+            <section class="con">
+                <div class="userInfo">
+                    <a href="#">
+                        <h4>최진우</h4>
+                    </a>
+                    <div class="is_pointer">
+                        <img src="../static/images/more@3x.png" alt="">
+                    </div>
+                </div>
+                <div class="image_box"></div>
+                <ul>
+                    <li class="is_pointer"><img src="../static/images/like@3x.png" alt="1"></li>
+                    <li><img src="../static/images/comment@3x.png" alt="1"></li>
+                    <li><img src="../static/images/dm@3x.png" alt="1"></li>
+                    <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
+                </ul>
+                <div class="comment">
+                    <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
+                    <p><strong>돈통</strong> : 안녕하세요</p>
+                    <span>2시간 전</span>
+                </div>
+            </section>
+        </div>
+        <div class="content">
+            <section class="con">
+                <div class="userInfo">
+                    <a href="#">
+                        <h4>최진우</h4>
+                    </a>
+                    <div class="is_pointer">
+                        <img src="../static/images/more@3x.png" alt="">
+                    </div>
+                </div>
+                <div class="image_box"></div>
+                <ul>
+                    <li class="is_pointer"><img src="../static/images/like@3x.png" alt="1"></li>
+                    <li><img src="../static/images/comment@3x.png" alt="1"></li>
+                    <li><img src="../static/images/dm@3x.png" alt="1"></li>
+                    <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
+                </ul>
+                <div class="comment">
+                    <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
+                    <p><strong>돈통</strong> : 안녕하세요</p>
+                    <span>2시간 전</span>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="hi">
+        <div class="recommend">
+            <h5>회원님을 위한 추천 <span>모두 보기</span></h5>
             <ul>
-                <li><img src="../static/images/like@3x.png" alt="1"></li>
-                <li><img src="../static/images/comment@3x.png" alt="1"></li>
-                <li><img src="../static/images/dm@3x.png" alt="1"></li>
-                <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
+                <li>
+                    <div>
+                        <h5>이용자1</h5>
+                        <p>이용자님이 팔로우합니다.</p>
+                    </div>
+                    <span>
+                        팔로우
+                    </span>
+                </li>
             </ul>
-            <div class="comment">
-                <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
-                <p><strong>돈통</strong> : 안녕하세요</p>
-                <span>2시간 전</span>
-            </div>
-        </section>
-    </div>
-    <div class="content">
-        <section class="con">
-            <div class="userInfo">
-                <h4>최진우</h4>
-                <div>
-                    <img src="../static/images/more@3x.png" alt="">
-                </div>
-            </div>
-            <div class="image_box"></div>
             <ul>
-                <li><img src="../static/images/like@3x.png" alt="1"></li>
-                <li><img src="../static/images/comment@3x.png" alt="1"></li>
-                <li><img src="../static/images/dm@3x.png" alt="1"></li>
-                <li class="favorite"><img src="../static/images/favorite@3x.png" alt="1"></li>
+                <li>
+                    <div>
+                        <h5>이용자1</h5>
+                        <p>이용자님이 팔로우합니다.</p>
+                    </div>
+                    <span>
+                        팔로우
+                    </span>
+                </li>
             </ul>
-            <div class="comment">
-                <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
-                <p><strong>돈통</strong> : 안녕하세요</p>
-                <span>2시간 전</span>
-            </div>
-        </section>
+            <ul>
+                <li>
+                    <div>
+                        <h5>이용자1</h5>
+                        <p>이용자님이 팔로우합니다.</p>
+                    </div>
+                    <span>
+                        팔로우
+                    </span>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <div>
+                        <h5>이용자1</h5>
+                        <p>이용자님이 팔로우합니다.</p>
+                    </div>
+                    <span>
+                        팔로우
+                    </span>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <div>
+                        <h5>이용자1</h5>
+                        <p>이용자님이 팔로우합니다.</p>
+                    </div>
+                    <span>
+                        팔로우
+                    </span>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <div>
+                        <h5>이용자1</h5>
+                        <p>이용자님이 팔로우합니다.</p>
+                    </div>
+                    <span>
+                        팔로우
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <ul class="bot_gnb">
-        <li><img src="../static/images/home@3x.png" alt="1"></li>
-        <li><img src="../static/images/search@3x.png" alt="1"></li>
-        <li><img src="../static/images/trending@3x.png" alt="1"></li>
-        <li><img src="../static/images/like@3x.png" alt="1"></li>
-        <li><img src="../static/images/home@3x.png" alt="1"></li>
-    </ul>
-</div>
-<div class="hi">
-    <div class="recommend">
-        <h5>회원님을 위한 추천 <span>모두 보기</span></h5>
-        <ul>
-            <li>
-                <div>
-                    <h5>이용자1</h5>
-                    <p>이용자님이 팔로우합니다.</p>
-                </div>
-                <span>
-                        팔로우
-                    </span>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <div>
-                    <h5>이용자1</h5>
-                    <p>이용자님이 팔로우합니다.</p>
-                </div>
-                <span>
-                        팔로우
-                    </span>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <div>
-                    <h5>이용자1</h5>
-                    <p>이용자님이 팔로우합니다.</p>
-                </div>
-                <span>
-                        팔로우
-                    </span>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <div>
-                    <h5>이용자1</h5>
-                    <p>이용자님이 팔로우합니다.</p>
-                </div>
-                <span>
-                        팔로우
-                    </span>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <div>
-                    <h5>이용자1</h5>
-                    <p>이용자님이 팔로우합니다.</p>
-                </div>
-                <span>
-                        팔로우
-                    </span>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <div>
-                    <h5>이용자1</h5>
-                    <p>이용자님이 팔로우합니다.</p>
-                </div>
-                <span>
-                        팔로우
-                    </span>
-            </li>
-        </ul>
-    </div>
-</div>
 </body>
 
 </html>
