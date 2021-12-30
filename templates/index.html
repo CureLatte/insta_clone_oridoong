@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="../static/css/common.css">
 
     <link rel="stylesheet" href="../static/css/no.css">
-    <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/main_page_css.css">
     <link rel="stylesheet" href="../static/css/style.css">
 
@@ -27,35 +26,29 @@
 <body>
     <div id="header">
         <div class="header_inner_wrap">
+            <img id="logo" class="is_pointer" src="../static/images/insta-logo.png" onclick="window.location.href='/index_page'" />
             <a herf="/index_page">
                 <img onclick="window.location.reload()" class="logo" src="../static/images/insta-logo.png">
             </a>
             <input type="text" placeholder="검색">
             <ul id="head_icon">
                 <li>
-                    <a href="#">
-                        <img src="../static/images/home@3x.png">
-                    </a>
+                    <img src="../static/images/home@3x.png" onclick="window.location.href='/edit_profile'" />
                 </li>
                 <li>
-                    <a href="#">
-                        <img src="../static/images/dm@3x.png">
-                    </a>
+                    <img src="../static/images/dm@3x.png">
                 </li>
                 <li>
+                    <img src="../static/images/trending@3x.png" onclick="window.location.href='/writing_new'" />
                     <a href="/writing_new">
                         <img src="../static/images/trending@3x.png">
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <img src="../static/images/like@3x.png">
-                    </a>
+                    <img src="../static/images/like@3x.png">
                 </li>
                 <li>
-                    <a href="#">
-                        <img src="../static/images/more@3x.png">
-                    </a>
+                    <img src="../static/images/more@3x.png">
                 </li>
             </ul>
         </div>
@@ -102,7 +95,7 @@
         <div class="content">
             <section class="con">
                 <div class="userInfo">
-                    <a href="#">
+                    <a href="#" onclick="window.location.href='/profile_main'" >
                         <h4>최진우</h4>
                     </a>
                     <div class="is_pointer">
