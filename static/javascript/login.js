@@ -4,7 +4,7 @@ function login() {
 
     if (username == "") {
         $("#help-id-login").text("아이디를 입력해주세요.")
-        $("#input-username").focus()
+        $("#user_id").focus()
         return;
     } else {
         $("#help-id-login").text("")
@@ -12,7 +12,7 @@ function login() {
 
     if (password == "") {
         $("#help-password-login").text("비밀번호를 입력해주세요.")
-        $("#input-password").focus()
+        $("#user_pw").focus()
         return;
     } else {
         $("#help-password-login").text("")
@@ -31,7 +31,7 @@ function login() {
                 window.location.href = '/index_page'
             } else {
                 // 로그인이 안되면 에러메시지를 띄웁니다.
-                alert(response['msg'])
+                $("#help-login").text('아이디 또는 비밀번호가 잘못 입력 되었습니다.\n 아이디와 비밀번호를 정확히 입력해 주세요.')
             }
         }
     })
