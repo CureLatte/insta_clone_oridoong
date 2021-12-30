@@ -93,7 +93,6 @@ def edit_profile_post():
     return jsonify({'msg': 'DB등록 완료!'})
 
 
-
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
     try:

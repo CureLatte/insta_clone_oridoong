@@ -105,7 +105,7 @@ function sign_up() {
     let get_input = $("#input-wrapper [type=text]");
     let user_dict = {};
 
-    $.each(get_input, function (index, obj){
+    $.each(get_input, function (index, obj) {
         obj.id = obj.id.replace('-', '_');
         user_dict[obj.id] = obj.value;
     })
@@ -116,10 +116,11 @@ function sign_up() {
         type: "POST",
         url: "/sign_up/save",
         data: user_dict,
-        success: function(response){
+        success: function (response) {
             alert(response['msg']);
             window.location.href = "/";
         }
     });
+}
 
 
