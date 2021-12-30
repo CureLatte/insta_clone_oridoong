@@ -100,7 +100,6 @@ def edit_profile_post():
     return jsonify({'msg': 'DB등록 완료!'})
 
 
-
 @app.route("/sign_in", methods=["POST"])
 def user():
 
@@ -138,7 +137,6 @@ def check_user_id():
     check_id = not bool(db.user.find_one({'user_id': user_id_receive}))
 
     return jsonify({'check_id': check_id})
-
 
 
 @app.route("/writing_new")
