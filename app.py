@@ -192,11 +192,15 @@ def writing():
 
 @app.route("/writing_new", methods=["POST"])
 def new_writing():
-    text_receive = request.form['text_receive']
-
-    doc = {
-        "desc": text_receive,
-    }
+    desc_receive = request.form['desc_give']
+    photo = request.files['photo_give']
+    extension = photo.filename.split('.')[-1]
+    today = datetime.datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+    filename = f'{mytime}'
+    save_to = f'static/images/post-contents/{filename}.{extension}'
+    photo.save(save_to)
+    doc = {'desc': desc_receive, 'img': f'{filename}.{extension}'}
     db.post_content.insert_one(doc)
 
     return jsonify({'msg': '등록완료'})
