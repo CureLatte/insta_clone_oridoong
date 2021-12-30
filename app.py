@@ -8,7 +8,8 @@ from flask import Flask, render_template, jsonify, request, session, redirect, u
 ca = certifi.where()
 
 client = MongoClient(
-    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', tlsCAFile=ca)
+    'mongodb+srv://seongo:123456789!@instagram.o4wki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    tlsCAFile=ca)
 
 db = client.instaClone
 
@@ -49,7 +50,7 @@ def profile_main_page():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         print(user_info)
-        return render_template('profile_main.html', user=user_info['user_id'])
+        return render_template('profile_main.html', user=user_info)
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -83,6 +84,31 @@ def move_addpage():
 @app.route('/edit_profile')
 def edit_profile():
     return render_template('edit_profile.html')
+
+
+@app.route('/edit_profile_get', methods=["GET"])
+def edit_profile_get():
+    # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
+    token_receive = request.cookies.get('mytoken')
+
+    try:
+        # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        del user_info['pwd']
+
+        # 비효율적인 코드이므로 리팩토링 하실꺼면 하세요
+        user_info['username'] = user_info['user_name']
+
+        del user_info['user_name']
+
+        return jsonify({'user_info': user_info})
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route("/edit_profile", methods=["POST"])
@@ -123,7 +149,6 @@ def edit_profile_post():
 
 @app.route("/sign_in", methods=["POST"])
 def user():
-
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
     try:
@@ -160,10 +185,10 @@ def api_login():
             'user_id': id_receive,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
         }
+        print('try : token.decode')
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
         # token을 줍니다.
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success', 'token': token.decode('utf-8')})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail'})
@@ -171,7 +196,7 @@ def api_login():
 
 # 회원 가입 페이지
 @app.route('/sign_up')
-def sign_up_test():
+def sign_up():
     return render_template('sign_up.html')
 
 
@@ -184,7 +209,24 @@ def check_user_id():
     return jsonify({'check_id': check_id})
 
 
-# 글작성 페이지
+@app.route('/sign_up/save', methods=['POST'])
+def sign_up_save():
+    # 회원가입
+    user_dict_receive = request.form.to_dict()
+
+    # 비밀번호 해쉬256으로 암호화
+    user_dict_receive['pwd'] = hashlib.sha256(
+        user_dict_receive['pwd'].encode('utf-8')).hexdigest()
+
+    user_dict_receive['bio'] = ""
+    user_dict_receive['avatar'] = ""
+
+    db.user.insert_one(user_dict_receive)
+
+    return jsonify({'msg': '회원가입 완료'})
+
+
+##########################글작성 페이지########################################
 @app.route("/writing_new")
 def writing():
     return render_template('writing_new.html')
@@ -224,21 +266,24 @@ def new_writing():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
-@app.route('/sign_up/save', methods=['POST'])
-def sign_up():
-    # 회원가입
-    user_dict_receive = request.form.to_dict()
+# 회원 탈퇴
+@app.route('/sign_out', methods=['GET'])
+def sign_out():
+    # 쿠키에서 토큰 가져옴
+    token_receive = request.cookies.get('mytoken')
 
-    # 비밀번호 해쉬256으로 암호화
-    user_dict_receive['pwd'] = hashlib.sha256(
-        user_dict_receive['pwd'].encode('utf-8')).hexdigest()
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        db.user.delete_one({'user_id': user_info['user_id']})
 
-    user_dict_receive['bio'] = ""
-    user_dict_receive['avatar'] = ""
+        return jsonify({'msg': '회원탈퇴 완료!'})
 
-    db.user.insert_one(user_dict_receive)
-
-    return jsonify({'msg': '회원가입 완료'})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 if __name__ == '__main__':

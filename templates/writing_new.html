@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -13,37 +13,46 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/writing_new.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+
 
     <title> 새글 작성 </title>
     <style>
     </style>
     <script>
-        function posting() {
-            let desc = $('#text-field').val()
-            let photo = $('#file')[0].files[0]
+        function save_update_text() {
+            let text = $("#text-field").val()
+            let post_photo_file = $('#id-photo')[0].files[0]
+            let post_photo_name = $('#photo-name').val()
             let form_data = new FormData()
-
-            form_data.append("desc_give", desc)
-            form_data.append("photo_give", photo)
-
+            form_data.append("photo_file_give", post_photo_file)
+            form_data.append("photo_name_give", post_photo_name)
             $.ajax({
                 type: "POST",
                 url: "/writing_new",
-                data: form_data,
                 cache: false,
                 contentType: false,
                 processData: false,
+                data: {text_receive: text},
                 success: function (response) {
-                    alert(response["result"])
+                    alert(response["msg"])
                     window.location.reload()
                 }
             });
         }
 
+        $(document).ready(function () {
+            $('#header').load("..\\templates\\common.html", function () {
+                document.getElementsByName("sub_nav").classList.add("show");
+            });
+        })
+
+
     </script>
 </head>
 
 <body>
+    <div id="header"></div>
     <section id="container">
         <div id="main-container">
             <div class="post-form-container">
