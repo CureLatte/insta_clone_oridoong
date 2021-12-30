@@ -15,12 +15,18 @@
         <div class="my_container">
             <div class="profile_container">
                 <div class="profile_picture">
-                    <img id="avatar" src="../static/images/user/profile_init.png">
+                    {% if user['avatar'] == '' %}
+                    {% set file = '../static/images/user/profile_init.png'  %}
+                    {% else %}
+                    {% set file = '../static/images/user/' + user['avatar'] %}
+                    {% endif %}
+                    <img id="avatar" src="{{ file }}">
                 </div>
             </div>
             <div class="info_container">
                 <div class="info_row">
                     <div class="nickname" id="nickname">
+                        <p>{{ user['user_name'] }}</p>
                     </div>
 
                     <div class="edit_profile">
@@ -32,37 +38,47 @@
                 </div>
                 <div class="info_row">
                     <div class="content_count">
-                        <p>게시글 00</p>
+                        <p>게시글 {{ len(user['feed']) }}</p>
                     </div>
                     <div class="follower_count">
-                        <p>팔로워 00</p>
+                        <p>팔로워 0</p>
                     </div>
                     <div class="follow_count">
-                        <p>팔로우 00</p>
+                        <p>팔로우 0</p>
                     </div>
                 </div>
 
                 <div class="info_row_more" id="more_info">
                     <div style="width: 300px; height : 0px; border:1px solid grey; margin-bottom: 20px;"></div>
                     <div class="info_email" id="email">
+                        <p>Email : {{ user['email'] }}</p>
                     </div>
                     <div class="info_gender" id="gender">
+                        <p>gender : {{ user['gender'] }}</p>
                     </div>
                     <div class="info_phone" id="phone_number">
+                        <p>Phone : {{ user['phone_number'] }}</p>
                     </div>
                     <div style="width: 300px; height : 0px; border:1px solid grey;margin-top: 20px; margin-bottom: 20px;"></div>
                 </div>
                 <div class="info_row">
                     <div class="info_name" id="name">
+                        <p>{{ user['name'] }}</p>
                     </div>
                     <div class="info_bio" id="bio">
+                        <p>{{ user['bio'] }}</p>
                     </div>
                </div>
             </div>
         </div>
         <div class="content_container">
             <div class="content_wrapper">
+                {% set total = len(user['feed'])  %}
+                {% rowcnt = total // 3 %}
+                {% for i in range(rowcnt) %}
                 <div class="content_row">
+                    {% for j in range(3) %}
+
                     <div class="content">
                         <img src="../static/images/라이언.png">
                     </div>
@@ -72,51 +88,9 @@
                     <div class="content">
                         <img src="../static/images/라이언.png">
                     </div>
+                    {% endfor %}
                 </div>
-                <div class="content_row">
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                </div>
-                <div class="content_row">
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                </div>
-                <div class="content_row">
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                </div>
-                <div class="content_row">
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                    <div class="content">
-                        <img src="../static/images/라이언.png">
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
