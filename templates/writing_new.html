@@ -40,10 +40,28 @@
         }
 
 
+            form_data.append("desc_give", desc)
+            form_data.append("photo_give", photo)
+
+            $.ajax({
+                type: "POST",
+                url: "/writing_new",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert(response["result"])
+                    window.location.reload()
+                }
+            });
+        }
+
     </script>
 </head>
 
 <body>
+<<<<<<< HEAD
 <section id="container">
     <div id="main-container">
         <div class="post-form-container">
@@ -58,27 +76,44 @@
                         </p>
                         <div id="img-size">
                             <canvas id="imageCanvas"></canvas>
+=======
+    <section id="container">
+        <div id="main-container">
+            <div class="post-form-container">
+                <div class="title">
+                    NEW POST
+                </div>
+                <div class="preview">
+                    <div class="upload">
+                        <div class="post-btn">
+                            <p>포스트 이미지 추가</p>
+                            <div id="img-size">
+                                <canvas id="imageCanvas"></canvas>
+                            </div>
+>>>>>>> ff90ac3f96cd9130b79afa6a130b9d35476d4b21
                         </div>
                     </div>
                 </div>
+                <div class="file-upload">
+                    <textarea name="text-field" id="text-field" cols="50" rows="5" wrap="hard"
+                        placeholder="140자 까지 등록 가능합니다."></textarea>
+                    <input type="file" id="file">
+                </div>
+                <button onclick="posting()" type="button" id="submit-btn">저장</button>
+                <a href="index.html">
+                    <button id="cancel-btn" type="button">되돌아가기</button>
+                </a>
             </div>
-            <p>
-                <input type="file" name="photo" id="id-photo" accept=".jpg,.png" required="required">
-            </p>
-            <p>
-                <textarea name="text-field" id="text-field" cols="50" rows="5" wrap="hard" placeholder="140자 까지 등록 가능합니다."></textarea>
-            </p>
-            <button onclick="save_update_text()" type="button" id="submit-btn" >저장</button>
-            <a href="index.html">
-                <button id="cancel-btn" type="button" >되돌아가기</button>
-            </a>
-        </div>
 
-    </div>
-</section>
-<script src="..\static\javascript\writing_new_js.js"></script>
+        </div>
+    </section>
 </body>
+<<<<<<< HEAD
 </html>
 
 
 
+=======
+
+</html>
+>>>>>>> ff90ac3f96cd9130b79afa6a130b9d35476d4b21
