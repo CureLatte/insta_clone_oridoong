@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../static/css/no.css">
     <link rel="stylesheet" href="../static/css/edit_profile_css.css">
     <link rel="stylesheet" href="../static/css/common.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -37,7 +38,7 @@
                 </li>
                 <li>
                     <label for="phone_number">전화번호</label>
-                    <input id="phone_number" type="number" maxlength="9" placeholder="전화번호" required>
+                    <input id="phone_number" type="text" maxlength="13" placeholder="전화번호" required>
                 </li>
                 <li>
                     <label for="gender">성별</label>
@@ -54,7 +55,7 @@
             </ul>
 
             <div class="submit_form">
-                <a href="#">회원탈퇴</a>
+                <input onclick="sign_out()" type="submit" value="회원탈퇴">
                 <div>
                     <a href="#">취소</a>
                     <input onclick="save_update_profile()" type="submit" value="변경">
@@ -69,6 +70,26 @@
 </html>
 
 <script>
+    $(document).ready(function () {
+        edit_profile();
+    });
+
+    function edit_profile() {
+        $.ajax({
+            type: 'GET',
+            url: '/edit_profile_get',
+            data: {},
+            success: function (response) {
+                let user_info = response['user_info'];
+
+                $.each(user_info, function (index, obj){
+                    $("#" + index).val(obj);
+                })
+            }
+        });
+    }
+
+
     //사진 미리보기
     function readImage(input) {
         if (input.files && input.files[0]) {
@@ -109,6 +130,18 @@
             success: function (response) {
                 alert(response["msg"])
                 window.location.reload()
+            }
+        });
+    }
+
+    function sign_out() {
+        $.ajax({
+            type: 'GET',
+            url: '/sign_out',
+            data: {},
+            success: function (response) {
+                alert(response["msg"]);
+                window.location.href = "/";
             }
         });
     }
