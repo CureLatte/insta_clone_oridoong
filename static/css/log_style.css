@@ -22,7 +22,7 @@ body {
     width: 300px;
 }
 
-#log-container #log-box{
+#log-container #log-box {
     display: flex;
     flex-direction: column;
     margin-top: 50px;
@@ -40,7 +40,15 @@ body {
     height: 30px;
 }
 
-#log-container > a {
-    margin-top:40px;
+#sign-up-box {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
+    border-top: 1px solid lightgray;
+}
+
+#log-container #sign-up-box > a {
+    margin-top: 40px;
     font-size: 11px;
 }

@@ -53,8 +53,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-
 }
 
 #sign-up-container #sign-up-body > input {
@@ -85,9 +83,18 @@ body {
 /* 중복확인 yes or no 이미지 */
 #sign-up-wrapper #sign-up-body #input-wrapper img {
     position: fixed;
-    margin: 15px -35px;
+    margin: 13px -35px;
     width: 30px;
-    display: none
+    display: none;
+    height: 30px;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper .yes-image {
+    filter: invert(65%);
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper .no-image {
+    filter: invert(40%) sepia(30%) saturate(3000%) hue-rotate(0deg);
 }
 
 /* sign-up-footer */
@@ -109,5 +116,3 @@ body {
 #sign-up-footer-container #footer-button-wrapper > p {
     margin-right: 5px;
 }
-
-
