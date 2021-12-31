@@ -41,7 +41,7 @@ def login_check():
 
 
 # 프로필 메인 페이지
-@app.route('/profile_main')
+@app.route('/profile_main/<user>')
 def profile_main_page():
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
@@ -78,6 +78,14 @@ def move_edit_page():
 def move_addpage():
     # 수정 필요!
     return redirect(url_for('profile_main_page'))
+
+
+# 개인 피드 확인
+@app.route('/my_feed/<user>')
+def load_my_feed(user):
+    user_check = db.user.find_one({'user_name': user}, {'_id': False})
+    print(user_check)
+    return render_template('my_feed.html', user=user_check)
 
 
 # 프로필 편집 페이지
