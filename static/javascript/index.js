@@ -4,10 +4,13 @@ $(document).ready(function () {
         url: "/index_page/post",
         data: {},
         success: function (response) {
-            let rows = response['all_photo'];
+            let rows = response[0]['all_photo'];
+            let login_user = response[1];
+
+            document.getElementById('user-home').alt = login_user;
 
             for (let i = 0; i < rows.length; i++) {
-                let photo = rows[i]['photo'];
+                let photo = rows[i]['container'][0]['photo'];
                 let name = rows[i]['name'];
                 let temp_html = ``;
 
@@ -16,7 +19,7 @@ $(document).ready(function () {
                                 <div class="content">
                                     <section class="con">
                                         <div class="userInfo">
-                                            <a href="#" onclick="profile_main(this)" >
+                                            <a href="#" onclick="profile_main_icon(this)" >
                                                 <h4>${name}</h4>
                                             </a>
                                             <div class="is_pointer">
@@ -64,7 +67,7 @@ function like(data) {
     }
 }
 
-function opendia() {
+function opendia(e) {
     let dialog = document.getElementById('dialog');
 
     if(typeof dialog.showModal === "function") {
@@ -73,10 +76,23 @@ function opendia() {
         alert('예기치 못한 오류')
     }
     dialog.addEventListener('cancel', function onClose() {
-        window.location.reload()
+        window.location.reload();
+    });
+
+    $(document).mouseup(function (e) {
+       let LayerPopup = $("#dialog");
+       if(LayerPopup.has(e.target).length === 0) {
+           $('#dialog').dialog('close');
+       }
     });
 }
 
+// 헤더 홈 버튼
 function profile_main(obj) {
+    window.location.href='/profile_main/' + obj.alt;
+}
+
+// 포스트 아이콘
+function profile_main_icon(obj) {
     window.location.href='/profile_main/' + obj.innerText;
 }
