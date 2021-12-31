@@ -74,11 +74,13 @@ def profile_main_page(user_name):
 
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
+
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        if user_name == user_info['user_name']:
+        print(payload['user_id'])
+        if user_name == user_info['name']:
             return render_template('profile_main.html', user=user_info, check=True)
         else:
             user_other = db.user.find_one({"user_name": user_name})

@@ -21,11 +21,7 @@ $(document).ready(function () {
                                     <section class="con">
                                         <div class="userInfo">
                                             <a href="#" onclick="profile_main_icon(this)" >
-<<<<<<< HEAD
 <!--                                            <img src="static/images/user/${avatar}" />-->
-=======
-                                            <img src="static/images/user/${avatar}" />
->>>>>>> 152d186bb4c9fd08bc251587cca87d198e896482
                                                 <h4>${name}</h4>
                                             </a>
                                             <div class="is_pointer">
