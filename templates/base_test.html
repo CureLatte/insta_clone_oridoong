@@ -18,19 +18,21 @@
     <link rel="stylesheet" href="../static/css/main_page_css.css">
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/write_popup_css.css">
+    <link rel="stylesheet" href="../static/css/like_history_css.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/javascript/index.js"></script>
+    <script src="../static/javascript/write_popup_js.js"></script>
+    <script src="../static/javascript/like_history_js.js"></script>
 </head>
 
 <body>
-    {% include 'write_popup.html' %}
+
     <div id="header">
         <div class="header_inner_wrap">
             <img id="logo" class="is_pointer" src="../static/images/insta-logo.png" onclick="window.location.href='/index_page'" />
-            <input type="text" placeholder="검색">
-            <ul id="head_icon">
+            <ul id="head_icon" style="position: relative">
                 <li>
                     <img class="is_pointer" src="../static/images/home@3x.png" onclick="window.location.href='/edit_profile'" />
                 </li>
@@ -38,18 +40,21 @@
                     <img class="is_pointer" src="../static/images/dm@3x.png">
                 </li>
                 <li>
-                    <img class="is_pointer" src="../static/images/trending@3x.png" onclick="window.location.href='/writing_new'" />
+                    <img class="is_pointer" src="../static/images/trending@3x.png" onclick="open_write_popup()" />
                 </li>
                 <li>
-                    <img class="is_pointer" src="../static/images/like@3x.png">
+                    <img class="is_pointer" style="position: static" src="../static/images/like@3x.png">
+                    {% include 'like_history.html' %}
                 </li>
                 <li>
                     <img class="is_pointer" src="../static/images/more@3x.png">
                 </li>
             </ul>
+
         </div>
     </div>
-    <div class="wrap">
+    <input type="button" id="button1" value="버튼1">
+    <div class="wrap" style="z-index: 0">
         <ul class="story">
             <li>
                 <img src="../static/images/8.jpeg" alt="2">
@@ -181,5 +186,7 @@
         <button value="cancel">취소</button>
     </form>
 </dialog>
+{% include 'write_popup.html' %}
+
 </body>
 </html>

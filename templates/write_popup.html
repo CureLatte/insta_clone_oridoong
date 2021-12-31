@@ -1,7 +1,32 @@
-<div class="write_background">
-    <div class="write_background_wrapper">
-        <div class="write_main">
-
+<div class="write_container" id="write_popup">
+    <div class="write_container_wrapper">
+        <div class="write_background">
+            <div class="cancel">
+                <img src="../static/images/cancel.png" onclick="close_write_popup()">
+            </div>
+            <div class="write_wrapper">
+                <div class="write_header">
+                    <div class="write_header_left">
+                        <p>취소</p>
+                    </div>
+                    <div class="write_header_center">
+                        <p>새 게시글 만들기</p>
+                    </div>
+                    <div class="write_header_right">
+                        <p>다음</p>
+                    </div>
+                </div>
+                <div class="write_main">
+                    <div class="write_add_container">
+                        <div class="write_add_image">
+                            <img src="../static/images/ikon_add_file.png">
+                        </div>
+                        <p> 사진과 동영상을 추가 해주세요 </p>
+                        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="write_add_photo()">
+                        <button>파일 선택</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

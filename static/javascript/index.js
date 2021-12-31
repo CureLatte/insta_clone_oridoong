@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function(){
     $.ajax({
         type: "GET",
         url: "/index_page/post",
@@ -6,7 +6,7 @@ $(document).ready(function () {
         success: function (response) {
             let rows = response['all_photo'];
 
-            for (let i = 0; i < rows.length; i++) {
+            for (let i = 0; i < rows.length; i++){
                 let photo = rows[i]['photo'];
                 let name = rows[i]['name'];
                 let temp_html = ``;
