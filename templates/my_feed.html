@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Duckstagram</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <link rel="stylesheet" href="../static/css/no.css">
+    <link rel="stylesheet" href="../static/css/my_feed_css.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="../static/javascript/my_feed_js.js"></script>
+</head>
+
+<body>
+
+<div class="wrap">
+    {% set feed_count = user['feed']|length %}
+    {% for i in range(feed_count) %}
+    <div class="content">
+        <div class="con">
+            <div class="userInfo">
+                {% set profile_url = '/profile_main/'+ user['user_id'] %}
+                <a href="/profile_main">
+                    <h4>{{ user['user_name'] }}</h4>
+                </a>
+            </div>
+            <div class="image_box">
+                {% set filepath = '../static/images/post-contents/'+ user['feed'][i] %}
+                <img src="{{ filepath }}" alt="">
+            </div>
+            <div class="row_icons">
+                <div class="left-wrapper">
+                    <div class="img_box">
+                        <img onclick="like_test()" src="../static/images/like@3x.png" alt="1">
+                    </div>
+                    <div class="img_box">
+                        <img src="../static/images/comment@3x.png" alt="1">
+                    </div>
+                    <div class="img_box">
+                        <img src="../static/images/dm@3x.png" alt="1">
+                    </div>
+                </div>
+                <div class="right-wrapper">
+                    <img  src="../static/images/favorite@3x.png" alt="1">
+                </div>
+            </div>
+            </div>
+            <div class="comment">
+                <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
+                <p><strong>돈통</strong> : 안녕하세요</p>
+                <span>2시간 전</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+
+</html>
