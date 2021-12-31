@@ -79,11 +79,7 @@ function like(data) {
     $.ajax({
         type: "POST",
         url: "/main/user_like",
-<<<<<<< HEAD
         data: {'photo': photo, 'like': likeCount},
-=======
-        data: { 'photo': photo, 'like': likeCount },
->>>>>>> 152d186bb4c9fd08bc251587cca87d198e896482
         success: function (response) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
