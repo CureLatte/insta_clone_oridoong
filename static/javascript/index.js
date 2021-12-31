@@ -21,7 +21,11 @@ $(document).ready(function () {
                                     <section class="con">
                                         <div class="userInfo">
                                             <a href="#" onclick="profile_main_icon(this)" >
+<<<<<<< HEAD
 <!--                                            <img src="static/images/user/${avatar}" />-->
+=======
+                                            <img src="static/images/user/${avatar}" />
+>>>>>>> 152d186bb4c9fd08bc251587cca87d198e896482
                                                 <h4>${name}</h4>
                                             </a>
                                             <div class="is_pointer">
@@ -75,7 +79,11 @@ function like(data) {
     $.ajax({
         type: "POST",
         url: "/main/user_like",
+<<<<<<< HEAD
         data: {'photo': photo, 'like': likeCount},
+=======
+        data: { 'photo': photo, 'like': likeCount },
+>>>>>>> 152d186bb4c9fd08bc251587cca87d198e896482
         success: function (response) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
@@ -86,7 +94,7 @@ function like(data) {
 function opendia() {
     let dialog = document.getElementById('dialog');
 
-    if(typeof dialog.showModal === "function") {
+    if (typeof dialog.showModal === "function") {
         dialog.showModal();
     } else {
         alert('예기치 못한 오류')
@@ -105,10 +113,10 @@ function opendia() {
 
 // 헤더 홈 버튼
 function profile_main(obj) {
-    window.location.href='/profile_main/' + obj.alt;
+    window.location.href = '/profile_main/' + obj.alt;
 }
 
 // 포스트 아이콘
 function profile_main_icon(obj) {
-    window.location.href='/profile_main/' + obj.innerText;
+    window.location.href = '/profile_main/' + obj.innerText;
 }

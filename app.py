@@ -49,6 +49,7 @@ def index_page_post():
             photo_user = db.user.find_one(
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
+            photo['avatar'] = photo_user['avatar']
 
         return jsonify([{'all_photo': all_photo}, user_info['name']])
 
@@ -263,7 +264,9 @@ def sign_up_save():
 
     # user DB column 추가
     user_dict_receive['bio'] = ""
-    user_dict_receive['avatar'] = ""
+
+    # 기본 프로필 이미지
+    user_dict_receive['avatar'] = "profile_init.png"
     user_dict_receive['feed'] = []
     user_dict_receive['follower'] = []
     user_dict_receive['follow'] = []
@@ -271,6 +274,18 @@ def sign_up_save():
     db.user.insert_one(user_dict_receive)
 
     return jsonify({'msg': '회원가입 완료'})
+
+
+# 메인 페이지 관련
+@app.route('/main/user_like', methods=["POST"])
+def main_user_like():
+    photo = request.form['photo']
+    like = request.form['like']
+    db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {'$set': {'container.$.like': int(like)}})
+    user_post = db.post_content.find_one({"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
+
+    return jsonify({'user_like': user_post['container'][0]['like']})
+
 
 
 ##########################글작성 페이지########################################

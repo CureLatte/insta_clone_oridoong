@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -70,179 +71,235 @@
   filter: alpha(opacity=50);
 }
 
-.dim-layer .pop-layer {
-  display: block;
-}
-a.btn-layerClose {
-  display: inline-block;
-  height: 25px;
-  padding: 0 14px 0;
-  border: 1px solid #304a8a;
-  background-color: #3f5a9d;
-  font-size: 13px;
-  color: #fff;
-  line-height: 25px;
-}
 
-a.btn-layerClose:hover {
-  border: 1px solid #091940;
-  background-color: #1f326a;
-  color: #fff;
-}
+        .pop-layer p.ctxt {
+            color: #666;
+            line-height: 25px;
+        }
 
-.myButton {
-	background-color:#44c767;
-	border-radius:28px;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	padding:11px 15px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-}
-.myButton:hover {
-	background-color:#5cbf2a;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
+        .pop-layer .btn-r {
+            width: 100%;
+            margin: 10px 0 20px;
+            padding-top: 10px;
+            border-top: 1px solid #DDD;
+            text-align: right;
+        }
 
-.myButton2 {
-	background-color:#1c93a8;
-	border-radius:28px;
-	border:1px solid #0a0a0a;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	padding:11px 15px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #8a8a21;
-}
-.myButton2:hover {
-	background-color:#4b1c80;
-}
-.myButton2:active {
-	position:relative;
-	top:1px;
-}
-#id-nicname{
-    height: 30px;
-    margin-top: 10px;
-    margin-left: 180px;
-}
+        .pop-layer {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            position: fixed;
+            width: 410px;
+            height: auto;
+            background-color: #fff;
+            border: 5px solid #000000;
+            z-index: 10;
+        }
 
-</style>
+        .dim-layer {
+            display: none;
+            position: fixed;
+            _position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+
+        .dim-layer .dimBg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: .5;
+            filter: alpha(opacity=50);
+        }
+
+        .dim-layer .pop-layer {
+            display: block;
+        }
+
+        a.btn-layerClose {
+            display: inline-block;
+            height: 25px;
+            padding: 0 14px 0;
+            border: 1px solid #304a8a;
+            background-color: #3f5a9d;
+            font-size: 13px;
+            color: #fff;
+            line-height: 25px;
+        }
+
+        a.btn-layerClose:hover {
+            border: 1px solid #091940;
+            background-color: #1f326a;
+            color: #fff;
+        }
+
+        .myButton {
+            background-color: #44c767;
+            border-radius: 28px;
+            border: 1px solid #18ab29;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 13px;
+            padding: 11px 15px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #2f6627;
+        }
+
+        .myButton:hover {
+            background-color: #5cbf2a;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+
+        .myButton2 {
+            background-color: #1c93a8;
+            border-radius: 28px;
+            border: 1px solid #0a0a0a;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 13px;
+            padding: 11px 15px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #8a8a21;
+        }
+
+        .myButton2:hover {
+            background-color: #4b1c80;
+        }
+
+        .myButton2:active {
+            position: relative;
+            top: 1px;
+        }
+
+        #id-nicname {
+            height: 30px;
+            margin-top: 10px;
+            margin-left: 180px;
+        }
+    </style>
 
 
 </head>
+
 <body>
-<div id="main">
-    <div id="container">
-        <div id="phone-img">
-            <div class="slide">
-                <ul>
-                    <li><img src="../static/images/instar_1.jpg"/></li>
-                    <li><img src="../static/images/instar_2.jpg"></li>
-                    <li><img src="../static/images/instar_3.jpg"></li>
-                    <li><img src="../static/images/instar_4.jpg"></li>
-                </ul>
-            </div>
-        </div>
-        <div id="sign-in-up">
-            <div id="sign-in-box">
-                <p id="title">𝓞𝓻𝓲𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
-                <div id="log-box">
-                    <input type="text" id="user_id" class="input_style_text" placeholder="아이디"/>
-                    <p id="help-id-login"></p>
-                    <input type="password" id="user_pw" class="input_style_text" placeholder="비밀번호"/>
-                    <p id="help-password-login"></p>
+    <div id="main">
+        <div id="container">
+            <div id="phone-img">
+                <div class="slide">
+                    <ul>
+                        <li><img src="../static/images/instar_1.jpg" /></li>
+                        <li><img src="../static/images/instar_2.jpg"></li>
+                        <li><img src="../static/images/instar_3.jpg"></li>
+                        <li><img src="../static/images/instar_4.jpg"></li>
+                    </ul>
                 </div>
-                <button id="log_button" class="common_btn" onclick="login()">로그인</button>
-                <div id="border-line">----------------------------------------</div>
-                <a href="https://www.facebook.com/?stype=lo&jlou=Affl79mdaHZ58qv2XOrTxBjrpw-_UvwAw9X9nniwhobN1V99cBmOKJXaM7LConT2bDxYMrJMheEupYauYLCv5NFJv7FdosmwC17LqZ3heD0q9g&smuh=5856&lh=Ac83_DGuPa56wcVju5w">
-                    <button id="facebook-button"><img src="https://img.etnews.com/photonews/1712/1023628_20171213175510_729_0001.jpg", width="20"/> Facebook으로 로그인 </button>
-                </a>
-                <a href="#layer2" class="btn-example">비밀번호를 잊으셨나요?</a>
-                <div class="dim-layer">
-                    <div class="dimBg"></div>
-                    <div id="layer2" class="pop-layer">
-                        <div class="pop-container">
-                            <div class="pop-conts">
-                                <input type="text" placeholder="아이디">
-                                <input type="text" placeholder="닉네임">
-                                <div>
-                                    <button id="id-nicname">아이디 닉네임 확인</button>
-                                </div>
-                                <div>
-                                    <input type="text" placeholder="새 비밀번호" readonly >
-                                </div>
-                                <div class="btn-r">
-                                    <a href="/" class="myButton">확인</a>
-                                    <a href="/" class="myButton2">취소</a>
+            </div>
+            <div id="sign-in-up">
+                <div id="sign-in-box">
+                    <p id="title">𝓞𝓻𝓲𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
+                    <div id="log-box">
+                        <input type="text" id="user_id" class="input_style_text" placeholder="아이디" />
+                        <p id="help-id-login"></p>
+                        <input type="password" id="user_pw" class="input_style_text" placeholder="비밀번호" />
+                        <p id="help-password-login"></p>
+                    </div>
+                    <button id="log_button" class="common_btn" onclick="login()">로그인</button>
+                    <div id="border-line">----------------------------------------</div>
+                    <a
+                        href="https://www.facebook.com/?stype=lo&jlou=Affl79mdaHZ58qv2XOrTxBjrpw-_UvwAw9X9nniwhobN1V99cBmOKJXaM7LConT2bDxYMrJMheEupYauYLCv5NFJv7FdosmwC17LqZ3heD0q9g&smuh=5856&lh=Ac83_DGuPa56wcVju5w">
+                        <button id="facebook-button"><img
+                                src="https://img.etnews.com/photonews/1712/1023628_20171213175510_729_0001.jpg" ,
+                                width="20" /> Facebook으로 로그인 </button>
+                    </a>
+                    <a href="#layer2" class="btn-example">비밀번호를 잊으셨나요?</a>
+                    <div class="dim-layer">
+                        <div class="dimBg"></div>
+                        <div id="layer2" class="pop-layer">
+                            <div class="pop-container">
+                                <div class="pop-conts">
+                                    <input type="text" placeholder="아이디">
+                                    <input type="text" placeholder="닉네임">
+                                    <div>
+                                        <button id="id-nicname">아이디 닉네임 확인</button>
+                                    </div>
+                                    <div>
+                                        <input type="text" placeholder="새 비밀번호" readonly>
+                                    </div>
+                                    <div class="btn-r">
+                                        <a href="/" class="myButton">확인</a>
+                                        <a href="/" class="myButton2">취소</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div id="help-box">
+                        <p id="help-login"></p>
+                    </div>
                 </div>
-                <div id="help-box">
-                    <p id="help-login"></p>
-                </div>
-            </div>
 
-            <div id="sign-up-box">
-                <p>계정이 없으신가요? <a href="/sign_up"><b>가입하기</b></a></p>
+                <div id="sign-up-box">
+                    <p>계정이 없으신가요? <a href="/sign_up"><b>가입하기</b></a></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-$('.btn-example').click(function(){
-        var $href = $(this).attr('href');
-        layer_popup($href);
-    });
-    function layer_popup(el){
+    <script type="text/javascript">
+        $('.btn-example').click(function () {
+            var $href = $(this).attr('href');
+            layer_popup($href);
+        });
+        function layer_popup(el) {
 
-        var $el = $(el);    //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass('dimBg'); //dimmed 레이어를 감지하기 위한 boolean 변수
+            var $el = $(el);    //레이어의 id를 $el 변수에 저장
+            var isDim = $el.prev().hasClass('dimBg'); //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+            isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 
-        var $elWidth = ~~($el.outerWidth()),
-            $elHeight = ~~($el.outerHeight()),
-            docWidth = $(document).width(),
-            docHeight = $(document).height();
+            var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
 
-        // 화면의 중앙에 레이어를 띄운다.
-        if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-                marginTop: -$elHeight /2,
-                marginLeft: -$elWidth/2
-            })
-        } else {
-            $el.css({top: 0, left: 0});
+            // 화면의 중앙에 레이어를 띄운다.
+            if ($elHeight < docHeight || $elWidth < docWidth) {
+                $el.css({
+                    marginTop: -$elHeight / 2,
+                    marginLeft: -$elWidth / 2
+                })
+            } else {
+                $el.css({ top: 0, left: 0 });
+            }
+
+            $el.find('a.btn-layerClose').click(function () {
+                isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+                return false;
+            });
+
+            $('.layer .dimBg').click(function () {
+                $('.dim-layer').fadeOut();
+                return false;
+            });
+
         }
-
-        $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-            return false;
-        });
-
-        $('.layer .dimBg').click(function(){
-            $('.dim-layer').fadeOut();
-            return false;
-        });
-
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
-
-
-
