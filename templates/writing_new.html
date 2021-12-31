@@ -7,73 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/writing_new.css">
     <link rel="stylesheet" href="../static/css/common.css">
 
+
     <title> 새글 작성 </title>
-    <style>
-    </style>
-    <script>
-        function posting() {
-            let photo = $('#photo')[0].files[0]
-            let desc = $('#desc').val()
-            let form_data = new FormData()
-
-            form_data.append("photo_give", photo)
-            form_data.append("desc_give", desc)
-
-            $.ajax({
-                type: "POST",
-                url: "/writing_new",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    alert(response["result"])
-                    window.location.reload()
-                }
-            });
-        }
-    </script>
 </head>
-
 <body>
-    <div id="header"></div>
-    <section id="container">
-        <div id="main-container">
-            <div class="post-form-container">
-                <div class="title">
-                    NEW POST
-                </div>
-                <div class="preview">
-                    <div class="upload">
-                        <div class="post-btn">
-                            <p>포스트 이미지 추가</p>
-                            <div id="img-size">
-                                <canvas id="imageCanvas"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="file-upload">
-                    <textarea name="desc" id="desc" cols="50" rows="5" wrap="hard"
-                        placeholder="140자 까지 등록 가능합니다."></textarea>
-                    <input type="file" id="photo">
-                </div>
-                <button onclick="posting()" type="button" id="submit-btn">저장</button>
-                <a href="index.html">
-                    <button id="cancel-btn" type="button">되돌아가기</button>
-                </a>
-            </div>
-
+<div id="header"></div>
+<section id="container">
+    <div id="main-container">
+        <div id="container-head">
+            <a href="/index">ᐸ</a>
+            <div class="title"><b>새 게시물 만들기</b></div>
+            <input onclick="posting()" type="button" id="submit-btn" class="is_pointer" disabled="disabled"
+                   value="공유하기">
         </div>
-    </section>
+        <form id="post-form-container">
+            <div id="img-form">
+                <p>이미지를 첨부하세요</p>
+                <img id="preview_writing_image">
+            </div>
+            <div class="file-upload">
+                    <textarea name="desc" id="desc" cols="50" rows="5" wrap="hard" autocomplete="off"
+                              placeholder="140자 까지 등록 가능합니다."></textarea>
+                <input style="display: none;" type="file" id="input_writing_image" accept=".jpg, .png" required>
+                <label class="input-file-button" for="input_writing_image">
+                    이미지선택
+                </label>
+            </div>
+        </form>
+    </div>
+</section>
 </body>
-
 </html>
+
+<script src="../static/javascript/writing_new_js.js"></script>
