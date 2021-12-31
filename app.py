@@ -94,7 +94,8 @@ def edit_profile_get():
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
         del user_info['pwd']
 
         # 비효율적인 코드이므로 리팩토링 하실꺼면 하세요
@@ -188,7 +189,7 @@ def api_login():
         print('try : token.decode')
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         # token을 줍니다.
-        return jsonify({'result': 'success', 'token': token.decode('utf-8')})
+        return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail'})
@@ -274,7 +275,8 @@ def sign_out():
 
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
         db.user.delete_one({'user_id': user_info['user_id']})
 
         return jsonify({'msg': '회원탈퇴 완료!'})

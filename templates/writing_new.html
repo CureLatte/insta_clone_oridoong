@@ -20,7 +20,7 @@
     </style>
     <script>
         function posting() {
-            let photo = $('#photo_give')[0].files[0]
+            let photo = $('#photo')[0].files[0]
             let desc = $('#desc').val()
             let form_data = new FormData()
 
@@ -64,7 +64,7 @@
                 <div class="file-upload">
                     <textarea name="desc" id="desc" cols="50" rows="5" wrap="hard"
                         placeholder="140자 까지 등록 가능합니다."></textarea>
-                    <input type="file" id="id-photo">
+                    <input type="file" id="photo">
                 </div>
                 <button onclick="posting()" type="button" id="submit-btn">저장</button>
                 <a href="index.html">
