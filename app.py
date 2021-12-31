@@ -1,5 +1,6 @@
 import hashlib
 import datetime
+from typing import Container
 import certifi
 import jwt
 from pymongo import MongoClient
@@ -25,6 +26,8 @@ def login_page():
 
 ##################################################
 # index.html(메인페이지)
+
+
 @app.route('/index_page')
 def index_page():
     return render_template('index.html')
@@ -43,7 +46,8 @@ def index_page_post():
         all_photo = list(db.post_content.find({}, {'_id': False}))
 
         for photo in all_photo:
-            photo_user = db.user.find_one({'user_id': photo['user_id']}, {'_id': False})
+            photo_user = db.user.find_one(
+                {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
 
         return jsonify({'all_photo': all_photo})
@@ -52,7 +56,6 @@ def index_page_post():
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
-
 
 
 @app.route('/login', methods=['POST'])
@@ -271,13 +274,21 @@ def new_writing():
         filename = f'{mytime}'
         save_to = f'static/images/post-contents/{filename}.{extension}'
         photo.save(save_to)
-        doc = {
-            'user_id': user_info["user_id"],
+
+        post_con = {
             'desc': desc_receive,
-            'img': f'{filename}.{extension}',
+            'photo': f'{filename}.{extension}',
             'comment': comment,
             'like': like,
         }
+        container = [post_con]
+
+        doc = {
+            'user_id': user_info["user_id"],
+            "container": container,
+        }
+
+        print(doc)
         db.post_content.insert_one(doc)
 
         return jsonify({'msg': '등록완료'})
@@ -288,7 +299,7 @@ def new_writing():
 
 
 # 회원 탈퇴
-@app.route('/sign_out', methods=['GET'])
+@ app.route('/sign_out', methods=['GET'])
 def sign_out():
     # 쿠키에서 토큰 가져옴
     token_receive = request.cookies.get('mytoken')
