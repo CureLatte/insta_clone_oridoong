@@ -68,15 +68,21 @@ def login_check():
 
 
 # 프로필 메인 페이지
-@app.route('/profile_main/<name>')
-def profile_main_page(name):
+@app.route('/profile_main/<user_name>')
+def profile_main_page(user_name):
+
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        return render_template('profile_main.html', user=user_info)
+        if user_name == user_info['user_name']:
+            return render_template('profile_main.html', user=user_info, check=True)
+        else:
+            user_other = db.user.find_one({"user_name": user_name})
+            return render_template('profile_main.html', user=user_other, check=False)
+
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -102,6 +108,13 @@ def move_edit_page():
 def move_addpage():
     # 수정 필요!
     return redirect(url_for('profile_main_page'))
+
+
+# 개인 피드 확인
+@app.route('/my_feed/<user>')
+def load_my_feed(user):
+    user_check = db.user.find_one({'user_name': user}, {'_id': False})
+    return render_template('my_feed.html', user=user_check)
 
 
 # 프로필 편집 페이지
@@ -208,7 +221,7 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'user_id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=12400)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         # token을 줍니다.

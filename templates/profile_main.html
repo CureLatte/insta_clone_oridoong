@@ -28,10 +28,11 @@
                     <div class="nickname" id="nickname">
                         <p>{{ user['user_name'] }}</p>
                     </div>
-
-                    <div class="edit_profile">
+                    {% if check == True %}
+                    <div class="edit_profile" id="edit_button">
                         <button onclick="move_edit()"> 프로필 편집 </button>
                     </div>
+                    {% endif %}
                     <div class="more_profile">
                         <button onclick="more()"> 더보기 </button>
                     </div>
@@ -81,7 +82,10 @@
                     {% for j in range(3) %}
                     <div class="content">
                         {% set file = '../static/images/post-contents/' + row[i*3+j]  %}
+                        {% set href = '/my_feed/' + user['user_name'] %}
+                        <a href="{{ href }}">
                         <img src="{{ file }}">
+                        </a>
                     </div>
                     {% endfor %}
                 </div>

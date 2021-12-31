@@ -44,20 +44,21 @@
 </head>
 
 <body>
-    <div id="header"></div>
-    <section id="container">
-        <div id="main-container">
-            <div class="post-form-container">
-                <div class="title">
-                    NEW POST
-                </div>
-                <div class="preview">
-                    <div class="upload">
-                        <div class="post-btn">
-                            <p>포스트 이미지 추가</p>
-                            <div id="img-size">
-                                <canvas id="imageCanvas"></canvas>
-                            </div>
+<section id="container">
+    <div id="main-container">
+        <div class="post-form-container">
+            <div class="title">
+                <p style="text-align: center">NEW POST</p>
+            </div>
+            <div class="preview">
+                <div class="upload">
+                    <div class="post-btn">
+                        <p>
+                            <input type="text" id="photo-name" placeholder="사진 이름을 입력하세요" >
+                        </p>
+                        <div id="img-size">
+                            <canvas id="imageCanvas"></canvas>
+                            <div id="header"></div>
                         </div>
                     </div>
                 </div>
@@ -73,7 +74,8 @@
             </div>
 
         </div>
-    </section>
+</section>
 </body>
 
 </html>
+
