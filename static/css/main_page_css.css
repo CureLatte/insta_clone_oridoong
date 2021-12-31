@@ -99,3 +99,22 @@ body {
   margin: 2% 4%;
   width: 35px;
 }
+
+#dialog{
+    width: 20rem;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 0.1px solid #8d8c8c45;
+    border-radius: 25px;
+    padding: 0;
+}
+#dialog button{
+    border: 0;
+    background-color: white;
+    font-size: 1.2rem;
+    padding-top: 2%;
+    padding-bottom: 4%;
+}
+#dialog button:focus-visible{
+    outline: 0;
+}
