@@ -1,15 +1,17 @@
 body {
     background-color: #f5f5f5;
+    width: 350px;
 }
 
 #container {
     display: flex;
     flex-direction: column;
+    margin-top: 44px;
 }
 
 /* html 공간 만드는 부분 */
 #sign-up-container {
-    width: 380px;
+    width: 350px;
     height: 560px;
     margin: 30px auto 0 auto;
     border: 1px solid lightgray;
@@ -23,11 +25,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 268px;
 
 }
 
 #sign-up-container #sign-up-header {
-    width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,35 +46,38 @@ body {
     font-weight: 400;
     color: gray;
     text-align: center;
-    margin: 0;
+    margin: 10px 0;
+}
 
+#title > p {
+    margin: 10px 0;
+    font-size: 45px;
 }
 
 #sign-up-container #sign-up-body {
-    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: auto;
 }
 
 #sign-up-container #sign-up-body > input {
-    width: 300px;
-    margin-top: 20px;
+    margin-top: 15px;
     height: 30px;
-    background-color: #c7c7ff;
+    border-radius: 4px;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper {
-    width: 300px;
+    width: 268px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper input {
-    margin-top: 10px;
-    height: 30px;
-    width: 292px;
+    margin-top: 7px;
+    height: 35px;
+    width: 268px;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper > select {
@@ -99,7 +104,7 @@ body {
 
 /* sign-up-footer */
 #sign-up-footer-container {
-    width: 380px;
+    width: 350px;
     height: 80px;
     margin: 10px auto;
     border: 1px solid lightgray;
