@@ -1,5 +1,6 @@
 import hashlib
 import datetime
+from typing import Container
 import certifi
 import jwt
 from pymongo import MongoClient
@@ -25,6 +26,8 @@ def login_page():
 
 ##################################################
 # index.html(메인페이지)
+
+
 @app.route('/index_page')
 def index_page():
     return render_template('index.html')
@@ -43,7 +46,8 @@ def index_page_post():
         all_photo = list(db.post_content.find({}, {'_id': False}))
 
         for photo in all_photo:
-            photo_user = db.user.find_one({'user_id': photo['user_id']}, {'_id': False})
+            photo_user = db.user.find_one(
+                {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
 
         return jsonify({'all_photo': all_photo})
@@ -52,7 +56,6 @@ def index_page_post():
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
-
 
 
 @app.route('/login', methods=['POST'])
@@ -65,15 +68,21 @@ def login_check():
 
 
 # 프로필 메인 페이지
-@app.route('/profile_main/<name>')
-def profile_main_page(name):
+@app.route('/profile_main/<user_name>')
+def profile_main_page(user_name):
+
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        return render_template('profile_main.html', user=user_info)
+        if user_name == user_info['user_name']:
+            return render_template('profile_main.html', user=user_info, check=True)
+        else:
+            user_other = db.user.find_one({"user_name": user_name})
+            return render_template('profile_main.html', user=user_other, check=False)
+
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -99,6 +108,13 @@ def move_edit_page():
 def move_addpage():
     # 수정 필요!
     return redirect(url_for('profile_main_page'))
+
+
+# 개인 피드 확인
+@app.route('/my_feed/<user>')
+def load_my_feed(user):
+    user_check = db.user.find_one({'user_name': user}, {'_id': False})
+    return render_template('my_feed.html', user=user_check)
 
 
 # 프로필 편집 페이지
@@ -205,7 +221,7 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'user_id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=12400)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         # token을 줍니다.
@@ -241,6 +257,7 @@ def sign_up_save():
 
     user_dict_receive['bio'] = ""
     user_dict_receive['avatar'] = ""
+    user_dict_receive['feed'] = []
 
     db.user.insert_one(user_dict_receive)
 
@@ -271,13 +288,21 @@ def new_writing():
         filename = f'{mytime}'
         save_to = f'static/images/post-contents/{filename}.{extension}'
         photo.save(save_to)
-        doc = {
-            'user_id': user_info["user_id"],
+
+        post_con = {
             'desc': desc_receive,
-            'img': f'{filename}.{extension}',
+            'photo': f'{filename}.{extension}',
             'comment': comment,
             'like': like,
         }
+        container = [post_con]
+
+        doc = {
+            'user_id': user_info["user_id"],
+            "container": container,
+        }
+
+        print(doc)
         db.post_content.insert_one(doc)
 
         return jsonify({'msg': '등록완료'})
@@ -288,7 +313,7 @@ def new_writing():
 
 
 # 회원 탈퇴
-@app.route('/sign_out', methods=['GET'])
+@ app.route('/sign_out', methods=['GET'])
 def sign_out():
     # 쿠키에서 토큰 가져옴
     token_receive = request.cookies.get('mytoken')
