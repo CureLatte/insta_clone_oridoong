@@ -15,7 +15,6 @@ $(document).ready(function () {
                 let avatar = rows[i]['avatar'];
                 let name = rows[i]['name'];
                 let temp_html = ``;
-
                 if (photo) {
                     temp_html = `
                                 <div class="content">
@@ -87,7 +86,7 @@ function like(data) {
 function opendia() {
     let dialog = document.getElementById('dialog');
 
-    if(typeof dialog.showModal === "function") {
+    if (typeof dialog.showModal === "function") {
         dialog.showModal();
     } else {
         alert('예기치 못한 오류')
@@ -106,10 +105,10 @@ function opendia() {
 
 // 헤더 홈 버튼
 function profile_main(obj) {
-    window.location.href='/profile_main/' + obj.alt;
+    window.location.href = '/profile_main/' + obj.alt;
 }
 
 // 포스트 아이콘
 function profile_main_icon(obj) {
-    window.location.href='/profile_main/' + obj.innerText;
+    window.location.href = '/profile_main/' + obj.innerText;
 }

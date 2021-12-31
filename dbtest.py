@@ -5,7 +5,10 @@ client = MongoClient(
 db = client.dbsparta
 
 
+doc={
+    'user_id' : 'ori',
 
-user = db.users.find_one({'user_id': 'kyoung'},{'_id':False})
-
-print(user['container']['comment'][0])
+    'my_stroy' : '김오리.jpg',
+    'story_visited':[]
+}
+user = db.story.insert_one(doc)
