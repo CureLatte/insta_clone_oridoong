@@ -50,7 +50,7 @@ def index_page_post():
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
 
-        return jsonify({'all_photo': all_photo})
+        return jsonify([{'all_photo': all_photo}, user_info['name']])
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -261,8 +261,12 @@ def sign_up_save():
     user_dict_receive['pwd'] = hashlib.sha256(
         user_dict_receive['pwd'].encode('utf-8')).hexdigest()
 
+    # user DB column 추가
     user_dict_receive['bio'] = ""
     user_dict_receive['avatar'] = ""
+    user_dict_receive['feed'] = []
+    user_dict_receive['follower'] = []
+    user_dict_receive['follow'] = []
 
     db.user.insert_one(user_dict_receive)
 
