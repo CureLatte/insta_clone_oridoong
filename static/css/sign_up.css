@@ -88,7 +88,7 @@ body {
 /* 중복확인 yes or no 이미지 */
 #sign-up-wrapper #sign-up-body #input-wrapper img {
     position: fixed;
-    margin: 13px -35px;
+    margin: -32px 236px;
     width: 30px;
     display: none;
     height: 30px;
