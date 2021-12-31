@@ -257,6 +257,7 @@ def sign_up_save():
 
     user_dict_receive['bio'] = ""
     user_dict_receive['avatar'] = ""
+    user_dict_receive['feed'] = []
 
     db.user.insert_one(user_dict_receive)
 
