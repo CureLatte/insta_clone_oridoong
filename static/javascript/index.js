@@ -15,7 +15,6 @@ $(document).ready(function () {
                 let avatar = rows[i]['avatar'];
                 let name = rows[i]['name'];
                 let temp_html = ``;
-
                 if (photo) {
                     temp_html = `
                                 <div class="content">
