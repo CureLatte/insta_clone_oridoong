@@ -22,7 +22,7 @@
             <img style="width:170px; height: 170px; border: 1px solid #ddd;" id="preview_image"
                 src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
             <input style="display: block;" type="file" id="input_image" accept=".jpg, .png" required>
-            <h4>@유저이름</h4>
+            <h4>"유저이름"님의 프로필 수정</h4>
             <ul>
                 <li>
                     <label for="name">성명</label>
@@ -52,12 +52,12 @@
                     <label for="bio">자기소개</label>
                     <textarea class="input_style_textarea" id="bio" name="bio" rows="4" cols="43"></textarea>
                 </li>
+                <input onclick="sign_out()" type="submit" value="회원탈퇴" class="sign_out_btn">
             </ul>
 
             <div class="submit_form">
-                <input onclick="sign_out()" type="submit" value="회원탈퇴">
                 <div>
-                    <a href="#">취소</a>
+                    <a href="/index_page">취소</a>
                     <input onclick="save_update_profile()" type="submit" value="변경">
                 </div>
             </div>
@@ -82,7 +82,7 @@
             success: function (response) {
                 let user_info = response['user_info'];
 
-                $.each(user_info, function (index, obj){
+                $.each(user_info, function (index, obj) {
                     $("#" + index).val(obj);
                 })
             }

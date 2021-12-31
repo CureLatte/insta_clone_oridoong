@@ -141,9 +141,7 @@ def edit_profile_get():
 
         # 비효율적인 코드이므로 리팩토링 하실꺼면 하세요
         user_info['username'] = user_info['user_name']
-
         del user_info['user_name']
-
         return jsonify({'user_info': user_info})
 
     except jwt.ExpiredSignatureError:
@@ -155,38 +153,42 @@ def edit_profile_get():
 
 @app.route("/edit_profile", methods=["POST"])
 def edit_profile_post():
-    username_receive = request.form['username_receive']
-    email_receive = request.form['email_receive']
-    phone_number_receive = request.form['phone_number_receive']
-    gender_receive = request.form['gender_receive']
-    avatar_receive = request.form['avatar_receive']
-    bio_receive = request.form['bio_receive']
+    token_receive = request.cookies.get('mytoken')
+    try:
+        # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
+        del user_info['pwd']
 
-    # 생성 로직
-    # doc = {
-    #     "user_id": "여기에는 login에서 넘겨준 user_id를 줘야함. 테스트 용임",
-    #     "username": username_receive,
-    #     "email": email_receive,
-    #     "phone_number": phone_number_receive,
-    #     "gender": gender_receive,
-    #     "avatar": avatar_receive,
-    #     "bio": bio_receive,
-    # }
-    # db.user.insert_one(doc)
+        user_info['username'] = user_info['user_name']
+        del user_info['user_name']
 
-    # 업데이트 로직
+        username_receive = request.form['username_receive']
+        email_receive = request.form['email_receive']
+        phone_number_receive = request.form['phone_number_receive']
+        gender_receive = request.form['gender_receive']
+        avatar_receive = request.form['avatar_receive']
+        bio_receive = request.form['bio_receive']
 
-    updatestmt = ({"user_id": "kyoung"}, {
-        "$set": {
-            "username": username_receive,
-            "email": email_receive,
-            "phone_number": phone_number_receive,
-            "gender": gender_receive,
-            "avatar": avatar_receive,
-            "bio": bio_receive,
-        }})
-    db.user.update_one(*updatestmt)
-    return jsonify({'msg': 'DB등록 완료!'})
+        # 업데이트 로직
+        updatestmt = ({"user_id": user_info['user_id']}, {
+            "$set": {
+                "user_name": username_receive,
+                "email": email_receive,
+                "phone_number": phone_number_receive,
+                "gender": gender_receive,
+                "avatar": avatar_receive,
+                "bio": bio_receive,
+            }})
+        db.user.update_one(*updatestmt)
+        return jsonify({'msg': 'DB등록 완료!'})
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route("/sign_in", methods=["POST"])
