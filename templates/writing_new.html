@@ -15,39 +15,31 @@
     <link rel="stylesheet" href="../static/css/writing_new.css">
     <link rel="stylesheet" href="../static/css/common.css">
 
-
     <title> 새글 작성 </title>
     <style>
     </style>
     <script>
-        function save_update_text() {
-            let text = $("#text-field").val()
-            let post_photo_file = $('#id-photo')[0].files[0]
-            let post_photo_name = $('#photo-name').val()
+        function posting() {
+            let photo = $('#photo_give')[0].files[0]
+            let desc = $('#desc').val()
             let form_data = new FormData()
-            form_data.append("photo_file_give", post_photo_file)
-            form_data.append("photo_name_give", post_photo_name)
+
+            form_data.append("photo_give", photo)
+            form_data.append("desc_give", desc)
+
             $.ajax({
                 type: "POST",
                 url: "/writing_new",
+                data: form_data,
                 cache: false,
                 contentType: false,
                 processData: false,
-                data: {text_receive: text},
                 success: function (response) {
-                    alert(response["msg"])
+                    alert(response["result"])
                     window.location.reload()
                 }
             });
         }
-
-        $(document).ready(function () {
-            $('#header').load("..\\templates\\common.html", function () {
-                document.getElementsByName("sub_nav").classList.add("show");
-            });
-        })
-
-
     </script>
 </head>
 
@@ -70,9 +62,9 @@
                     </div>
                 </div>
                 <div class="file-upload">
-                    <textarea name="text-field" id="text-field" cols="50" rows="5" wrap="hard"
+                    <textarea name="desc" id="desc" cols="50" rows="5" wrap="hard"
                         placeholder="140자 까지 등록 가능합니다."></textarea>
-                    <input type="file" id="file">
+                    <input type="file" id="id-photo">
                 </div>
                 <button onclick="posting()" type="button" id="submit-btn">저장</button>
                 <a href="index.html">
