@@ -61,7 +61,7 @@ main {
 #sign-in-box #log-box {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 80px;
     width: 250px;
 }
 
@@ -100,4 +100,31 @@ main {
     justify-content: center;
     border: 1px solid lightgray;
     font-size: 13px;
+}
+
+#facebook-button{
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border: 0;
+    text-align: center;
+    text-decoration: none;
+    background-color: unset;
+
+}
+#facebook-button img {
+    margin-top: 10px;
+    margin-right: 5px;
+    height: 17px;
+}
+
+#pwd-find {
+    margin-top: 15px;
+    background-color: white;
+}
+
+#border-line{
+    margin-top: 15px;
 }
