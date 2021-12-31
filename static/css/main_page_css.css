@@ -13,8 +13,14 @@ body {
   justify-content: space-between;
   overflow: hidden;
 }
-.story img {
+.story .stroy_on img {
   margin-top: 10px;
+  border: 10px solid indianred;
+}
+
+.story .stroy_off img {
+  margin-top: 10px;
+  border: 10px solid gray;
 }
 
 
