@@ -1,0 +1,26 @@
+
+.write_background{
+    background-color: gray;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    opacity: 0.7;
+    width : 100vw;
+    height : 100vw;
+    z-index: 3;
+    display: flex;
+}
+
+.write_background .write_background_wrapper{
+}
+
+.write_background .write_main{
+    position: relative;
+    top : 400px;
+    left:auto;
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    z-index: 2;
+
+}

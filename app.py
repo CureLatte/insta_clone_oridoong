@@ -116,6 +116,10 @@ def load_my_feed(user):
     user_check = db.user.find_one({'user_name': user}, {'_id': False})
     return render_template('my_feed.html', user=user_check)
 
+@app.route('/profile_test/')
+def profile_test_11():
+    return render_template('base_test.html')
+
 
 # 프로필 편집 페이지
 @app.route('/edit_profile')

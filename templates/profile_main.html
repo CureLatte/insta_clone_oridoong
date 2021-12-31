@@ -55,8 +55,13 @@
                         <p>Email : {{ user['email'] }}</p>
                     </div>
                     <div class="info_gender" id="gender">
-                        <p>gender : {{ user['gender'] }}</p>
+                        {% if user['gender'] == 'female' %}
+                        <p>gender : 여</p>
+                        {% else  %}
+                        <p>gender : 남</p>
+                        {% endif %}
                     </div>
+
                     <div class="info_phone" id="phone_number">
                         <p>Phone : {{ user['phone_number'] }}</p>
                     </div>
