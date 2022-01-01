@@ -161,7 +161,6 @@ def load_my_feed(user):
     return render_template('my_feed.html', user=user_check)
 
 
-
 # 메인페이지 복사본 API
 @app.route('/profile_test_main')
 def profile_test_11():
@@ -174,7 +173,8 @@ def profile_test_load_follow():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
         print(user_info)
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
@@ -226,7 +226,6 @@ def edit_profile_post():
         del user_info['pwd']
 
         user_info['username'] = user_info['user_name']
-        del user_info['user_name']
 
         username_receive = request.form['username_receive']
         email_receive = request.form['email_receive']
