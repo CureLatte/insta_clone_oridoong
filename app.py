@@ -161,7 +161,6 @@ def load_my_feed(user):
     return render_template('my_feed.html', user=user_check)
 
 
-
 # 메인페이지 복사본 API
 @app.route('/profile_test_main')
 def profile_test_11():
