@@ -12,3 +12,7 @@ doc={
     'story_visited':[]
 }
 user = db.story.insert_one(doc)
+
+
+for i in range(1):
+    print(i)

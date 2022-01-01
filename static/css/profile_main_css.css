@@ -177,10 +177,16 @@ body{
 
 
 .content_wrapper .content_row .content{
-    background-color: #8f8f8f;
+    background-color: white;
     width: 200px;
     height: 200px;
     border: 1px solid gray;
+}
+
+.content_wrapper .content_row .none_content{
+    background-color: white;
+    width: 200px;
+    height: 200px;
 }
 
 
