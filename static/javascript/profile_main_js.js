@@ -27,3 +27,7 @@ function on_edit_profile_button(){
 
     }
 }
+
+function load_post_content(){
+
+}
