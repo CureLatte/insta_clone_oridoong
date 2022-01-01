@@ -17,10 +17,12 @@
     <link rel="stylesheet" href="../static/css/no.css">
     <link rel="stylesheet" href="../static/css/main_page_css.css">
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/like_history_css.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/javascript/index.js"></script>
+    <script src="../static/javascript/like_history_js.js"></script>
 </head>
 
 <body>
@@ -41,11 +43,12 @@
                         onclick="window.location.href='/writing_new'" />
                 </li>
                 <li>
-                    <img class="is_pointer" src="../static/images/like@3x.png">
+                    <img class="is_pointer" src="../static/images/like@3x.png" onclick="open_like_history()">
                 </li>
                 <li>
                     <img class="is_pointer" src="../static/images/more@3x.png">
                 </li>
+                {% include 'like_history.html' %}
             </ul>
         </div>
     </div>

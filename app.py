@@ -51,7 +51,7 @@ def index_page_poster_get():
 
         for i, photo in enumerate(all_photo):
             if photo['user_id'] == user_info['user_id']:
-                index_num = i
+                login_user = i
                 continue
 
             photo_user = db.user.find_one(
