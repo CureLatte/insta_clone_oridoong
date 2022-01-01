@@ -23,6 +23,7 @@ SECRET_KEY = 'TEST'
 def login_page():
     return render_template('login.html')
 
+
 ##################################################
 # index.html(메인페이지)
 @app.route('/index_page')
@@ -52,7 +53,6 @@ def index_page_post():
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
-
 
 
 @app.route('/login', methods=['POST'])
@@ -212,6 +212,33 @@ def api_login():
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail'})
+
+
+@app.route('/login/find-pwd', methods=['POST'])
+def find_pwd():
+    id_receive = request.form['find_id']
+    nickname_receive = request.form['find_nickname']
+
+    find_id = list(db.user.find({'user_id'}, {'_id': False}))
+    find_nickname = list(db.user.find({'user_name'}, {'_id': False}))
+
+    for id, nickname in find_id, find_nickname:
+        if id == id_receive and nickname == nickname_receive:
+            return jsonify({'msg': '확인 되었습니다.'})
+        else:
+            return jsonify({'msg': '입력한 회원정보를 찾을수 없습니다..'})
+
+
+@app.route('/login/update-pwd', methods=['POST'])
+def update_pwd():
+    pwd_receive = request.form['new_pwd']
+    id_receive = request.form['find_id']
+
+    pw_hash = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
+
+    db.user.update_one({'user_id': id_receive}, {'$set': {'pwd': pw_hash}})
+
+    return jsonify({'msg': '비밀번호가 변경 되었습니다.'})
 
 
 # 회원 가입 페이지
