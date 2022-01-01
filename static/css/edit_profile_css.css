@@ -159,3 +159,67 @@ a {
   cursor: pointer;
   border: none;
 }
+
+.in_popup {
+  position: absolute;
+  z-index: 100;
+  background: #fff;
+  width: 550px;
+  top: 49%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  padding: 40px 50px;
+  border: 1px solid #ddd;
+}
+
+.in_popup h4 {
+  position: relative;
+  padding-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+.in_popup h4:before {
+  position: absolute;
+  content: "";
+  width: 40px;
+  height: 3px;
+  background-color: #232323;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.in_popup p {
+  font-size: 18px;
+  line-height: 28px;
+  margin-top: 15px;
+}
+
+.in_popup p strong {
+  font-size: 21px;
+  color: #fa4c5b;
+}
+
+.popup-inner button {
+  background-color: #fff;
+  color: #232323;
+  border: 1px solid #ddd;
+  padding: 10px 25px;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.popup-inner .sign_out_btn {
+  margin: 0;
+}
+
+.warnin_pop {
+  position: fixed;
+  content: "";
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}

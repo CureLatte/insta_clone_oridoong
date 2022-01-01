@@ -23,7 +23,7 @@ $(document).ready(function () {
                                     <section class="con">
                                         <div class="userInfo">
                                             <div class="post-left-wrapper">
-                                                <img src="static/images/user/${avatar}" onclick="profile_main_icon(this)"/>
+                                                <img src="static/images/user/${avatar}" onclick="profile_main(this)" alt="${name}"/>
                                                 <p>${name}</p>
                                             </div>
                                             <div class="is_pointer">
@@ -147,9 +147,4 @@ function opendia(obj) {
 // 헤더 홈 버튼
 function profile_main(obj) {
     window.location.href = '/profile_main/' + obj.alt;
-}
-
-// 포스트 아이콘
-function profile_main_icon(obj) {
-    window.location.href = '/profile_main/' + obj.innerText;
 }

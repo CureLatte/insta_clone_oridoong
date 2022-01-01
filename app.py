@@ -51,7 +51,7 @@ def index_page_poster_get():
 
         for i, photo in enumerate(all_photo):
             if photo['user_id'] == user_info['user_id']:
-                index_num = i
+                login_user = i
                 continue
 
             photo_user = db.user.find_one(
@@ -173,7 +173,8 @@ def profile_test_load_follow():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
         print(user_info)
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
@@ -225,7 +226,6 @@ def edit_profile_post():
         del user_info['pwd']
 
         user_info['username'] = user_info['user_name']
-        del user_info['user_name']
 
         username_receive = request.form['username_receive']
         email_receive = request.form['email_receive']

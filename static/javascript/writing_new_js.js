@@ -26,7 +26,7 @@
 // }
 
 function posting() {
-    let photo = $('#preview_writing_image')[0].files[0]
+    let photo = $('#input_writing_image')[0].files[0]
     let desc = $('#desc').val()
     let form_data = new FormData()
 
