@@ -15,27 +15,32 @@
 
     <link rel="stylesheet" href="../static/css/no.css">
     <link rel="stylesheet" href="../static/css/my_feed_css.css">
+    <link rel="stylesheet" href="../static/css/like_history_css.css">
+    <link rel="stylesheet" href="../static/css/common.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/javascript/my_feed_js.js"></script>
+    <script src="../static/javascript/common_js.js"></script>
 </head>
 
 <body>
+{% include 'common.html' %}
 
 <div class="wrap">
-    {% set feed_count = user['feed']|length %}
+    {% set feed_count = feed['container']|length %}
+    {{ feed[] }}
     {% for i in range(feed_count) %}
     <div class="content">
         <div class="con">
             <div class="userInfo">
-                {% set profile_url = '/profile_main/'+ user['user_id'] %}
-                <a href="/profile_main">
+                {% set profile_url = '/profile_main/'+ user['name'] %}
+                <a href="{{ profile_url }}">
                     <h4>{{ user['user_name'] }}</h4>
                 </a>
             </div>
             <div class="image_box">
-                {% set filepath = '../static/images/post-contents/'+ user['feed'][i] %}
+                {% set filepath = '../static/images/post-contents/'+ feed['container'][i]['photo'] %}
                 <img src="{{ filepath }}" alt="">
             </div>
             <div class="row_icons">

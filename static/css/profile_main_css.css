@@ -166,7 +166,8 @@ body{
 }
 
 .content_container .content_wrapper{
-    margin-top : 10px;
+    margin-top : 20px;
+     margin-bottom: 20px;
 }
 
 .content_container .content_wrapper .content_row{
@@ -177,10 +178,16 @@ body{
 
 
 .content_wrapper .content_row .content{
-    background-color: #8f8f8f;
+    background-color: white;
     width: 200px;
     height: 200px;
     border: 1px solid gray;
+}
+
+.content_wrapper .content_row .none_content{
+    background-color: white;
+    width: 200px;
+    height: 200px;
 }
 
 

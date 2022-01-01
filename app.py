@@ -74,22 +74,40 @@ def index_page_poster_get():
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
+        user_id = request.form["user_name_id_give"]
+        get_name = db.user.find_one({"user_id": user_id})
+        name = get_name["name"]
+
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        user_id = request.form["user_name_id_give"]
-        updatestmt = ({"user_id": user_info['user_id']},
-                      {
-                      "$push": {"follow":
-                                {
-                                    "user_id": user_id,
-                                    "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                }
-                                }
-                      }
-                      )
+        loggedin_user = user_info["user_id"]
+        loggedin_name = user_info["name"]
 
-        db.user.update_one(*updatestmt)
-        print(updatestmt)
+        update_follow = ({"user_id": user_info['user_id']},
+                         {
+            "$push": {"follow":
+                      {
+                          "user_id": user_id,
+                          "name": name,
+                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                      }
+                      }
+        }
+        )
+        update_follower = ({"user_id": user_id},
+                           {
+            "$push": {"follower":
+                      {
+                          "user_id": loggedin_user,
+                          "name": loggedin_name,
+                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                      }
+                      }
+        }
+        )
+
+        db.user.update_one(*update_follow)
+        db.user.update_one(*update_follower)
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -108,10 +126,8 @@ def login_check():
 
 ################################################################
 # 프로필 메인 페이지
-
-
-@app.route('/profile_main/<user_name>')
-def profile_main_page(user_name):
+@app.route('/profile_main/<name>')
+def profile_main_page(name):
 
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
@@ -120,11 +136,14 @@ def profile_main_page(user_name):
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        if user_name == user_info['name']:
-            return render_template('profile_main.html', user=user_info, check=True)
+        if name == user_info['name']:
+            user_my_feed = db.post_content.find_one({"user_id": payload['user_id']},{'_id':False})
+            return render_template('profile_main.html', user=user_info, check=True, feed=user_my_feed)
         else:
-            user_other = db.user.find_one({"name": user_name})
-            return render_template('profile_main.html', user=user_other, check=False)
+            user_other = db.user.find_one({"name": name})
+            user_other_feed = db.post_content.find_one(
+                {"user_id": user_other['user_id']})
+            return render_template('profile_main.html', user=user_other, check=False, feed=user_other_feed)
 
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
@@ -132,6 +151,14 @@ def profile_main_page(user_name):
     except jwt.exceptions.DecodeError:
         # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/profile_main/')
+def redirect_main_profile():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.user.find_one({"user_id": payload['user_id']})
+    return redirect(url_for('profile_main_page', name=user_info['name']))
 
 
 @app.route('/profile_main/load_info', methods=['POST'])
@@ -154,10 +181,12 @@ def move_addpage():
 
 
 # 개인 피드 확인
-@app.route('/my_feed/<user>')
-def load_my_feed(user):
-    user_check = db.user.find_one({'user_name': user}, {'_id': False})
-    return render_template('my_feed.html', user=user_check)
+@app.route('/my_feed/<name>')
+def load_my_feed(name):
+    user = db.user.find_one({'name': name}, {'_id': False})
+    my_feed = db.post_content.find_one(
+        {'user_id': user['user_id']}, {'_id': False})
+    return render_template('my_feed.html', user=user, feed=my_feed)
 
 
 # 메인페이지 복사본 API
@@ -174,7 +203,6 @@ def profile_test_load_follow():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
-        print(user_info)
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -394,21 +422,20 @@ def new_writing():
 
         desc_receive = request.form['desc_give']
         photo = request.files['photo_give']
-        # comment, like 미구현상태
-        comment = []
-        like = 0
+
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-        filename = f'{mytime}'
-        save_to = f'static/images/post-contents/{filename}.{extension}'
+        filename = f'{mytime}.{extension}'
+        save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
+
 
         post_con = {
             'desc': desc_receive,
-            'photo': f'{filename}.{extension}',
-            'comment': comment,
-            'like': like,
+            'photo': f'{filename}',
+            'comment': [],
+            'like': 0,
         }
         container = [post_con]
 
@@ -417,8 +444,13 @@ def new_writing():
             "container": container,
         }
 
-        print(doc)
+        # print(doc)
         db.post_content.insert_one(doc)
+
+        # pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
+        # pre_desc = pre_desc["container"][0]['desc']
+        # db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
+
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
