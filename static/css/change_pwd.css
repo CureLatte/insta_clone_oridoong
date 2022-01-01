@@ -1,0 +1,113 @@
+body {
+    background-color: #f5f5f5;
+    width: 350px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 44px;
+}
+#title-img{
+    width: 80px;
+}
+
+/* html 공간 만드는 부분 */
+#sign-up-container {
+    width: 350px;
+    height: 600px;
+    margin: 30px auto 0 auto;
+    border: 1px solid lightgray;
+    background-color: white;
+}
+
+/* container 에서 margin 주고 실질적으로 이미지 및 데이터 들어가는 부분*/
+#sign-up-container #sign-up-wrapper {
+    margin: 20px 40px 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 268px;
+
+}
+
+#sign-up-container #sign-up-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid lightgray;
+
+}
+
+#sign-up-wrapper #sign-up-header > p {
+    font-size: 18px;
+    font-weight: 400;
+    color: gray;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#title > p {
+    margin: 10px 0;
+    font-size: 20px;
+}
+#sub-title{
+    font-size: 15px;
+}
+
+#sign-up-container #sign-up-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+}
+
+#sign-up-container #sign-up-body > input {
+    margin-top: 25px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper {
+    width: 268px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper input {
+    margin-top: 10px;
+    height: 35px;
+    width: 268px;
+}
+
+#sign-up-wrapper #sign-up-body #input-wrapper > select {
+    margin-top: 10px;
+    height: 35px;
+}
+
+
+/* sign-up-footer */
+#sign-up-footer-container {
+    width: 200px;
+    height: 80px;
+    margin: 100px auto;
+    border: 1px solid lightgray;
+    background-color: white;
+}
+
+#sign-up-footer-container #footer-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 12px;
+}
+
+#sign-up-footer-container #footer-button-wrapper > p {
+    margin-right: 5px;
+}
