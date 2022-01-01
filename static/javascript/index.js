@@ -7,7 +7,7 @@ $(document).ready(function () {
             let rows = response[0]['all_photo'];
             let login_user = response[1];
             console.log(login_user)
-            console.log(typeof(login_user))
+            console.log(typeof (login_user))
 
             document.getElementById('user-home').alt = login_user;
 
