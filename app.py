@@ -126,8 +126,6 @@ def login_check():
 
 ################################################################
 # 프로필 메인 페이지
-
-
 @app.route('/profile_main/<name>')
 def profile_main_page(name):
 
@@ -153,6 +151,14 @@ def profile_main_page(name):
     except jwt.exceptions.DecodeError:
         # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/profile_main/')
+def redirect_main_profile():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.user.find_one({"user_id": payload['user_id']})
+    return redirect(url_for('profile_main_page', name=user_info['name']))
 
 
 @app.route('/profile_main/load_info', methods=['POST'])
