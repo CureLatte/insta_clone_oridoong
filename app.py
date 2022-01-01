@@ -1,5 +1,6 @@
 import hashlib
 import datetime
+import random
 from typing import Container
 import certifi
 import jwt
@@ -35,25 +36,60 @@ def index_page():
 
 
 @app.route('/index_page/post', methods=['GET'])
-def index_page_post():
+def index_page_poster_get():
     token_receive = request.cookies.get('mytoken')
 
     # user_id 값은 사용 안하지만 로그인 시간 확인을 위해 체크
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-
-        # photo-content 데이터, user 이름 데이터 얻어 오는 부분
         all_photo = list(db.post_content.find({}, {'_id': False}))
+        all_user = list(db.user.find({}, {'_id': False}))[0:5]
+        random.shuffle(all_user)
 
-        for photo in all_photo:
+        login_user = 0
+
+        for i, photo in enumerate(all_photo):
+            if photo['user_id'] == user_info['user_id']:
+                index_num = i
+                continue
+
             photo_user = db.user.find_one(
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
 
-        return jsonify([{'all_photo': all_photo}, user_info['name']])
+        del all_photo[login_user]
 
+        return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/index_page/post', methods=['POST'])
+def indexPagePost():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']})
+        user_id = request.form["user_name_id_give"]
+        updatestmt = ({"user_id": user_info['user_id']},
+                      {
+                      "$push": {"follow":
+                                {
+                                    "user_id": user_id,
+                                    "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                }
+                                }
+                      }
+                      )
+
+        db.user.update_one(*updatestmt)
+        print(updatestmt)
+        return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -71,6 +107,8 @@ def login_check():
 
 ################################################################
 # 프로필 메인 페이지
+
+
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
 
@@ -119,6 +157,7 @@ def move_addpage():
 def load_my_feed(user):
     user_check = db.user.find_one({'user_name': user}, {'_id': False})
     return render_template('my_feed.html', user=user_check)
+
 
 
 # 메인페이지 복사본 API
@@ -289,6 +328,7 @@ def sign_up_save():
 
     # 기본 프로필 이미지
     user_dict_receive['avatar'] = "profile_init.png"
+
     user_dict_receive['feed'] = []
     user_dict_receive['follower'] = []
     user_dict_receive['follow'] = []
@@ -303,11 +343,12 @@ def sign_up_save():
 def main_user_like():
     photo = request.form['photo']
     like = request.form['like']
-    db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {'$set': {'container.$.like': int(like)}})
-    user_post = db.post_content.find_one({"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
+    db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+                               '$set': {'container.$.like': int(like)}})
+    user_post = db.post_content.find_one(
+        {"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
 
     return jsonify({'user_like': user_post['container'][0]['like']})
-
 
 
 ##########################글작성 페이지########################################

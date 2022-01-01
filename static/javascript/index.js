@@ -22,12 +22,12 @@ $(document).ready(function () {
                                 <div class="content">
                                     <section class="con">
                                         <div class="userInfo">
-                                            <a href="#" onclick="profile_main_icon(this)" >
-<!--                                            <img src="static/images/user/${avatar}" />-->
-                                                <h4>${name}</h4>
-                                            </a>
+                                            <div class="post-left-wrapper">
+                                                <img src="static/images/user/${avatar}" onclick="profile_main_icon(this)"/>
+                                                <p>${name}</p>
+                                            </div>
                                             <div class="is_pointer">
-                                                <img src="../static/images/more@3x.png" onclick="opendia()" alt="">
+                                                <img src="../static/images/more@3x.png" onclick="opendia(this)" alt="">
                                             </div>
                                         </div>
                                         <div class="image_box" style="background-image: url('/static/images/post-contents/${photo}')"></div>
@@ -52,7 +52,49 @@ $(document).ready(function () {
             }
         }
     });
+    $.ajax({
+        type: "GET",
+        url: "/index_page/post",
+        data: {},
+        success: function (response) {
+            user_id = response[2];
+
+            for (var i = 0; i < user_id.length; i++) {
+                let user = user_id[i]["user_id"]
+                let user_bio = user_id[i]["bio"]
+                let temp_html = ``;
+                temp_html = `
+                                    <ul>
+                                        <li>
+                                            <div>
+                                                <h5>${user}</h5>
+                                                <p>${user_bio}</p>
+                                            </div>
+                                            <span onclick="follow(this)" name="${user}">
+                                                팔로우
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    `
+                $(".recommend").append(temp_html)
+            }
+
+        }
+    });
 })
+
+function follow(obj) {
+    var name_by_id = obj.getAttribute('name');
+    $.ajax({
+        type: "POST",
+        url: "/index_page/post",
+        data: { "user_name_id_give": name_by_id },
+        success: function (response) {
+            alert(response["msg"])
+        }
+    })
+}
+
 
 function logout() {
     $.removeCookie('mytoken');
@@ -77,7 +119,7 @@ function like(data) {
     $.ajax({
         type: "POST",
         url: "/main/user_like",
-        data: {'photo': photo, 'like': likeCount},
+        data: { 'photo': photo, 'like': likeCount },
         success: function (response) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
@@ -85,23 +127,20 @@ function like(data) {
 }
 
 // post 더 보기 버튼
-function opendia() {
+function opendia(obj) {
     let dialog = document.getElementById('dialog');
 
-    if (typeof dialog.showModal === "function") {
-        dialog.showModal();
-    } else {
-        alert('예기치 못한 오류')
-    }
+    dialog.showModal();
+
     dialog.addEventListener('cancel', function onClose() {
-        window.location.reload();
+        dialog.close();
     });
 
     $(document).mouseup(function (e) {
-       let dialogPopup = $("#dialog");
-       if(dialogPopup.has(e.target).length === 0) {
-           $("#dialog button").click();
-       }
+        let dialogPopup = $("#dialog");
+        if (dialogPopup.has(e.target).length === 0) {
+            $("#dialog button").click();
+        }
     });
 }
 
