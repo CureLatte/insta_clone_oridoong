@@ -427,11 +427,27 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
 
-        pre_desc = db.post_content.find_one({'user_id': user_info["user_id"]}, {
-                                            'container': 1, '_id': False})
-        pre_desc = pre_desc["container"][0]['desc']
-        db.post_content.update_one({'user_id': user_info["user_id"], 'container': {'$elemMatch': {'desc': pre_desc}}}, {
-                                   '$set': {'container.$.desc': desc_receive, 'container.$.photo': filename}})
+
+        post_con = {
+            'desc': desc_receive,
+            'photo': f'{filename}',
+            'comment': [],
+            'like': 0,
+        }
+        container = [post_con]
+
+        doc = {
+            'user_id': user_info["user_id"],
+            "container": container,
+        }
+
+        # print(doc)
+        db.post_content.insert_one(doc)
+
+        # pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
+        # pre_desc = pre_desc["container"][0]['desc']
+        # db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
+
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
