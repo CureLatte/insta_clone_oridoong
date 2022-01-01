@@ -14,11 +14,20 @@ $(document).ready(function () {
                 let photo_like = rows[i]['container'][0]['like'];
                 let avatar = rows[i]['avatar'];
                 let name = rows[i]['name'];
-                let like_user = rows[i]['like_user']
-                console.log(like_user)
+                let like_user = rows[i]['container'][0]['like_user']
 
                 let temp_image_html = ``;
                 let temp_html = ``;
+
+                temp_image_html = `<img src="../static/images/like@3x.png" onclick="like(this)" alt="${name},${photo}">`;
+
+                    for(let i = 0; i < like_user.length; i++) {
+                        if(like_user[i] === login_user){
+                            temp_image_html = `<img src="../static/images/like@4x.png" onclick="like(this)" alt="${name},${photo}">`;
+                            break;
+                        }
+                    }
+
                 if (photo) {
                     temp_html = `
                                 <div class="content">
@@ -29,12 +38,13 @@ $(document).ready(function () {
                                                 <p>${name}</p>
                                             </div>
                                             <div class="is_pointer">
-                                                <img src="../static/images/more@3x.png" onclick="opendia(this)" alt="">
+                                                <img src="../static/images/more@3x.png" onclick="opendia()" alt="">
                                             </div>
                                         </div>
                                         <div class="image_box" style="background-image: url('/static/images/post-contents/${photo}')"></div>
                                             <div class="left-wrapper">
-                                                <img src="../static/images/like@3x.png" onclick="like(this)" alt="${name},${photo}">
+                                            <!--    <img src="../static/images/like@3x.png" onclick="like(this)" alt="${name},${photo}"> -->
+                                                ${temp_image_html}
                                                 <img class="icon-2" src="../static/images/comment@3x.png">
                                                 <img src="../static/images/dm@3x.png">
                                                 <img class="right-wrapper" src="../static/images/favorite@3x.png">
@@ -48,8 +58,11 @@ $(document).ready(function () {
                                     </section>
                                 </div>
                                 `
+
+
+
                     $("#content-wrapper").append(temp_html);
-                    $(".userInfo")
+                    // $(".left-wrapper").append(temp_image_html);
                 }
             }
         }
@@ -109,19 +122,23 @@ function like(data) {
     let name = data.alt.split(',')[0];
     let photo = data.alt.split(',')[1];
     let like = Number(document.getElementById(`${name}like`).innerText.split('명')[0]);
-    let likeCount;
+    let like_count;
+    let login_user = document.getElementById('user-home').alt;
+
     if (data.attributes[0].value === '../static/images/like@3x.png') {
-        likeCount = like + 1;
+        like_count = like + 1;
+        login_user = login_user + ",1";
         data.setAttribute('src', '../static/images/like@4x.png');
     } else {
-        likeCount = like - 1;
+        like_count = like - 1;
+        login_user = login_user + ",0";
         data.setAttribute('src', '../static/images/like@3x.png');
     }
 
     $.ajax({
         type: "POST",
         url: "/main/user_like",
-        data: { 'photo': photo, 'like': likeCount },
+        data: {'photo': photo, 'like_count': like_count, 'login_user': login_user},
         success: function (response) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
@@ -129,7 +146,7 @@ function like(data) {
 }
 
 // post 더 보기 버튼
-function opendia(obj) {
+function opendia() {
     let dialog = document.getElementById('dialog');
 
     dialog.showModal();

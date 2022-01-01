@@ -371,9 +371,21 @@ def sign_up_save():
 @app.route('/main/user_like', methods=["POST"])
 def main_user_like():
     photo = request.form['photo']
-    like = request.form['like']
+    like_count = request.form['like_count']
+    login_user = request.form['login_user']
+    like = login_user.split(',')[1]
+    login_user = login_user.split(',')[0]
+
+    if bool(int(like)):
+        db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+            '$addToSet': {'container.$.like_user': login_user}})
+    else:
+        db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+            '$pull': {'container.$.like_user': login_user}})
+
     db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
-                               '$set': {'container.$.like': int(like)}})
+        '$set': {'container.$.like': int(like_count)}})
+
     user_post = db.post_content.find_one(
         {"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
 
