@@ -6,8 +6,6 @@ $(document).ready(function () {
         success: function (response) {
             let rows = response[0]['all_photo'];
             let login_user = response[1];
-            let user_id = response[2];
-            console.log(user_id)
 
             document.getElementById('user-home').alt = login_user;
 
@@ -57,13 +55,13 @@ $(document).ready(function () {
         url: "/index_page/post",
         data: {},
         success: function (response) {
-            let user_id = response[2];
-            for (let i = 0; i <= 5; i++) {
+            user_id = response[2];
+
+            for (var i = 0; i < user_id.length; i++) {
                 let user = user_id[i]["user_id"]
                 let user_bio = user_id[i]["bio"]
                 let temp_html = ``;
-                if (user) {
-                    temp_html = `
+                temp_html = `
                                     <ul>
                                         <li>
                                             <div>
@@ -76,10 +74,9 @@ $(document).ready(function () {
                                         </li>
                                     </ul>
                                     `
-                    $(".recommend").append(temp_html)
-                }
-
+                $(".recommend").append(temp_html)
             }
+
         }
     });
 })

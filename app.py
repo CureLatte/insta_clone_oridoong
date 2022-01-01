@@ -43,7 +43,7 @@ def index_page_post():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         all_photo = list(db.post_content.find({}, {'_id': False}))
-        all_user = list(db.user.find({}, {'_id': False}))
+        all_user = list(db.user.find({}, {'_id': False}))[0:5]
         random.shuffle(all_user)
 
         for photo in all_photo:
@@ -66,9 +66,20 @@ def indexPagePost():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        user_id = request.data
-        updatestmt = ({"user_id": user_info["user_id"]}, {"follow": user_id, })
+        user_id = request.form["user_name_id_give"]
+        updatestmt = ({"user_id": user_info['user_id']},
+                      {
+                      "$push": {"follow":
+                                {
+                                    "user_id": user_id,
+                                    "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                }
+                                }
+                      }
+                      )
+
         db.user.update_one(*updatestmt)
+        print(updatestmt)
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
