@@ -1,0 +1,144 @@
+body {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.story {
+  background-color: #fff;
+  padding: 20px 15px;
+  margin-top: 100px;
+  margin-bottom: 25px;
+  border: 1px solid #ddd;
+  width: 650px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.story .stroy_on img {
+  margin-top: 10px;
+  border: 10px solid indianred;
+}
+
+.story .stroy_off img {
+  margin-top: 10px;
+  border: 10px solid gray;
+}
+
+
+.wrap {
+  position: relative;
+  width: 800px;
+  background-color: #efefef;
+  margin-top: 10px;
+}
+
+.content {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-top: 40px;
+  width: 650px;
+}
+
+.userInfo .post-left-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 300px;
+}
+
+.userInfo .post-left-wrapper > img {
+  width: 2vw;
+  height: 2vw;
+  border-radius: 50%;
+  cursor: pointer;
+  oject-fit: contain;
+}
+
+.userInfo .post-left-wrapper > p {
+  color: #232323;
+  font-weight: 800;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.image_box {
+  width: 98%;
+  margin: 8px 0;
+  background-image: url(../images/image.gif);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  height: 450px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.comment p {
+  font-size: 15px;
+  color: #232323;
+  margin-top: 7px;
+}
+
+.recommend {
+  position: fixed;
+  top: 0;
+  margin-top: 80px;
+  padding: 20px 15px;
+  box-sizing: border-box;
+  width: 300px;
+  height: 450px;
+}
+.hi{
+  margin-right: 240px;
+}
+.left-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  width: 25px;
+  position: relative;
+}
+.right-wrapper {
+  width: 30px;
+  display: flex;
+  justify-content: right;
+  margin-left: 500px;
+}
+.left-wrapper img{
+  margin: 5px;
+}
+.left-wrapper img:last-child{
+  position: absolute;
+  margin-left: 600px;
+}
+
+.icon-2{
+  margin-left: 10px;
+  width: 30px;
+}
+
+#dialog{
+    width: 280px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #8d8c8c45;
+    border-radius: 25px;
+    padding: 0;
+}
+
+
+#dialog p {
+    border: 1px solid #8d8c8c45;
+    text-align: center;
+    padding: 4% 0;
+}
+
+#dialog button{
+    background-color: white;
+    font-size: 1.2rem;
+    width: 100%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    border: 1px solid #8d8c8c45;
+}
+#dialog button:focus-visible{
+    outline: 0;
+}

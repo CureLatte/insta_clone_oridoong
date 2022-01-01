@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Duckstagram 회원가입</title>
+    <link rel="stylesheet" href="../static/css/sign_up.css">
+    <link rel="stylesheet" href="../static/css/common.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/javascript/sign_up.js"></script>
+</head>
+<body>
+<div id="main">
+    <div id="container">
+        <div id="sign-up-container">
+            <div id="sign-up-wrapper">
+                <div id="sign-up-header">
+                    <div id="title">
+                        <p>𝓞𝓻𝓲𝓼𝓽𝓪𝓻𝓰𝓻𝓪𝓶</p>
+                    </div>
+                    <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
+                </div>
+                <div id="sign-up-body">
+                    <div id="input-wrapper">
+                        <div id="id-box">
+                            <input type="text" onchange="check_user_id(this)" id="user-id" class="input_style_text" placeholder="아이디"/>
+                            <img id="user-id-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="user-id-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="pwd-box">
+                            <input type="password" onchange="check_pwd(this)" id="pwd" class="input_style_text" placeholder="비밀번호"/>
+                            <img id="pwd-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="pwd-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="user-name-box">
+                            <input type="text" onchange="check_empty(this)" id="user-name" class="input_style_text" placeholder="사용자 이름(별칭)"/>
+                            <img id="user-name-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="user-name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="name-box">
+                            <input type="text" onchange="check_empty(this)" id="name" class="input_style_text" placeholder="성명"/>
+                            <img id="name-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="name-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <select id="gender" class="input_style_select" onchange="check_sign_up_button()">
+                            <option value="">-- 성별을 선택해주세요 --</option>
+                            <option value="female">여성</option>
+                            <option value="male">남성</option>
+                        </select>
+                        <div id="phone-number-box">
+                            <input type="text" onchange="check_phone(this)" id="phone-number" class="input_style_text" placeholder="휴대폰 번호 01x-xxx-xxxx"/>
+                            <img id="phone-number-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="phone-number-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                        <div id="email-box">
+                            <input type="text" onchange="check_email(this)" id="email" class="input_style_text" placeholder="이메일 주소"/>
+                            <img id="email-yes" class="yes-image" src="../static/images/check-circle-regular.svg" />
+                            <img id="email-no" class="no-image" src="../static/images/times-circle-regular.svg" />
+                        </div>
+                    </div>
+                    <input id="sign-up-button" onclick="sign_up()" type="button" disabled="disabled" value="가입">
+                </div>
+            </div>
+        </div>
+        <div id="sign-up-footer-container">
+            <div id="footer-button-wrapper">
+                <p>계정이 있으신가요?</p>
+                <a href="/">로그인</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
