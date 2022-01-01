@@ -109,8 +109,8 @@ def login_check():
 # 프로필 메인 페이지
 
 
-@app.route('/profile_main/<user_name>')
-def profile_main_page(user_name):
+@app.route('/profile_main/<name>')
+def profile_main_page(name):
 
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
@@ -119,11 +119,13 @@ def profile_main_page(user_name):
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        if user_name == user_info['name']:
-            return render_template('profile_main.html', user=user_info, check=True)
+        if name == user_info['name']:
+            user_my_feed = db.post_content.find_one({"user_id": payload['user_id']})
+            return render_template('profile_main.html', user=user_info, check=True, feed=user_my_feed)
         else:
-            user_other = db.user.find_one({"name": user_name})
-            return render_template('profile_main.html', user=user_other, check=False)
+            user_other = db.user.find_one({"name": name})
+            user_other_feed = db.post_content.find_one({"user_id": user_other['user_id']})
+            return render_template('profile_main.html', user=user_other, check=False, feed=user_other_feed)
 
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:

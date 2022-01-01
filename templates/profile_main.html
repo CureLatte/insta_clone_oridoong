@@ -77,21 +77,21 @@
                </div>
             </div>
         </div>
+        {{ feed['container'][0]['photo'] }}
+        {% set total = feed['container']|length %}
+        {% set rows = total//3 %}
         <div class="content_container">
             <div class="content_wrapper">
-                {% set row = user['feed'] %}
-                {% set total = user['feed'] | length  %}
-                {% set rowcnt = total // 3 %}
-                {% for i in range(rowcnt) %}
+                {% for i in range(3) %}
                 <div class="content_row">
-                    {% for j in range(3) %}
+                    {% for k in range(3) %}
+                    {% if i*3+k < total %}
+                    {% set filepath = '../static/images/post-contents/'+ feed['container'][i*3+k]['photo'] %}
+                    {% set urlpath = '/my_feed/'+ user['user_name'] %}
                     <div class="content">
-                        {% set file = '../static/images/post-contents/' + row[i*3+j]  %}
-                        {% set href = '/my_feed/' + user['user_name'] %}
-                        <a href="{{ href }}">
-                        <img src="{{ file }}">
-                        </a>
+                        <a href="{{ urlpath }}"><img src="{{ filepath }}"></a>
                     </div>
+                     {% endif %}
                     {% endfor %}
                 </div>
                 {% endfor %}
