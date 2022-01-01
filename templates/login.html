@@ -56,28 +56,28 @@
                                 src="https://img.etnews.com/photonews/1712/1023628_20171213175510_729_0001.jpg" ,
                                 width="20" /> Facebook으로 로그인 </button>
                     </a>
-                    <a href="#layer2" class="btn-example">비밀번호를 잊으셨나요?</a>
-                    <div class="dim-layer">
-                        <div class="dimBg"></div>
-                        <div id="layer2" class="pop-layer">
-                            <div class="pop-container">
-                                <div class="pop-conts">
-                                    <input type="text" placeholder="아이디">
-                                    <input type="text" placeholder="닉네임">
-                                    <div>
-                                        <button id="id-nicname">아이디 닉네임 확인</button>
-                                    </div>
-                                    <div>
-                                        <input type="text" placeholder="새 비밀번호" readonly>
-                                    </div>
-                                    <div class="btn-r">
-                                        <a href="/" class="myButton">확인</a>
-                                        <a href="/" class="myButton2">취소</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="/change_pwd" class="btn-example">비밀번호를 잊으셨나요?</a>
+<!--                    <div class="dim-layer">-->
+<!--                        <div class="dimBg"></div>-->
+<!--                        <div id="layer2" class="pop-layer">-->
+<!--                            <div class="pop-container">-->
+<!--                                <div class="pop-conts">-->
+<!--                                    <input type="text" placeholder="아이디">-->
+<!--                                    <input type="text" placeholder="닉네임">-->
+<!--                                    <div>-->
+<!--                                        <button id="id-nicname" onclick="check_id_nickname()">아이디 닉네임 확인</button>-->
+<!--                                    </div>-->
+<!--                                    <div>-->
+<!--                                        <input type="text" placeholder="새 비밀번호">-->
+<!--                                    </div>-->
+<!--                                    <div class="btn-r">-->
+<!--                                        <a href="/" onclick="update_pwd()" class="myButton">확인</a>-->
+<!--                                        <a href="/" class="myButton2">취소</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div id="help-box">
                         <p id="help-login"></p>
                     </div>
@@ -89,6 +89,7 @@
             </div>
         </div>
     </div>
+
     <script type="text/javascript">
         $('.btn-example').click(function () {
             var $href = $(this).attr('href');
@@ -128,35 +129,7 @@
 
         }
 
-    function check_id_nickname(){
-        let id = $('send-id').val()
-        let nickname = $('send-nickname').val()
 
-        $.ajax({
-            type : 'POST',
-            url:'/login/find-pwd',
-            data:{find_id:id,find_nickname:nickname},
-            success: function (response){
-                alert(response['msg'])
-
-            }
-        })
-    }
-
-    function update_pwd(){
-        let pwd = $('new-pwd').val()
-        let id = $('send-id').val()
-
-        $.ajax({
-            type : 'POST',
-            url:'/login/update-pwd',
-            data:{new_pwd:pwd, find_id: id},
-            success: function (response){
-                alert(response['msg'])
-
-            }
-        })
-    }
 </script>
 
 

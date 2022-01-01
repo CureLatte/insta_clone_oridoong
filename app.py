@@ -261,8 +261,11 @@ def api_login():
     else:
         return jsonify({'result': 'fail'})
 
+@app.route("/change_pwd")
+def change():
+    return render_template('change_pwd.html')
 
-@app.route('/login/find-pwd', methods=['POST'])
+@app.route('/change_pwd/find-pwd', methods=['POST'])
 def find_pwd():
     id_receive = request.form['find_id']
     nickname_receive = request.form['find_nickname']
@@ -270,14 +273,12 @@ def find_pwd():
     find_id = list(db.user.find({'user_id'}, {'_id': False}))
     find_nickname = list(db.user.find({'user_name'}, {'_id': False}))
 
-    for id, nickname in find_id, find_nickname:
-        if id == id_receive and nickname == nickname_receive:
-            return jsonify({'msg': '확인 되었습니다.'})
-        else:
-            return jsonify({'msg': '입력한 회원정보를 찾을수 없습니다..'})
+
+    return jsonify({'msg': '확인 되었습니다.'})
 
 
-@app.route('/login/update-pwd', methods=['POST'])
+
+@app.route('/change_pwd/update-pwd', methods=['POST'])
 def update_pwd():
     pwd_receive = request.form['new_pwd']
     id_receive = request.form['find_id']
