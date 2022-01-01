@@ -48,7 +48,7 @@ def index_page_poster_get():
         all_user = list(db.user.find({}, {'_id': False}))[0:5]
         random.shuffle(all_user)
 
-        login_user = 0
+        login_user = None
 
         for i, photo in enumerate(all_photo):
             if photo['user_id'] == user_info['user_id']:
@@ -60,7 +60,8 @@ def index_page_poster_get():
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
 
-        del all_photo[login_user]
+        if login_user:
+            del all_photo[login_user]
 
         return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
 
@@ -79,12 +80,12 @@ def indexPagePost():
         user_id = request.form["user_name_id_give"]
         updatestmt = ({"user_id": user_info['user_id']},
                       {
-                      "$push": {"follow":
-                                {
-                                    "user_id": user_id,
-                                    "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                }
-                                }
+                          "$push": {"follow":
+                              {
+                                  "user_id": user_id,
+                                  "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                              }
+                          }
                       }
                       )
 
@@ -112,7 +113,6 @@ def login_check():
 
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
-
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
 
@@ -370,9 +370,21 @@ def sign_up_save():
 @app.route('/main/user_like', methods=["POST"])
 def main_user_like():
     photo = request.form['photo']
-    like = request.form['like']
+    like_count = request.form['like_count']
+    login_user = request.form['login_user']
+    like = login_user.split(',')[1]
+    login_user = login_user.split(',')[0]
+
+    if bool(int(like)):
+        db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+            '$addToSet': {'container.$.like_user': login_user}})
+    else:
+        db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+            '$pull': {'container.$.like_user': login_user}})
+
     db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
-                               '$set': {'container.$.like': int(like)}})
+        '$set': {'container.$.like': int(like_count)}})
+
     user_post = db.post_content.find_one(
         {"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
 
@@ -402,9 +414,10 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}.{extension}'
         photo.save(save_to)
 
-        pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
+        pre_desc = db.post_content.find_one({'user_id': user_info["user_id"]}, {'container': 1, '_id': False})
         pre_desc = pre_desc["container"][0]['desc']
-        db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
+        db.post_content.update_one({'user_id': user_info["user_id"], 'container': {'$elemMatch': {'desc': pre_desc}}},
+                                   {'$set': {'container.$.desc': desc_receive, 'container.$.photo': filename}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
@@ -414,7 +427,7 @@ def new_writing():
 
 
 # 회원 탈퇴
-@ app.route('/sign_out', methods=['GET'])
+@app.route('/sign_out', methods=['GET'])
 def sign_out():
     # 쿠키에서 토큰 가져옴
     token_receive = request.cookies.get('mytoken')

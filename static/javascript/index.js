@@ -6,8 +6,6 @@ $(document).ready(function () {
         success: function (response) {
             let rows = response[0]['all_photo'];
             let login_user = response[1];
-            console.log(login_user)
-            console.log(typeof(login_user))
 
             document.getElementById('user-home').alt = login_user;
 
@@ -16,6 +14,10 @@ $(document).ready(function () {
                 let photo_like = rows[i]['container'][0]['like'];
                 let avatar = rows[i]['avatar'];
                 let name = rows[i]['name'];
+                let like_user = rows[i]['like_user']
+                console.log(like_user)
+
+                let temp_image_html = ``;
                 let temp_html = ``;
                 if (photo) {
                     temp_html = `
@@ -46,8 +48,8 @@ $(document).ready(function () {
                                     </section>
                                 </div>
                                 `
+                    // temp_image_html = `<img class="right-wrapper" src="../static/images/favorite@3x.png">`
                     $("#content-wrapper").append(temp_html);
-                    $(".userInfo")
                 }
             }
         }
@@ -107,19 +109,25 @@ function like(data) {
     let name = data.alt.split(',')[0];
     let photo = data.alt.split(',')[1];
     let like = Number(document.getElementById(`${name}like`).innerText.split('명')[0]);
-    let likeCount;
+    let login_user = document.getElementById('user-home').alt;
+
+    console.log(login_user);
+
+    let like_count;
     if (data.attributes[0].value === '../static/images/like@3x.png') {
-        likeCount = like + 1;
+        like_count = like + 1;
+        login_user = login_user + ",1";
         data.setAttribute('src', '../static/images/like@4x.png');
     } else {
-        likeCount = like - 1;
+        like_count = like - 1;
+        login_user = login_user + ",0";
         data.setAttribute('src', '../static/images/like@3x.png');
     }
 
     $.ajax({
         type: "POST",
         url: "/main/user_like",
-        data: { 'photo': photo, 'like': likeCount },
+        data: { 'photo': photo, 'like_count': like_count, 'login_user': login_user},
         success: function (response) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
