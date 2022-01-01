@@ -116,8 +116,8 @@ a {
 }
 
 #header #logo {
-  height: 40px;
-  margin-top: 25px;
+  height: 45px;
+  margin-top: 8px;
   font-size: 30px;
   cursor: pointer;
 }
@@ -128,4 +128,8 @@ a {
 }
 #search-box{
   margin-top: 15px;
+}
+
+ul{
+  list-style: none;
 }

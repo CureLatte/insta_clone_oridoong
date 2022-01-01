@@ -15,15 +15,17 @@
 
     <link rel="stylesheet" href="../static/css/no.css">
     <link rel="stylesheet" href="../static/css/my_feed_css.css">
+    <link rel="stylesheet" href="../static/css/like_history_css.css">
+    <link rel="stylesheet" href="../static/css/common.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/javascript/my_feed_js.js"></script>
+    <script src="../static/javascript/like_history_js.js"></script>
 </head>
 
 <body>
-
-
+{% include 'common.html' %}
 
 <div class="wrap">
     {% set feed_count = feed['container']|length %}
