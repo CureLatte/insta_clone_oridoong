@@ -5,6 +5,7 @@ import certifi
 import jwt
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
+from bson.json_util import dumps
 
 ca = certifi.where()
 
@@ -68,6 +69,7 @@ def login_check():
     return jsonify({'user': user_check})
 
 
+################################################################
 # 프로필 메인 페이지
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
@@ -79,11 +81,10 @@ def profile_main_page(user_name):
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        print(payload['user_id'])
         if user_name == user_info['name']:
             return render_template('profile_main.html', user=user_info, check=True)
         else:
-            user_other = db.user.find_one({"user_name": user_name})
+            user_other = db.user.find_one({"name": user_name})
             return render_template('profile_main.html', user=user_other, check=False)
 
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
@@ -119,10 +120,29 @@ def load_my_feed(user):
     user_check = db.user.find_one({'user_name': user}, {'_id': False})
     return render_template('my_feed.html', user=user_check)
 
-@app.route('/profile_test/')
+
+# 메인페이지 복사본 API
+@app.route('/profile_test_main')
 def profile_test_11():
     return render_template('base_test.html')
 
+
+# follow_test API
+@app.route('/profile_test_main/follow', methods=['GET'])
+def profile_test_load_follow():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        print(user_info)
+        return jsonify({'data': user_info})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+#####################################################################
 
 # 프로필 편집 페이지
 @app.route('/edit_profile')

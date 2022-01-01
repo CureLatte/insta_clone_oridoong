@@ -34,7 +34,7 @@
             <img id="logo" class="is_pointer" src="../static/images/insta-logo.png" onclick="window.location.href='/index_page'" />
             <ul id="head_icon" style="position: relative">
                 <li>
-                    <img class="is_pointer" src="../static/images/home@3x.png" onclick="window.location.href='/edit_profile'" />
+                    <img id="user-home" class="is_pointer" src="../static/images/home@3x.png"  onclick="profile_main(this)"/>
                 </li>
                 <li>
                     <img class="is_pointer" src="../static/images/dm@3x.png">
@@ -43,7 +43,8 @@
                     <img class="is_pointer" src="../static/images/trending@3x.png" onclick="open_write_popup()" />
                 </li>
                 <li>
-                    <img class="is_pointer" style="position: static" src="../static/images/like@3x.png">
+                    <img class="is_pointer" style="position: static" src="../static/images/like@3x.png" onclick="open_like_history()">
+
                     {% include 'like_history.html' %}
                 </li>
                 <li>
@@ -53,7 +54,6 @@
 
         </div>
     </div>
-    <input type="button" id="button1" value="버튼1">
     <div class="wrap" style="z-index: 0">
         <ul class="story">
             <li>
