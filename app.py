@@ -97,7 +97,6 @@ def indexPagePost():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
-
 @app.route('/login', methods=['POST'])
 def login_check():
     user_id = request.form['user_id']
@@ -299,9 +298,11 @@ def api_login():
     else:
         return jsonify({'result': 'fail'})
 
+
 @app.route("/change_pwd")
 def change():
     return render_template('change_pwd.html')
+
 
 @app.route('/change_pwd/find-pwd', methods=['POST'])
 def find_pwd():
@@ -311,9 +312,7 @@ def find_pwd():
     find_id = list(db.user.find({'user_id'}, {'_id': False}))
     find_nickname = list(db.user.find({'user_name'}, {'_id': False}))
 
-
     return jsonify({'msg': '확인 되었습니다.'})
-
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
@@ -439,6 +438,7 @@ def sign_out():
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
         db.user.delete_one({'user_id': user_info['user_id']})
+        db.post_content.delete_many({'user_id': user_info['user_id']})
 
         return jsonify({'msg': '회원탈퇴 완료!'})
 
