@@ -121,7 +121,8 @@ def profile_main_page(name):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         if name == user_info['name']:
-            user_my_feed = db.post_content.find_one({"user_id": payload['user_id']})
+            user_my_feed = db.post_content.find_one({"user_id": payload['user_id']},{'_id':False})
+            print(user_my_feed)
             return render_template('profile_main.html', user=user_info, check=True, feed=user_my_feed)
         else:
             user_other = db.user.find_one({"name": name})
@@ -156,10 +157,10 @@ def move_addpage():
 
 
 # 개인 피드 확인
-@app.route('/my_feed/<user_id>')
-def load_my_feed(user_id):
-    user = db.user.find_one({'user_id': user_id}, {'_id': False})
-    my_feed = db.post_content.find_one({'user_id': user_id}, {'_id': False})
+@app.route('/my_feed/<name>')
+def load_my_feed(name):
+    user = db.user.find_one({'name': name}, {'_id': False})
+    my_feed = db.post_content.find_one({'user_id': user['user_id']}, {'_id': False})
     return render_template('my_feed.html', user=user, feed=my_feed)
 
 
