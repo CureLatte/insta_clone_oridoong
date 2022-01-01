@@ -366,9 +366,7 @@ def new_writing():
 
         desc_receive = request.form['desc_give']
         photo = request.files['photo_give']
-        # comment, like 미구현상태
-        comment = []
-        like = 0
+
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
@@ -376,21 +374,9 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}.{extension}'
         photo.save(save_to)
 
-        post_con = {
-            'desc': desc_receive,
-            'photo': f'{filename}.{extension}',
-            'comment': comment,
-            'like': like,
-        }
-        container = [post_con]
-
-        doc = {
-            'user_id': user_info["user_id"],
-            "container": container,
-        }
-
-        print(doc)
-        db.post_content.insert_one(doc)
+        pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
+        pre_desc = pre_desc["container"][0]['desc']
+        db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:

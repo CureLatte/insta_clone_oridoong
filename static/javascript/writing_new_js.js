@@ -41,8 +41,8 @@ function posting() {
         contentType: false,
         processData: false,
         success: function (response) {
-            alert(response["result"])
-            window.location.reload()
+            alert(response["msg"])
+            window.location.href='/index_page'
         }
     });
 }
