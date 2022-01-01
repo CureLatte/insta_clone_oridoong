@@ -1,5 +1,6 @@
 import hashlib
 import datetime
+import random
 from typing import Container
 import certifi
 import jwt
@@ -41,9 +42,9 @@ def index_page_post():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-
-        # photo-content 데이터, user 이름 데이터 얻어 오는 부분
         all_photo = list(db.post_content.find({}, {'_id': False}))
+        all_user = list(db.user.find({}, {'_id': False}))
+        random.shuffle(all_user)
 
         for photo in all_photo:
             photo_user = db.user.find_one(
@@ -51,8 +52,24 @@ def index_page_post():
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
 
-        return jsonify([{'all_photo': all_photo}, user_info['name']])
+        return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
 
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/index_page/post', methods=['POST'])
+def indexPagePost():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']})
+        user_id = request.data
+        updatestmt = ({"user_id": user_info["user_id"]}, {"follow": user_id, })
+        db.user.update_one(*updatestmt)
+        return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -69,6 +86,8 @@ def login_check():
 
 
 # 프로필 메인 페이지
+
+
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
 
@@ -118,6 +137,7 @@ def move_addpage():
 def load_my_feed(user):
     user_check = db.user.find_one({'user_name': user}, {'_id': False})
     return render_template('my_feed.html', user=user_check)
+
 
 @app.route('/profile_test/')
 def profile_test_11():
@@ -283,11 +303,12 @@ def sign_up_save():
 def main_user_like():
     photo = request.form['photo']
     like = request.form['like']
-    db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {'$set': {'container.$.like': int(like)}})
-    user_post = db.post_content.find_one({"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
+    db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+                               '$set': {'container.$.like': int(like)}})
+    user_post = db.post_content.find_one(
+        {"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
 
     return jsonify({'user_like': user_post['container'][0]['like']})
-
 
 
 ##########################글작성 페이지########################################
