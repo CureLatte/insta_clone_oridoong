@@ -17,6 +17,27 @@
 </head>
 
 <body>
+
+    <div class="warnin_pop" style="display: none;">
+        <div class="in_popup">
+            <div class="popup-inner">
+                <div class="popup-contents">
+                    <h4>회원탈퇴 진행</h4>
+                    <p>
+                        회원탈퇴를 한번 진행하면 되돌릴 수 없습니다.
+                        <br>
+                        <strong>정말로 진행하시겠습니까?</strong>
+                    </p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <button class="popup-close">취소</button>
+                    <input onclick="sign_out()" type="submit" value="회원탈퇴" class="sign_out_btn">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="edit_profile_container">
         <form class="bot_content" method="post">
             <img style="width:170px; height: 170px; border: 1px solid #ddd;" id="preview_image"
@@ -52,7 +73,7 @@
                     <label for="bio">자기소개</label>
                     <textarea class="input_style_textarea" id="bio" name="bio" rows="4" cols="43"></textarea>
                 </li>
-                <input onclick="sign_out()" type="submit" value="회원탈퇴" class="sign_out_btn">
+                <input class="pop_btn sign_out_btn" type="button" value="회원탈퇴">
             </ul>
 
             <div class="submit_form">
@@ -65,84 +86,13 @@
 
     </div>
 
+
+
+
 </body>
 
 </html>
 
-<script>
-    $(document).ready(function () {
-        edit_profile();
-    });
+<!--  -->
 
-    function edit_profile() {
-        $.ajax({
-            type: 'GET',
-            url: '/edit_profile_get',
-            data: {},
-            success: function (response) {
-                let user_info = response['user_info'];
-
-                $.each(user_info, function (index, obj) {
-                    $("#" + index).val(obj);
-                })
-            }
-        });
-    }
-
-
-    //사진 미리보기
-    function readImage(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader()
-            reader.onload = e => {
-                const previewImage = document.getElementById("preview_image")
-                previewImage.src = e.target.result
-            }
-            reader.readAsDataURL(input.files[0])
-        }
-    }
-    const inputImage = document.getElementById("input_image")
-    inputImage.addEventListener("change", e => {
-        readImage(e.target)
-    })
-    // ajax
-    function save_update_profile() {
-        let username = $("#username").val()
-        let name = $("#name").val()
-        let email = $("#email").val()
-        let phone_number = $("#phone_number").val()
-        let gender = $("#gender").val();
-        let avatar = $("#input_image").val();
-        let bio = $("#bio").val();
-
-        $.ajax({
-            type: "POST",
-            url: "/edit_profile",
-            data: {
-                username_receive: username,
-                name_receive: name,
-                email_receive: email,
-                phone_number_receive: phone_number,
-                gender_receive: gender,
-                avatar_receive: avatar,
-                bio_receive: bio,
-            },
-            success: function (response) {
-                alert(response["msg"])
-                window.location.reload()
-            }
-        });
-    }
-
-    function sign_out() {
-        $.ajax({
-            type: 'GET',
-            url: '/sign_out',
-            data: {},
-            success: function (response) {
-                alert(response["msg"]);
-                window.location.href = "/";
-            }
-        });
-    }
-</script>
+<script src="../static/javascript/edit_profile_js.js"></script>
