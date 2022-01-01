@@ -28,3 +28,8 @@ function GET_follower_data(){
             }
         })
 }
+
+function profile_main(obj) {
+    window.location.href = '/profile_main/' + obj.alt;
+
+}
