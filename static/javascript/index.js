@@ -6,8 +6,6 @@ $(document).ready(function () {
         success: function (response) {
             let rows = response[0]['all_photo'];
             let login_user = response[1];
-            console.log(login_user)
-            console.log(typeof (login_user))
 
             document.getElementById('user-home').alt = login_user;
 
@@ -16,6 +14,10 @@ $(document).ready(function () {
                 let photo_like = rows[i]['container'][0]['like'];
                 let avatar = rows[i]['avatar'];
                 let name = rows[i]['name'];
+                let like_user = rows[i]['like_user']
+                console.log(like_user)
+
+                let temp_image_html = ``;
                 let temp_html = ``;
                 if (photo) {
                     temp_html = `
