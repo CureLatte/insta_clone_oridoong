@@ -157,10 +157,11 @@ def move_addpage():
 
 
 # 개인 피드 확인
-@app.route('/my_feed/<user>')
-def load_my_feed(user):
-    user_check = db.user.find_one({'user_name': user}, {'_id': False})
-    return render_template('my_feed.html', user=user_check)
+@app.route('/my_feed/<user_id>')
+def load_my_feed(user_id):
+    user = db.user.find_one({'user_id': user_id}, {'_id': False})
+    my_feed = db.post_content.find_one({'user_id': user_id}, {'_id': False})
+    return render_template('my_feed.html', user=user, feed=my_feed)
 
 
 # 메인페이지 복사본 API

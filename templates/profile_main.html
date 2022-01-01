@@ -5,11 +5,11 @@
     <title>Orimstagram</title>
     <link rel="stylesheet" href="../static/css/profile_main_css.css">
     <link rel="stylesheet" href="../static/css/no.css">
+    <link rel="stylesheet" href="../static/css/common.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../static/javascript/profile_main_js.js"></script>
 </head>
 <body>
-
 <div class="wrap">
     <div class="main_wrap">
         <div class="my_container">
@@ -77,21 +77,23 @@
                </div>
             </div>
         </div>
-        {{ feed['container'][0]['photo'] }}
         {% set total = feed['container']|length %}
         {% set rows = total//3 %}
         <div class="content_container">
             <div class="content_wrapper">
-                {% for i in range(3) %}
+                {% for i in range(rows+1) %}
                 <div class="content_row">
                     {% for k in range(3) %}
                     {% if i*3+k < total %}
                     {% set filepath = '../static/images/post-contents/'+ feed['container'][i*3+k]['photo'] %}
-                    {% set urlpath = '/my_feed/'+ user['user_name'] %}
+                    {% set urlpath = '/my_feed/'+ user['name'] %}
                     <div class="content">
                         <a href="{{ urlpath }}"><img src="{{ filepath }}"></a>
                     </div>
-                     {% endif %}
+                    {% else %}
+                    <div class="none_content">
+                    </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 {% endfor %}
