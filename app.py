@@ -398,9 +398,10 @@ def new_writing():
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-        filename = f'{mytime}'
-        save_to = f'static/images/post-contents/{filename}.{extension}'
+        filename = f'{mytime}.{extension}'
+        save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
+
 
         pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
         pre_desc = pre_desc["container"][0]['desc']
