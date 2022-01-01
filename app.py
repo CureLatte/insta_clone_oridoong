@@ -35,7 +35,7 @@ def index_page():
 
 
 @app.route('/index_page/post', methods=['GET'])
-def index_page_post():
+def index_page_poster_get():
     token_receive = request.cookies.get('mytoken')
 
     # user_id 값은 사용 안하지만 로그인 시간 확인을 위해 체크
@@ -46,11 +46,19 @@ def index_page_post():
         all_user = list(db.user.find({}, {'_id': False}))[0:5]
         random.shuffle(all_user)
 
-        for photo in all_photo:
+        login_user = 0
+
+        for i, photo in enumerate(all_photo):
+            if photo['user_id'] == user_info['user_id']:
+                index_num = i
+                continue
+
             photo_user = db.user.find_one(
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
+
+        del all_photo[login_user]
 
         return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
 
@@ -300,6 +308,7 @@ def sign_up_save():
 
     # 기본 프로필 이미지
     user_dict_receive['avatar'] = "profile_init.png"
+
     user_dict_receive['feed'] = []
     user_dict_receive['follower'] = []
     user_dict_receive['follow'] = []

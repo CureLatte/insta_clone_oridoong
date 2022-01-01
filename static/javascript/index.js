@@ -20,12 +20,12 @@ $(document).ready(function () {
                                 <div class="content">
                                     <section class="con">
                                         <div class="userInfo">
-                                            <a href="#" onclick="profile_main_icon(this)" >
-<!--                                            <img src="static/images/user/${avatar}" />-->
-                                                <h4>${name}</h4>
-                                            </a>
+                                            <div class="post-left-wrapper">
+                                                <img src="static/images/user/${avatar}" onclick="profile_main_icon(this)"/>
+                                                <p>${name}</p>
+                                            </div>
                                             <div class="is_pointer">
-                                                <img src="../static/images/more@3x.png" onclick="opendia()" alt="">
+                                                <img src="../static/images/more@3x.png" onclick="opendia(this)" alt="">
                                             </div>
                                         </div>
                                         <div class="image_box" style="background-image: url('/static/images/post-contents/${photo}')"></div>
@@ -125,16 +125,13 @@ function like(data) {
 }
 
 // post 더 보기 버튼
-function opendia() {
+function opendia(obj) {
     let dialog = document.getElementById('dialog');
 
-    if (typeof dialog.showModal === "function") {
-        dialog.showModal();
-    } else {
-        alert('예기치 못한 오류')
-    }
+    dialog.showModal();
+
     dialog.addEventListener('cancel', function onClose() {
-        window.location.reload();
+        dialog.close();
     });
 
     $(document).mouseup(function (e) {
