@@ -97,7 +97,6 @@ def indexPagePost():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
-
 @app.route('/login', methods=['POST'])
 def login_check():
     user_id = request.form['user_id']
@@ -302,9 +301,11 @@ def api_login():
     else:
         return jsonify({'result': 'fail'})
 
+
 @app.route("/change_pwd")
 def change():
     return render_template('change_pwd.html')
+
 
 @app.route('/change_pwd/find-pwd', methods=['POST'])
 def find_pwd():
@@ -314,9 +315,7 @@ def find_pwd():
     find_id = list(db.user.find({'user_id'}, {'_id': False}))
     find_nickname = list(db.user.find({'user_name'}, {'_id': False}))
 
-
     return jsonify({'msg': '확인 되었습니다.'})
-
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
@@ -398,9 +397,7 @@ def new_writing():
 
         desc_receive = request.form['desc_give']
         photo = request.files['photo_give']
-        # comment, like 미구현상태
-        comment = []
-        like = 0
+
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
@@ -408,21 +405,9 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}.{extension}'
         photo.save(save_to)
 
-        post_con = {
-            'desc': desc_receive,
-            'photo': f'{filename}.{extension}',
-            'comment': comment,
-            'like': like,
-        }
-        container = [post_con]
-
-        doc = {
-            'user_id': user_info["user_id"],
-            "container": container,
-        }
-
-        print(doc)
-        db.post_content.insert_one(doc)
+        pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
+        pre_desc = pre_desc["container"][0]['desc']
+        db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
@@ -442,6 +427,7 @@ def sign_out():
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
         db.user.delete_one({'user_id': user_info['user_id']})
+        db.post_content.delete_many({'user_id': user_info['user_id']})
 
         return jsonify({'msg': '회원탈퇴 완료!'})
 
