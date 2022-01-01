@@ -38,26 +38,26 @@ body {
   width: 650px;
 }
 
-.userInfo h4 {
-  position: relative;
-  color: #232323;
-  padding-left: 3rem;
-  font-weight: 600;
-  height: 42px;
-  line-height: 25px;
+.userInfo .post-left-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 300px;
 }
-.userInfo h4:before {
-  position: absolute;
-  content: "";
-  left: 0;
-  top: 10px;
-  transform: translateY(-50%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("/static/images/8.jpeg");
-  width: 2rem;
-  height: 2rem;
+
+.userInfo .post-left-wrapper > img {
+  width: 2vw;
+  height: 2vw;
   border-radius: 50%;
+  cursor: pointer;
+  oject-fit: contain;
+}
+
+.userInfo .post-left-wrapper > p {
+  color: #232323;
+  font-weight: 800;
+  margin-left: 10px;
+  font-size: 20px;
 }
 
 .image_box {
@@ -116,19 +116,28 @@ body {
 }
 
 #dialog{
-    width: 20rem;
-    font-size: 1.2rem;
+    width: 280px;
+    font-size: 20px;
     text-align: center;
-    border: 0.1px solid #8d8c8c45;
+    border: 1px solid #8d8c8c45;
     border-radius: 25px;
     padding: 0;
 }
+
+
+#dialog p {
+    border: 1px solid #8d8c8c45;
+    text-align: center;
+    padding: 4% 0;
+}
+
 #dialog button{
-    border: 0;
     background-color: white;
     font-size: 1.2rem;
-    padding-top: 2%;
+    width: 100%;
+    padding-top: 4%;
     padding-bottom: 4%;
+    border: 1px solid #8d8c8c45;
 }
 #dialog button:focus-visible{
     outline: 0;
