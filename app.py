@@ -74,22 +74,40 @@ def index_page_poster_get():
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
+        user_id = request.form["user_name_id_give"]
+        get_name = db.user.find_one({"user_id": user_id})
+        name = get_name["name"]
+
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        user_id = request.form["user_name_id_give"]
-        updatestmt = ({"user_id": user_info['user_id']},
-                      {
-                      "$push": {"follow":
-                                {
-                                    "user_id": user_id,
-                                    "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                }
-                                }
-                      }
-                      )
+        loggedin_user = user_info["user_id"]
+        loggedin_name = user_info["name"]
 
-        db.user.update_one(*updatestmt)
-        print(updatestmt)
+        update_follow = ({"user_id": user_info['user_id']},
+                         {
+            "$push": {"follow":
+                      {
+                          "user_id": user_id,
+                          "name": name,
+                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                      }
+                      }
+        }
+        )
+        update_follower = ({"user_id": user_id},
+                           {
+            "$push": {"follower":
+                      {
+                          "user_id": loggedin_user,
+                          "name": loggedin_name,
+                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                      }
+                      }
+        }
+        )
+
+        db.user.update_one(*update_follow)
+        db.user.update_one(*update_follower)
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -121,12 +139,14 @@ def profile_main_page(name):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         if name == user_info['name']:
-            user_my_feed = db.post_content.find_one({"user_id": payload['user_id']},{'_id':False})
+            user_my_feed = db.post_content.find_one(
+                {"user_id": payload['user_id']}, {'_id': False})
             print(user_my_feed)
             return render_template('profile_main.html', user=user_info, check=True, feed=user_my_feed)
         else:
             user_other = db.user.find_one({"name": name})
-            user_other_feed = db.post_content.find_one({"user_id": user_other['user_id']})
+            user_other_feed = db.post_content.find_one(
+                {"user_id": user_other['user_id']})
             return render_template('profile_main.html', user=user_other, check=False, feed=user_other_feed)
 
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
@@ -160,7 +180,8 @@ def move_addpage():
 @app.route('/my_feed/<name>')
 def load_my_feed(name):
     user = db.user.find_one({'name': name}, {'_id': False})
-    my_feed = db.post_content.find_one({'user_id': user['user_id']}, {'_id': False})
+    my_feed = db.post_content.find_one(
+        {'user_id': user['user_id']}, {'_id': False})
     return render_template('my_feed.html', user=user, feed=my_feed)
 
 
@@ -406,10 +427,11 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
 
-
-        pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
+        pre_desc = db.post_content.find_one({'user_id': user_info["user_id"]}, {
+                                            'container': 1, '_id': False})
         pre_desc = pre_desc["container"][0]['desc']
-        db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
+        db.post_content.update_one({'user_id': user_info["user_id"], 'container': {'$elemMatch': {'desc': pre_desc}}}, {
+                                   '$set': {'container.$.desc': desc_receive, 'container.$.photo': filename}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
