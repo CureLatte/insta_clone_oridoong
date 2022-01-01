@@ -7,6 +7,7 @@
     right: 30px;
     border: 1px solid gray;
     border-radius: 10px;
+    display: none;
 }
 
 .like_history_container .like_history_wrapper{
