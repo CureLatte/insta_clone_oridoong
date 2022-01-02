@@ -6,6 +6,7 @@ $(document).ready(function () {
         success: function (response) {
             let rows = response[0]['all_photo'];
             let login_user = response[1];
+            let index = 0;
 
             document.getElementById('user-home').alt = login_user;
 
@@ -38,12 +39,18 @@ $(document).ready(function () {
                                                 <p>${name}</p>
                                             </div>
                                             <div class="is_pointer">
-                                                <img src="../static/images/more@3x.png" onclick="opendia()" alt="">
+                                                <img src="../static/images/more@3x.png" onclick="dialog_open(this)" alt="${index}">
+                                                <!-- more@3x 눌렀을때 반응 -->
+                                                <div class="dialog">
+                                                    <div class="more-button-wrapper">
+                                                        <button onclick="dialog_remove(${index})" value="remove">삭제</button>
+                                                        <button onclick="dialog_cancel(${index})" value="cancel">취소</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="image_box" style="background-image: url('/static/images/post-contents/${photo}')"></div>
                                             <div class="left-wrapper">
-                                            <!--    <img src="../static/images/like@3x.png" onclick="like(this)" alt="${name},${photo}"> -->
                                                 ${temp_image_html}
                                                 <img class="icon-2" src="../static/images/comment@3x.png">
                                                 <img src="../static/images/dm@3x.png">
@@ -58,11 +65,8 @@ $(document).ready(function () {
                                     </section>
                                 </div>
                                 `
-
-
-
                     $("#content-wrapper").append(temp_html);
-                    // $(".left-wrapper").append(temp_image_html);
+                    index++;
                 }
             }
         }
@@ -146,21 +150,37 @@ function like(data) {
 }
 
 // post 더 보기 버튼
-function opendia() {
-    let dialog = document.getElementById('dialog');
+function dialog_open(obj) {
+    if($(".dialog").is(':visible') || !($(".dialog:eq("+obj.alt+")").is(':visible'))) {
+        $(".dialog").hide();
+        $(".dialog:eq("+obj.alt+")").show();
+    } else {
+        $(".dialog:eq("+obj.alt+")").show();
+    }
 
-    dialog.showModal();
-
-    dialog.addEventListener('cancel', function onClose() {
-        dialog.close();
-    });
+    $(document).scroll(function (e) {
+        let dialog_popup = $(".dialog:eq("+obj.alt+")");
+        if( dialog_popup.has(e.target).length === 0){
+            dialog_popup.hide();
+        }
+    })
 
     $(document).mouseup(function (e) {
-        let dialogPopup = $("#dialog");
-        if (dialogPopup.has(e.target).length === 0) {
-            $("#dialog button").click();
+        let dialog_popup = $(".dialog:eq("+obj.alt+")");
+        if( dialog_popup.has(e.target).length === 0){
+            dialog_popup.hide();
         }
-    });
+    })
+}
+
+// dialog 삭제버튼
+function dialog_remove(index) {
+    console.log($('.is_pointer'.children))
+}
+
+// dialog 취소버튼
+function dialog_cancel(index) {
+    $(".dialog:eq("+index+")").hide();
 }
 
 // 헤더 홈 버튼
