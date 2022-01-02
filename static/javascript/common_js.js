@@ -1,16 +1,20 @@
 $(document).ready(function(){
     load_user_info_profile();
-    $(document).mouseup(function (e) {
-        let dialogPopup = $("#more_container");
-        if (dialogPopup.has(e.target).length === 0) {
-            $("#more_container").hide();
-        }
-        let like_history = $("#like_history_container");
-        if (dialogPopup.has(e.target).length === 0) {
-            $("#like_history_container").hide();
-        }
-    });
+
 })
+
+$(document).mouseup(function (e) {
+    let dialogPopup = $("#more_container");
+    if (dialogPopup.has(e.target).length === 0 ) {
+        $("#more_container").hide();
+
+    }
+
+    let like_history = $("#like_history_container");
+    if (dialogPopup.has(e.target).length === 0) {
+        $("#like_history_container").hide();
+    }
+});
 
 
 //  like_history 부분
