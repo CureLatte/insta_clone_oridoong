@@ -25,6 +25,9 @@
 //     reader.readAsDataURL(e.target.files[0]);
 // }
 
+
+
+
 function posting() {
     let photo = $('#input_writing_image')[0].files[0]
     let desc = $('#desc').val()
