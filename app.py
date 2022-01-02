@@ -113,6 +113,7 @@ def login_check():
 def redirect_my_profile():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    check_user = db.user.find_one({"name": payload['user_id']}, {'_id': False})
     return redirect(url_for('profile_main_page', user_name=user))
 
 
