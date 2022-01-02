@@ -48,11 +48,15 @@ def index_page_poster_get():
         all_user = list(db.user.find({}, {'_id': False}))[0:5]
         random.shuffle(all_user)
 
-        login_user = None
+        user_remove = []
 
         for i, photo in enumerate(all_photo):
             if photo['user_id'] == user_info['user_id']:
-                login_user = i
+                user_remove.append(i)
+                continue
+
+            if len(photo['container']) == 0:
+                user_remove.append(i)
                 continue
 
             photo_user = db.user.find_one(
@@ -60,8 +64,9 @@ def index_page_poster_get():
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
 
-        if login_user is not None:
-            del all_photo[login_user]
+        if len(user_remove):
+            for user_index in reversed(user_remove):
+                del all_photo[user_index]
 
         return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
 
@@ -98,6 +103,14 @@ def indexPagePost():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
+@app.route('/index_page/header/profile')
+def header_profile_info():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+    return jsonify({'user_info': user_info})
+
+
 @app.route('/login', methods=['POST'])
 def login_check():
     user_id = request.form['user_id']
@@ -109,19 +122,22 @@ def login_check():
 
 ################################################################
 # 프로필 메인 페이지
-@app.route('/profile_main/')
+@app.route('/profile_main/my')
 def redirect_my_profile():
     token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    check_user = db.user.find_one({"name": payload['user_id']}, {'_id': False})
-    return redirect(url_for('profile_main_page', user_name=user))
-
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        return redirect(url_for('profile_main_page', user_name=user_info['name']))
+    except:
+        return redirect(url_for('login_page'))
 
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
+    if user_name == 'undefined':
+        return render_template('has_not_feed.html')
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
-
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -129,10 +145,10 @@ def profile_main_page(user_name):
         check_user = db.user.find_one({"name": user_name}, {'_id': False})
         check_user_feed = db.post_content.find_one({"user_id": check_user['user_id']}, {'_id': False})
         if check_user['user_id'] == user_info['user_id'] and check_user_feed is not None:
-            return render_template('profile_main.html', user=user_info, check=True, feed=check_user)
+            return render_template('profile_main.html', user=user_info, check=True, feed=check_user_feed)
         elif check_user['user_id'] != user_info['user_id'] and check_user_feed is not None:
             user_other = db.user.find_one({"name": user_name})
-            return render_template('profile_main.html', user=user_other, check=False, feed=check_user)
+            return render_template('profile_main.html', user=user_other, check=False, feed=check_user_feed)
         else:
             return render_template('has_not_feed.html')
 

@@ -10,6 +10,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../static/javascript/profile_main_js.js"></script>
     <script src="../static/javascript/common_js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 <body>
 {% include 'common.html' %}
@@ -42,7 +43,7 @@
                 </div>
                 <div class="info_row">
                     <div class="content_count">
-                        <p>게시글 {{ feed['container']|length }}</p>
+                        <p>게시글 <strong>{{ feed['container']|length }}</strong></p>
                     </div>
                     <div class="follower_count">
                         <p>팔로워 {{ user['follower']|length }}</p>
@@ -81,6 +82,13 @@
             </div>
         </div>
         {% set total = feed['container']|length %}
+        {% if total == 0%}
+         <div class="content_container">
+             <div class="no_content_box">
+                 <p>현재 게시글이 없습니다!</p>
+             </div>
+         </div>
+        {% else %}
         {% set rows = total//3 %}
         <div class="content_container">
             <div class="content_wrapper">
@@ -102,6 +110,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 </body>

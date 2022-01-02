@@ -134,6 +134,10 @@ ul{
   list-style: none;
 }
 
+#index_main_header_profile{
+    border-radius: 50%;
+}
+
 /* like_history 부분 */
 
 .like_history_container{
@@ -141,8 +145,8 @@ ul{
     background-color: white;
     width : 500px;
     height: 350px;
-    top: 70px;
-    right: 30px;
+    top: 60px;
+    right: -10px;
     border: 1px solid gray;
     border-radius: 10px;
     display: none;
@@ -218,13 +222,54 @@ ul{
 
 
 .header_more_container{
-  background-color: aqua;
-  position: absolute;
-  width : 250px;
-  height: 350px;
-  top: 70px;
-  right: -10px;
-  border: 1px solid gray;
-  border-radius: 10px;
+    background-color: white;
+    position: absolute;
+    width: 200px;
+    top: 60px;
+    right: -10px;
+    border: 1px solid gray;
+    border-radius: 10px;
     display: none;
+    overflow: hidden;
+}
+
+.header_more_row{
+    width: 100%;
+    height : 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.header_more_row:hover{
+    background: rgb(250, 249, 249);
+}
+
+.header_more_icon{
+    width : 30px;
+    height : 30px;
+    margin : 5px 10px 5px 10px;
+}
+
+.header_more_icon img{
+    width : 100%;
+    height : 100%;
+    object-fit: cover;
+}
+
+.header_more_text{
+    width : 100px;
+    height : 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+}
+
+#logout_text{
+    width :100%;
 }
