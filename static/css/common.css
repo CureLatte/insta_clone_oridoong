@@ -269,3 +269,7 @@ ul{
     justify-content: center;
     font-weight: bolder;
 }
+
+#logout_text{
+    width :100%;
+}
