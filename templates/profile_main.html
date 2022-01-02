@@ -82,6 +82,13 @@
             </div>
         </div>
         {% set total = feed['container']|length %}
+        {% if total == 0%}
+         <div class="content_container">
+             <div class="no_content_box">
+                 <p>현재 게시글이 없습니다!</p>
+             </div>
+         </div>
+        {% else %}
         {% set rows = total//3 %}
         <div class="content_container">
             <div class="content_wrapper">
@@ -103,6 +110,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 </body>

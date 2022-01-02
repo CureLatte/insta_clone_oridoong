@@ -1,5 +1,15 @@
 $(document).ready(function(){
     load_user_info_profile();
+    $(document).mouseup(function (e) {
+        let dialogPopup = $("#more_container");
+        if (dialogPopup.has(e.target).length === 0) {
+            $("#more_container").hide();
+        }
+        let like_history = $("#like_history_container");
+        if (dialogPopup.has(e.target).length === 0) {
+            $("#like_history_container").hide();
+        }
+    });
 })
 
 
@@ -69,4 +79,17 @@ function more_logout(){
     $.removeCookie('mytoken');
     alert('로그아웃!')
     window.location.href = '/'
+}
+
+function check_more_header_other() {
+    let more_btn = document.getElementById('index_main_header_profile');
+
+    dialog.showModal();
+
+    $(document).mouseup(function (e) {
+        let dialogPopup = $("#index_main_header_profile");
+        if (dialogPopup.has(e.target).length === 0) {
+            $("#index_main_header_profile").hide();
+        }
+    });
 }
