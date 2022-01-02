@@ -33,3 +33,7 @@ function profile_main(obj) {
     window.location.href = '/profile_main/' + obj.alt;
 
 }
+
+function more_header_on(){
+
+}

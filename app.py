@@ -109,6 +109,13 @@ def login_check():
 
 ################################################################
 # 프로필 메인 페이지
+@app.route('/profile_main/')
+def redirect_my_profile():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    check_user = db.user.find_one({"name": payload['user_id']}, {'_id': False})
+    return redirect(url_for('profile_main_page', user_name=user))
+
 
 
 @app.route('/profile_main/<user_name>')
@@ -121,11 +128,15 @@ def profile_main_page(user_name):
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        if user_name == user_info['name']:
-            return render_template('profile_main.html', user=user_info, check=True)
-        else:
+        check_user = db.user.find_one({"name": user_name}, {'_id': False})
+        check_user_feed = db.post_content.find_one({"user_id": check_user['user_id']}, {'_id': False})
+        if check_user['user_id'] == user_info['user_id'] and check_user_feed is not None:
+            return render_template('profile_main.html', user=user_info, check=True, feed=check_user)
+        elif check_user['user_id'] != user_info['user_id'] and check_user_feed is not None:
             user_other = db.user.find_one({"name": user_name})
-            return render_template('profile_main.html', user=user_other, check=False)
+            return render_template('profile_main.html', user=user_other, check=False, feed=check_user)
+        else:
+            return render_template('has_not_feed.html')
 
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
@@ -158,13 +169,16 @@ def move_addpage():
 @app.route('/my_feed/<user>')
 def load_my_feed(user):
     user_check = db.user.find_one({'user_name': user}, {'_id': False})
-    return render_template('my_feed.html', user=user_check)
+    feed_check = db.post_content.find({'usr_id': user_check['user_id']},{'_id':False})
+    if feed_check is None:
+        return render_template('has_not_feed.html')
+    else:
+        return render_template('my_feed.html', user=user_check)
 
 
-# 메인페이지 복사본 API
-@app.route('/profile_test_main')
-def profile_test_11():
-    return render_template('base_test.html')
+@app.route('/my_feed/None')
+def cant_find_feed():
+    return render_template('has_not_feed.html')
 
 
 # follow_test API
@@ -175,7 +189,6 @@ def profile_test_load_follow():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
-        print(user_info)
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
