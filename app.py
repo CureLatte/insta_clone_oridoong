@@ -182,12 +182,13 @@ def move_addpage():
 # 개인 피드 확인
 @app.route('/my_feed/<user>')
 def load_my_feed(user):
-    user_check = db.user.find_one({'user_name': user}, {'_id': False})
-    feed_check = db.post_content.find({'usr_id': user_check['user_id']}, {'_id': False})
+    user_check = db.user.find_one({'name': user}, {'_id': False})
+    feed_check = db.post_content.find_one({'user_id': user_check['user_id']}, {'_id': False})
+    print(feed_check)
     if feed_check is None:
         return render_template('has_not_feed.html')
     else:
-        return render_template('my_feed.html', user=user_check)
+        return render_template('my_feed.html', user=user_check, feed=feed_check)
 
 
 @app.route('/my_feed/None')
