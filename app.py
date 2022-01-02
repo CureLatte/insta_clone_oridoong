@@ -60,7 +60,7 @@ def index_page_poster_get():
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
 
-        if login_user:
+        if login_user is not None:
             del all_photo[login_user]
 
         return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
@@ -386,7 +386,17 @@ def sign_up_save():
     user_dict_receive['follower'] = []
     user_dict_receive['follow'] = []
 
+    post_content_dict = {
+        'user_id': user_dict_receive['user_id'],
+        'container': []
+    }
+
+    # user 테이블 생성
     db.user.insert_one(user_dict_receive)
+
+    # post_content 테이블 생성
+    db.post_content.insert_one(post_content_dict)
+
 
     return jsonify({'msg': '회원가입 완료'})
 
@@ -439,9 +449,15 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}.{extension}'
         photo.save(save_to)
 
-        pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]}, {'container': 1, '_id': False})
-        pre_desc = pre_desc["container"][0]['desc']
-        db.post_content.update_one({'user_id': user_info["user_id"], 'container': {'$elemMatch': {'desc': pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
+        container_content = {
+            'desc': desc_receive,
+            'photo': filename,
+            'comment': [],
+            'like': 0,
+            'like_user': []
+        }
+
+        db.post_content.update_one({'user_id': user_info['user_id']}, {'$addToSet': {'container': container_content}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
