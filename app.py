@@ -132,7 +132,6 @@ def redirect_my_profile():
     except:
         return redirect(url_for('login_page'))
 
-
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
     if user_name == 'undefined':
@@ -444,12 +443,16 @@ def new_writing():
 
         desc_receive = request.form['desc_give']
         photo = request.files['photo_give']
+        if desc_receive == "":
+            desc_receive = ""
+        else:
+            desc_receive = desc_receive
 
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-        filename = f'{mytime}'
-        save_to = f'static/images/post-contents/{filename}.{extension}'
+        filename = f'{mytime}.{extension}'
+        save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
 
         container_content = {

@@ -33,6 +33,10 @@ function posting() {
     let desc = $('#desc').val()
     let form_data = new FormData()
 
+    if(typeof photo === "undefined")
+        alert("이미지을 넣어 주세요")
+        return
+
     form_data.append("photo_give", photo)
     form_data.append("desc_give", desc)
 
