@@ -48,11 +48,15 @@ def index_page_poster_get():
         all_user = list(db.user.find({}, {'_id': False}))[0:5]
         random.shuffle(all_user)
 
-        login_user = None
+        user_remove = []
 
         for i, photo in enumerate(all_photo):
             if photo['user_id'] == user_info['user_id']:
-                login_user = i
+                user_remove.append(i)
+                continue
+
+            if len(photo['container']) == 0:
+                user_remove.append(i)
                 continue
 
             photo_user = db.user.find_one(
@@ -60,8 +64,9 @@ def index_page_poster_get():
             photo['name'] = photo_user['name']
             photo['avatar'] = photo_user['avatar']
 
-        if login_user is not None:
-            del all_photo[login_user]
+        if len(user_remove):
+            for user_index in reversed(user_remove):
+                del all_photo[user_index]
 
         return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
 
@@ -80,12 +85,12 @@ def indexPagePost():
         user_id = request.form["user_name_id_give"]
         updatestmt = ({"user_id": user_info['user_id']},
                       {
-                      "$push": {"follow":
-                                {
-                                    "user_id": user_id,
-                                    "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                }
-                                }
+                          "$push": {"follow":
+                              {
+                                  "user_id": user_id,
+                                  "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                              }
+                          }
                       }
                       )
 
@@ -126,8 +131,6 @@ def redirect_my_profile():
         return redirect(url_for('profile_main_page', user_name=user_info['name']))
     except:
         return redirect(url_for('login_page'))
-
-
 
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
@@ -180,7 +183,7 @@ def move_addpage():
 @app.route('/my_feed/<user>')
 def load_my_feed(user):
     user_check = db.user.find_one({'user_name': user}, {'_id': False})
-    feed_check = db.post_content.find({'usr_id': user_check['user_id']},{'_id':False})
+    feed_check = db.post_content.find({'usr_id': user_check['user_id']}, {'_id': False})
     if feed_check is None:
         return render_template('has_not_feed.html')
     else:
@@ -397,7 +400,6 @@ def sign_up_save():
     # post_content 테이블 생성
     db.post_content.insert_one(post_content_dict)
 
-
     return jsonify({'msg': '회원가입 완료'})
 
 
@@ -441,12 +443,16 @@ def new_writing():
 
         desc_receive = request.form['desc_give']
         photo = request.files['photo_give']
+        if desc_receive == "":
+            desc_receive = ""
+        else:
+            desc_receive = desc_receive
 
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-        filename = f'{mytime}'
-        save_to = f'static/images/post-contents/{filename}.{extension}'
+        filename = f'{mytime}.{extension}'
+        save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
 
         container_content = {
@@ -467,7 +473,7 @@ def new_writing():
 
 
 # 회원 탈퇴
-@ app.route('/sign_out', methods=['GET'])
+@app.route('/sign_out', methods=['GET'])
 def sign_out():
     # 쿠키에서 토큰 가져옴
     token_receive = request.cookies.get('mytoken')
