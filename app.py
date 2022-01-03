@@ -1,7 +1,6 @@
 import hashlib
 import datetime
 import random
-from typing import Container
 import certifi
 import jwt
 from pymongo import MongoClient
