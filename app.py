@@ -498,6 +498,17 @@ def new_writing():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
+# 포스터 삭제
+@app.route("/writing_remove", methods=["POST"])
+def writing_remove():
+    name = request.form["name"]
+    photo = request.form["photo"]
+
+    user_id = db.user.find_one({"name": name}, {"user_id": 1, "_id": False})
+    poster = db.content
+
+    return jsonify()
+
 
 # 회원 탈퇴
 @app.route('/sign_out', methods=['GET'])
