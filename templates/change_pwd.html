@@ -15,10 +15,14 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <link rel="stylesheet" href="../static/css/change_pwd.css">
-<!--    <script src="../static/javascript/change_pwd_js.js"></script>-->
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/like_history_css.css">
+    <link rel="stylesheet" href="../static/css/no.css">
+    <script src="../static/javascript/change_pwd_js.js"></script>
     <title>Title</title>
 </head>
 <body>
+{% include 'common.html' %}
     <div id="main">
     <div id="container">
         <div id="sign-up-container">
@@ -28,7 +32,7 @@
                         <img id="title-img" src="..\static\images\자물쇠_원형_아이콘-06.png.crdownload"/>
                         <p>로그인에 문제가 있나요?</p>
                     </div>
-                    <p id="sub-title">아이디와 닉네임을 입력하시면 비밀번호를 바굴수 있습니다.</p>
+                    <p id="sub-title">아이디와 닉네임을 입력하시면 비밀번호를 바꿀수 있습니다.</p>
                 </div>
                 <div id="sign-up-body">
                     <input type="text" id="send-id" placeholder="아이디">
@@ -40,8 +44,8 @@
                         <input type="text" id="new_pwd" placeholder="새 비밀번호">
                     </div>
                     <div class="btn-r">
-                        <a href="/" onclick="update_pwd()" class="myButton">확인</a>
-                        <a href="/" class="myButton2">취소</a>
+                        <button onclick="update_pwd()" class="myButton">확인</button>
+                        <button href="/" class="myButton2">취소</button>
                     </div>
                 </div>
             </div>
