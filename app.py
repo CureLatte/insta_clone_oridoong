@@ -657,5 +657,33 @@ def sign_out():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
+# 댓글 작성
+@app.route("/index_page/comment", methods=["POST"])
+def post_comment():
+    comment_receive = request.form['comment_give']
+    user_id_receive = request.form['user_id_give']
+
+    check_user = db.post_content.find_one({'user_id': user_id_receive}, {'_id': False})
+
+
+    token_receive = request.cookies.get('mytoken')
+
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.post_content.find_one({"user_id": payload['user_id']})
+
+
+    db.post_content.update_one({'user_id': check_user}, {'$set': {'comment': comment_receive}})
+
+    return jsonify({'msg': '회원가입 완료'})
+
+
+# 댓글 가져오기
+@app.route("/index_page/comment", methods=["GET"])
+def comment_list():
+    all_comment = list(db.post_content.find({}, {'_id': False}))
+
+    return jsonify({'comments': all_comment})
+
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
