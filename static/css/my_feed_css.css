@@ -217,13 +217,14 @@ li {
 
 .userInfo .post_more{
   width : 20px;
-  height : 5px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .userInfo .post_more img{
   width :100%;
-  height : 100%;
+  height : 5px;
+  margin-bottom: 10px;
 }
 
 .userInfo div {
