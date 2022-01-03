@@ -413,16 +413,7 @@ def update_pwd():
 # 회원 가입 페이지
 @app.route('/sign_up')
 def sign_up():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
-            return render_template('sign_up.html')
-
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return render_template('login.html')
-    # return render_template('sign_up.html')
+    return render_template('sign_up.html')
 
 
 @app.route('/sign_up/check_dup', methods=['POST'])
