@@ -372,9 +372,9 @@ def change():
 @app.route('/change_pwd/find-pwd', methods=['POST'])
 def find_pwd():
     id_receive = request.form['find_id']
-    nickname_receive = request.form['find_nickname']
+    email_receive = request.form['find_email']
 
-    if db.user.find_one({'user_id': id_receive}) and db.user.find_one({'user_name': nickname_receive}):
+    if db.user.find_one({'user_id': id_receive}) and db.user.find_one({'email': email_receive}):
         return jsonify({'msg': '확인 되었습니다.'})
     else:
         return jsonify({'msg': '등록된 회원정보가 없습니다.'})
@@ -382,15 +382,14 @@ def find_pwd():
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
 def update_pwd():
-    pwd_receive = request.form['new_pwd']
     id_receive = request.form['find_id']
+    new_pwd_receive = request.form['give_new_pwd']
 
-    pw_hash = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
+    pw_hash = hashlib.sha256(new_pwd_receive.encode('utf-8')).hexdigest()
 
     db.user.update_one({'user_id': id_receive}, {'$set': {'pwd': pw_hash}})
 
     return jsonify({'msg': '비밀번호가 변경 되었습니다.'})
-
 
 # 회원 가입 페이지
 @app.route('/sign_up')

@@ -5,11 +5,13 @@ body {
 
 #container {
     display: flex;
-    flex-direction: column;
-    margin-top: 44px;
-}
-#title-img{
-    width: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    background-color: white;
+    justify-content: center;
+    border: 1px solid lightgray;
 }
 
 /* html 공간 만드는 부분 */
@@ -17,19 +19,17 @@ body {
     width: 350px;
     height: 600px;
     margin: 30px auto 0 auto;
-    border: 1px solid lightgray;
+
     background-color: white;
 }
 
 /* container 에서 margin 주고 실질적으로 이미지 및 데이터 들어가는 부분*/
 #sign-up-container #sign-up-wrapper {
-    margin: 20px 40px 0 40px;
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 268px;
-
 }
 
 #sign-up-container #sign-up-header {
@@ -52,13 +52,13 @@ body {
     margin: 10px 0;
 }
 
-#title > p {
+#pwd_title > p {
     margin: 10px 0;
-    letter-spacing: 2px;
-    font-size: 20px;
+    font-size: 26px;
 }
 #sub-title{
     font-size: 15px;
+    margin: 0 32px;
 }
 
 #sign-up-container #sign-up-body {
@@ -68,41 +68,32 @@ body {
     margin: auto;
 }
 
-#sign-up-container #sign-up-body > input {
-    margin-top: 25px;
-    height: 30px;
+#sign-up-wrapper #sign-up-body input {
+    height: 35px;
+    width: 268px;
+    margin-top: 20px;
     border-radius: 4px;
 }
 
-#sign-up-wrapper #sign-up-body #input-wrapper {
-    width: 268px;
+#sign-up-wrapper #sign-up-body button {
+    margin: 20px auto;
+    width: 100px;
+    height: 35px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
-#sign-up-wrapper #sign-up-body #input-wrapper input {
-    margin-top: 10px;
-    height: 35px;
-    width: 268px;
-}
-
-#sign-up-wrapper #sign-up-body #input-wrapper > select {
-    margin-top: 10px;
-    height: 35px;
+#change-box {
+    border-top: 1px solid lightgray;
 }
 
 
-/* sign-up-footer */
-#sign-up-footer-container {
-    width: 200px;
-    height: 80px;
-    margin: 100px auto;
-    border: 1px solid lightgray;
+#footer-button-wrapper {
+    width: 100px;
+    height: 50px;
+    margin: 20px auto;
     background-color: white;
-}
-
-#sign-up-footer-container #footer-button-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
