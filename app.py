@@ -76,6 +76,7 @@ def index_page_poster_get():
             photo_user = db.user.find_one(
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
+            photo['user_name'] = photo_user['user_name']
             photo['avatar'] = photo_user['avatar']
 
         if len(user_remove):
@@ -219,9 +220,7 @@ def move_addpage():
 @app.route('/my_feed/<user>')
 def load_my_feed(user):
     user_check = db.user.find_one({'name': user}, {'_id': False})
-    feed_check = db.post_content.find_one(
-        {'user_id': user_check['user_id']}, {'_id': False})
-    print(feed_check)
+    feed_check = db.post_content.find_one({'user_id': user_check['user_id']}, {'_id': False})
     if feed_check is None:
         return render_template('has_not_feed.html')
     else:
@@ -511,6 +510,24 @@ def new_writing():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
+# 포스터 삭제
+@app.route("/poster_remove", methods=["POST"])
+def poster_remove():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {"user_id": 1, "_id": False})
+        photo = request.form["photo"]
+
+        db.post_content.update_one({"user_id": user_info["user_id"]}, {"$pull": {"container": {'photo': photo}}})
+
+        return jsonify()
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
 # 회원 탈퇴
 @app.route('/sign_out', methods=['GET'])
 def sign_out():
@@ -523,9 +540,7 @@ def sign_out():
             {"user_id": payload['user_id']}, {'_id': False})
         db.user.delete_one({'user_id': user_info['user_id']})
         db.post_content.delete_many({'user_id': user_info['user_id']})
-
-        return jsonify({'msg': '회원탈퇴 완료!'})
-
+        return jsonify()
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:

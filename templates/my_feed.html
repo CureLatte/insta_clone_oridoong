@@ -20,6 +20,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="../static/javascript/my_feed_js.js"></script>
     <script src="../static/javascript/common_js.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -38,6 +39,9 @@
                 <a href="{{ profile_url }}">
                     <h4>{{ user['user_name'] }}</h4>
                 </a>
+                <div class="post_more">
+                    <img onclick="poster_remove(this)" src="../static/images/more@3x.png" alt="{{ i }}">
+                </div>
             </div>
             <div class="image_box">
                 {% set filepath = '../static/images/post-contents/'+ feed['container'][i]['photo'] %}
