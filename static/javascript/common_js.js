@@ -41,8 +41,17 @@ function GET_follower_data() {
             var now = new Date();
 
             $('#like_history_wrapper').empty()
+
+            if (follow_info.length== 0){
+                let temp_not_alert_html= `<div class="not_message_history"> 알림이 없습니다. </div>`
+                $('#like_history_wrapper').append(temp_not_alert_html)
+
+                return
+            }
+
             for(let i=0; i<follow_info.length;i++){
                 let row = follow_info[i]
+                console.log(row)
                 let date = parseInt(now.getDate()) - parseInt(row['follow_time'].split(' ')[0].split('-')[2])
                 let temp_html=`<div class="like_history_row" id="row_${i}">
                                     <div class="like_history_row_header">
@@ -56,7 +65,9 @@ function GET_follower_data() {
                                             <p>${row['user_id']}님이 회원님을 팔로우하기 시작했습니다. </p>
                                         </div>
                                         <div class="like_history_follow_wrapper">
-                                            <button onclick="follow(this)"  class="like_history_follow" name="${row['user_id']}">팔로우</button>
+                                            <button   class="like_history_follow">
+                                            <span onclick="follow(this)" name="${row['name']}">팔로우</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>`
@@ -69,7 +80,6 @@ function GET_follower_data() {
                 let filepath = 'url(/static/images/user/' + filename +')'
                 console.log(filepath)
                 $('#'+'history_profile_'+i).css({"background":filepath, 'background-size': 'cover'})
-
             }
         }
     })

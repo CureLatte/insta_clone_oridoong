@@ -37,6 +37,7 @@ def login_page():
 
     # return render_template('login.html')
 
+
 ##################################################
 # index.html(메인페이지)
 
@@ -64,12 +65,24 @@ def index_page_poster_get():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         all_photo = list(db.post_content.find({}, {'_id': False}))
-        all_user = list(db.user.find({}, {'_id': False}))[0:6]
+        all_user = list(db.user.find({}, {'_id': False}))
+
+        login_follow_user = db.user.find_one({"user_id": user_info["user_id"]},
+                                             {"_id": False, "follow": 1})
+
+        for remove_user in login_follow_user["follow"]:
+            for i, users in enumerate(all_user):
+                if user_info['user_id'] == users['user_id']:
+                    del all_user[i]
+                    continue
+                elif remove_user['user_id'] == users['user_id']:
+                    del all_user[i]
+                    break
+
         random.shuffle(all_user)
 
-        for a in range(0, 5):
-            if (all_user[a]["user_id"] == user_info["user_id"]):
-                del all_user[a]
+        if len(all_user) > 5:
+            all_user = all_user[:5]
 
         user_remove = []
 
@@ -118,6 +131,8 @@ def indexPagePost():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = list(db.user.find({"$or": [{"user_id": payload["user_id"]}, {"user_name": follow_to_user_name}]},
                                       {"_id": False, "user_id": 1, "user_name": 1}))
+        user_all_info = db.user.find_one({'user_id': payload['user_id']}, {'_id': False})
+
         for user in user_info:
             if user['user_name'] == follow_to_user_name:
                 follow_to_user_id = user['user_id']
@@ -140,6 +155,21 @@ def indexPagePost():
             "user_name": login_user_name,
             "follower_time": today_time
         }
+
+        update_feed = ({"user_id": follow_to_user_id},
+                       {
+                           "$push": {"feed":
+                               {
+                                   "user_id": login_user_id,
+                                   "avatar": user_all_info["avatar"],
+                                   "name": user_all_info["name"],
+                                   "follow_time": today_time
+                               }
+                           }
+                       }
+                       )
+
+        db.user.update_one(*update_feed)
 
         if follow_check == "팔로우":
             db.user.update_one({"user_id": login_user_id}, {
@@ -264,8 +294,6 @@ def profile_test_load_follow():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
-        print(user_info)
-
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -275,10 +303,32 @@ def profile_test_load_follow():
 
 @app.route('/profile_test_main/follow/delete', methods=['POST'])
 def delete_follow_alert():
-    follow_index = request.form['index']
-    print(follow_index)
+    follow_index = int(request.form['index'])
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
+        feed = user_info['feed']
+        t = feed.pop(follow_index)
+        update_feed = ({"user_id": payload['user_id']},
+                       {
+                           "$pull": {"feed":
+                               {
+                                   "user_id": t['user_id'],
+                                   "avatar": t['avatar'],
+                                   "name": t['name'],
+                                   "follow_time": t['follow_time']
+                               }
+                           }
+                       })
+        db.user.update_one(*update_feed)
+        return jsonify({'data': user_info})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
-    return
 
 
 #####################################################################
@@ -433,6 +483,7 @@ def update_pwd():
     db.user.update_one({'user_id': id_receive}, {'$set': {'pwd': pw_hash}})
 
     return jsonify({'msg': '비밀번호가 변경 되었습니다.'})
+
 
 # 회원 가입 페이지
 
