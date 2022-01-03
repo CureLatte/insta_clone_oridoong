@@ -38,8 +38,9 @@ inputImage.addEventListener("change", e => {
 })
 // ajax
 function save_update_profile() {
-    let username = $("#username").val()
     let name = $("#name").val()
+    console.log(name)
+    let username = $("#username").val()
     let email = $("#email").val()
     let phone_number = $("#phone_number").val()
     let gender = $("#gender").val();
@@ -49,24 +50,55 @@ function save_update_profile() {
     var jb_split = avatar.split('\\');
     var get_user_avarar = jb_split[jb_split.length - 1]
 
-    $.ajax({
-        type: "POST",
-        url: "/edit_profile",
-        data: {
-            username_receive: username,
-            name_receive: name,
-            email_receive: email,
-            phone_number_receive: phone_number,
-            gender_receive: gender,
-            avatar_receive: get_user_avarar,
-            bio_receive: bio,
-        },
-        success: function (response) {
-            alert(response["msg"])
-            window.location.reload("/")
-        }
-    });
+    console.log("Asdgasdhgg")
+    if (avatar == "") {
+        console.log("if란다");
+        var hi = $("#preview_image").attr('src');
+        hoho = hi.split('/');
+        hihi = hoho[hoho.length - 1];
+
+        $.ajax({
+            type: "POST",
+            url: "/edit_profile",
+            data: {
+                "name_receive": name,
+                "username_receive": username,
+                "email_receive": email,
+                "phone_number_receive": phone_number,
+                "gender_receive": gender,
+                "avatar_receive": hihi,
+                "bio_receive": bio,
+            },
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload("/")
+            }
+        });
+    }
+    else {
+        console.log("eles란다")
+        $.ajax({
+            type: "POST",
+            url: "/edit_profile",
+            data: {
+                "name_receive": name,
+                "username_receive": username,
+                "email_receive": email,
+                "phone_number_receive": phone_number,
+                "gender_receive": gender,
+                "avatar_receive": get_user_avarar,
+                "bio_receive": bio,
+            },
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload("/")
+            }
+        });
+    }
+
 }
+
+
 // 회원탈퇴 팝업창
 $(function () {
     //----- OPEN
@@ -90,6 +122,7 @@ function sign_out() {
         data: {},
         success: function (response) {
             alert(response["msg"]);
+            $.removeCookie('mytoken');
             window.location.href = "/";
         }
     });
