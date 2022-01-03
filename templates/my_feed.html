@@ -31,7 +31,7 @@
 
 <div class="wrap">
     {% set feed_count = feed['container']|length %}
-    {% for i in range(feed_count) %}
+    {% for content in feed['container']|reverse %}
     <div class="content">
         <div class="con">
             <div class="userInfo">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="image_box">
-                {% set filepath = '../static/images/post-contents/'+ feed['container'][i]['photo'] %}
+                    {% set filepath = '../static/images/post-contents/'+ content['photo'] %}
                 <img src="{{ filepath }}" alt="">
             </div>
             <div class="row_icons">
