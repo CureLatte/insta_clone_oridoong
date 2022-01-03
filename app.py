@@ -184,7 +184,6 @@ def move_addpage():
 def load_my_feed(user):
     user_check = db.user.find_one({'name': user}, {'_id': False})
     feed_check = db.post_content.find_one({'user_id': user_check['user_id']}, {'_id': False})
-    print(feed_check)
     if feed_check is None:
         return render_template('has_not_feed.html')
     else:
