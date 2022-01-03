@@ -215,6 +215,17 @@ li {
   padding-top: 0.8rem;
 }
 
+.userInfo .post_more{
+  width : 20px;
+  height : 5px;
+  object-fit: cover;
+}
+
+.userInfo .post_more img{
+  width :100%;
+  height : 100%;
+}
+
 .userInfo div {
   height: 35px;
   line-height: 35px;
