@@ -454,7 +454,7 @@ def api_login():
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         # token을 줍니다.
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success', 'token': token.decode('utf-8')})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail'})
@@ -596,7 +596,7 @@ def new_writing():
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
         filename = f'{mytime}.{extension}'
-        save_to = f'static/images/post-contents/{filename}'
+        save_to = f'../static/images/post-contents/{filename}'
         photo.save(save_to)
 
         container_content = {
