@@ -1,9 +1,12 @@
+html {
+  background-color: #fafafa;
+}
 body {
   display: flex;
   justify-content: space-between;
   max-width: 720px;
   color: #232323;
-  background-color: #efefef;
+  background-color: #fafafa;
   margin: 0 auto !important;
 }
 a {
@@ -21,10 +24,10 @@ a {
 }
 
 .logo_test {
-  width: 100px;
+  width: 65px;
   height: 50px;
   font-size: 30px;
-  margin-top: 10px;
+  margin-top: 4px;
   cursor: pointer;
 }
 
@@ -58,7 +61,7 @@ a {
 #header {
   background-color: #fff;
   width: 100%;
-  height: 60px;
+  height: 70px;
   margin: auto;
   left: 0;
   top: 0px;
@@ -118,8 +121,7 @@ a {
 }
 
 #header #logo {
-  height: 45px;
-  margin-top: 8px;
+  height: 50px;
   font-size: 30px;
   cursor: pointer;
 }
@@ -166,7 +168,6 @@ ul {
 }
 
 .like_history_row_header {
-
   width: 500px;
   display: flex;
   flex-direction: row;
@@ -174,7 +175,7 @@ ul {
   align-items: center;
 }
 
-.like_history_cancel{
+.like_history_cancel {
   margin-left: 10px;
   color: red;
   cursor: pointer;
@@ -202,7 +203,6 @@ ul {
 
 .like_history_content {
   width: 300px;
-
 }
 
 .like_history_follow_wrapper {
@@ -225,13 +225,13 @@ ul {
   cursor: pointer;
 }
 
-.like_history_follow:hover{
+.like_history_follow:hover {
   background-color: #1996e1;
 }
 
-.not_message_history{
-  width :200px;
-  height : 100px;
+.not_message_history {
+  width: 200px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -243,22 +243,23 @@ ul {
 .header_more_container {
   background-color: white;
   position: absolute;
-  width: 200px;
-  top: 60px;
+  width: 150px;
+  top: 74px;
   right: -10px;
-  border: 1px solid gray;
-  border-radius: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   display: none;
   overflow: hidden;
 }
 
 .header_more_row {
   width: 100%;
-  height: 50px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
+  border: none;
   font-size: 18px;
   cursor: pointer;
 }
@@ -280,13 +281,13 @@ ul {
 }
 
 .header_more_text {
-  width: 100px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-weight: bolder;
+  font-size: 15px;
 }
 
 #logout_text {

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/edit_profile_css.css">
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/like_history_css.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -53,19 +54,23 @@
                 <li>
                     <label for="name">성명</label>
                     <input id="name" type="text" minlength="1" maxlength="5" placeholder="성명" required>
+                    <i class="fas fa-user errspan""></i>
                 </li>
                 <li>
-                    <label for="username">닉네임</label>
-                    <input id="username" type="text" minlength="4" maxlength="9" placeholder="닉네임" required>
+                    <label for=" username">닉네임</label>
+                        <input id="username" type="text" minlength="4" maxlength="9" placeholder="닉네임" required>
+                        <i class="fas fa-rocket errspan"></i>
                 </li>
                 <li>
                     <label for="email">이메일</label>
                     <input id="email" type="email" placeholder="이메일" minlength="1" maxlength="35" required>
+                    <i class="fas fa-envelope errspan"></i>
                 </li>
                 <li>
                     <label for="phone_number">전화번호</label>
                     <input id="phone_number" type="text" maxlength="13" placeholder="전화번호" required>
-                </li>
+                    <i class="fas fa-phone-square errspan" style="transform:scaleX(-1);"></i>
+                </li>
                 <li>
                     <label for="gender">성별</label>
                     <select class="input_style_select" id="gender" required>

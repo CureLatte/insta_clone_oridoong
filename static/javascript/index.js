@@ -4,7 +4,7 @@ $(document).ready(function () {
         url: "/index_page/post",
         data: {},
         success: function (response) {
-            let a =JSON.parse(response)
+            let a = JSON.parse(response)
 
             let rows = a[0]['all_photo'];
             let login_user = a[1];
@@ -28,12 +28,12 @@ $(document).ready(function () {
 
                 temp_image_html = `<img src="../static/images/like@3x.png" onclick="like(this)" alt="${name},${photo}">`;
 
-                    for (let i = 0; i < like_user.length; i++) {
-                        if (like_user[i] === login_user) {
-                            temp_image_html = `<img src="../static/images/like@4x.png" onclick="like(this)" alt="${name},${photo}">`;
-                            break;
-                        }
+                for (let i = 0; i < like_user.length; i++) {
+                    if (like_user[i] === login_user) {
+                        temp_image_html = `<img src="../static/images/like@4x.png" onclick="like(this)" alt="${name},${photo}">`;
+                        break;
                     }
+                }
 
                 if (photo) {
                     temp_html = `
@@ -63,6 +63,7 @@ $(document).ready(function () {
                                         </div>
                                         <div id="comment-box">
                                             <input type="text" id="comment-text" placeholder="댓글 달기..." />
+                                            <i class="fas fa-comments errspan" style="margin-left: 4px; margin-top: -25px;"></i>
                                             <input onclick="post_comment(${i})" type="button" id="comment-post" value="게시">
                                             <div id="comment-list">
                                             </div>
@@ -76,7 +77,7 @@ $(document).ready(function () {
             }
 
             let user_id = response[2];
-            for(let i = 0; i < user_id.length; i++) {
+            for (let i = 0; i < user_id.length; i++) {
                 let user_name = user_id[i]["user_name"]
                 let user_bio = user_id[i]["bio"]
                 let avata = user_id[i]["avatar"]
@@ -105,7 +106,7 @@ function follow(obj) {
     let name_by_id = obj.getAttribute('name');
     let follow = obj.innerText;
 
-    if(follow === "팔로우"){
+    if (follow === "팔로우") {
         obj.innerText = "팔로우 취소"
     } else {
         obj.innerText = "팔로우"
@@ -114,7 +115,7 @@ function follow(obj) {
     $.ajax({
         type: "POST",
         url: "/index_page/post",
-        data: {"user_name_id_give": name_by_id, "follow": follow},
+        data: { "user_name_id_give": name_by_id, "follow": follow },
         success: function (response) {
             alert(response["msg"])
         }
@@ -149,7 +150,7 @@ function like(data) {
     $.ajax({
         type: "POST",
         url: "/main/user_like",
-        data: {'photo': photo, 'like_count': like_count, 'login_user': login_user},
+        data: { 'photo': photo, 'like_count': like_count, 'login_user': login_user },
         success: function (response) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
@@ -165,7 +166,7 @@ function profile_main(obj) {
 function see_comment() {
     if ($("#comment-list").css('display') == 'none') {
         $("#comment-list").show();
-    }else {
+    } else {
         $("#comment-list").hide();
     }
 }
@@ -174,12 +175,12 @@ function see_comment() {
 function post_comment(index) {
     let user_name = document.querySelectorAll(".post-left-wrapper p")[index].textContent
     let post_img = document.querySelectorAll(".image_box")[index].style.backgroundImage.replace(/^url\(['"](.+)['"]\)/, '$1').split("/")
-    post_img = post_img[post_img.length-1]
+    post_img = post_img[post_img.length - 1]
 
     $.ajax({
         type: "POST",
         url: "/index_page/comment",
-        data: {comment_give: $('#comment-text').val(),post_give: post_img , user_id_give: user_name, num_give: index},
+        data: { comment_give: $('#comment-text').val(), post_give: post_img, user_id_give: user_name, num_give: index },
         success: function (response) {
             console.log(response)
         }

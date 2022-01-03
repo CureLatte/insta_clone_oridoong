@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/log_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -42,11 +43,14 @@
             </div>
             <div id="sign-in-up">
                 <div id="sign-in-box">
-                    <p id="title">𝓞𝓻𝓲𝓼𝓽𝓪𝓰𝓻𝓪𝓶</p>
+                    <p id="title"><img src="/static/images/logo.png" alt="logo"></p>
                     <div id="log-box">
                         <input type="text" id="user_id" class="input_style_text" placeholder="아이디" />
+                        <span class="fas fa-user errspan" style="transform: translate(15px, -8px);"></span>
                         <p id="help-id-login"></p>
-                        <input type="password" id="user_pw" class="input_style_text" placeholder="비밀번호" />
+                        <input style="margin-top: 15px;" type="password" id="user_pw" class="input_style_text"
+                            placeholder="비밀번호" />
+                        <span class="fas fa-envelope errspan"></span>
                         <p id="help-password-login"></p>
                     </div>
                     <button id="log_button" class="common_btn" onclick="login()">로그인</button>

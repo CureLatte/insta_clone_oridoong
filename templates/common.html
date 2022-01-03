@@ -1,27 +1,30 @@
 <div id="header">
     <div class="header_inner_wrap">
         <div class="logo_test" onclick="window.location.href='/index_page'">
-            𝓞𝓻𝓲𝓼𝓽𝓪𝓰𝓻𝓪𝓶
+            <img src="/static/images/logo.png" alt="logo" id="logo">
         </div>
-<!--        <img id="logo" class="is_pointer" src="../static/images/insta-logo.png"-->
-<!--             onclick="window.location.href='/index_page'"/>-->
+        <!--        <img id="logo" class="is_pointer" src="../static/images/insta-logo.png"-->
+        <!--             onclick="window.location.href='/index_page'"/>-->
         <input type="text" placeholder="검색">
         <ul id="head_icon" style="position: relative">
             <li>
-                <img id="user-home" class="is_pointer" src="../static/images/home@3x.png" onclick="window.location.href='/index_page'"/>
+                <img id="user-home" class="is_pointer" src="../static/images/home@3x.png"
+                    onclick="window.location.href='/index_page'" />
             </li>
             <li>
                 <img class="is_pointer" src="../static/images/dm@3x.png">
             </li>
             <li>
                 <img class="is_pointer" src="../static/images/trending@3x.png"
-                     onclick="window.location.href='/writing_new'"/>
+                    onclick="window.location.href='/writing_new'" />
             </li>
             <li>
-                <img id="like_icon_id" class="is_pointer" src="../static/images/like@3x.png" onclick="open_like_history(this)">
+                <img id="like_icon_id" class="is_pointer" src="../static/images/like@3x.png"
+                    onclick="open_like_history(this)">
             </li>
             <li>
-                <img id="index_main_header_profile" class="is_pointer" src="../static/images/user/profile_init.png" onclick="open_header_more()">
+                <img id="index_main_header_profile" class="is_pointer" src="../static/images/user/profile_init.png"
+                    onclick="open_header_more()">
             </li>
             {% include 'like_history.html' %}
             {% include 'header_more.html' %}
