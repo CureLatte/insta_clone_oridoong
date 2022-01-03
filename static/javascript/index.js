@@ -14,6 +14,7 @@ $(document).ready(function () {
                 let photo = rows[i]['container'][0]['photo'];
                 let photo_like = rows[i]['container'][0]['like'];
                 let avatar = rows[i]['avatar'];
+                let user_name = rows[i]['user_name']
                 let name = rows[i]['name'];
                 let like_user = rows[i]['container'][0]['like_user']
 
@@ -36,17 +37,10 @@ $(document).ready(function () {
                                         <div class="userInfo">
                                             <div class="post-left-wrapper">
                                                 <img src="static/images/user/${avatar}" onclick="profile_main(this)" alt="${name}"/>
-                                                <p>${name}</p>
+                                                <p>${user_name}</p>
                                             </div>
                                             <div class="is_pointer">
-                                                <img src="../static/images/more@3x.png" onclick="dialog_open(this)" alt="${index}">
-                                                <!-- more@3x 눌렀을때 반응 -->
-                                                <div class="dialog">
-                                                    <div class="more-button-wrapper">
-                                                        <button onclick="dialog_remove(${index})" value="remove">삭제</button>
-                                                        <button onclick="dialog_cancel(${index})" value="cancel">취소</button>
-                                                    </div>
-                                                </div>
+                                                <img src="../static/images/more@3x.png"">
                                             </div>
                                         </div>
                                         <div class="image_box" style="background-image: url('/static/images/post-contents/${photo}')"></div>
@@ -58,9 +52,7 @@ $(document).ready(function () {
                                             </div>
                         
                                         <div class="comment">
-                                            <h4><strong>${name}</strong>님 외 <strong id="${name}like">${photo_like}명</strong>이 좋아합니다.</h4>
-                                            <p><strong>돈통</strong> : 안녕하세요</p>
-                                            <span>2시간 전</span>
+                                            <h4><strong>${login_user}</strong>님 외 <strong id="${name}like">${photo_like}명</strong>이 좋아합니다.</h4>
                                         </div>
                                     </section>
                                 </div>
@@ -111,7 +103,7 @@ function follow(obj) {
         success: function (response) {
             alert(response["msg"])
         }
-    })
+    });
 }
 
 
@@ -147,40 +139,6 @@ function like(data) {
             document.getElementById(`${name}like`).innerText = `${String(response['user_like'])}명`;
         }
     });
-}
-
-// post 더 보기 버튼
-function dialog_open(obj) {
-    if($(".dialog").is(':visible') || !($(".dialog:eq("+obj.alt+")").is(':visible'))) {
-        $(".dialog").hide();
-        $(".dialog:eq("+obj.alt+")").show();
-    } else {
-        $(".dialog:eq("+obj.alt+")").show();
-    }
-
-    $(document).scroll(function (e) {
-        let dialog_popup = $(".dialog:eq("+obj.alt+")");
-        if( dialog_popup.has(e.target).length === 0){
-            dialog_popup.hide();
-        }
-    })
-
-    $(document).mouseup(function (e) {
-        let dialog_popup = $(".dialog:eq("+obj.alt+")");
-        if( dialog_popup.has(e.target).length === 0){
-            dialog_popup.hide();
-        }
-    })
-}
-
-// dialog 삭제버튼
-function dialog_remove(index) {
-    console.log($('.is_pointer'.children))
-}
-
-// dialog 취소버튼
-function dialog_cancel(index) {
-    $(".dialog:eq("+index+")").hide();
 }
 
 // 헤더 홈 버튼
