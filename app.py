@@ -118,6 +118,22 @@ def indexPagePost():
 
         db.user.update_one(*update_follow)
         db.user.update_one(*update_follower)
+
+
+        # 팔로우 누른 사람에게 알림이 가도록 설정 DB : feed창으로 연결
+        update_feed = ({"user_id": user_id},
+                           {
+                               "$push": {"feed":
+                                   {
+                                       "user_id": loggedin_user,
+                                       "name": loggedin_name,
+                                       "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                   }
+                               }
+                           }
+                           )
+
+        db.user.update_one(*update_feed)
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))

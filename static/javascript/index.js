@@ -110,8 +110,10 @@ function follow(obj) {
         data: { "user_name_id_give": name_by_id },
         success: function (response) {
             alert(response["msg"])
+
         }
     })
+
 }
 
 
