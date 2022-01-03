@@ -54,7 +54,7 @@ $(document).ready(function () {
                                         <div class="comment">
                                             <h4><strong>${login_user}</strong>님 외 <strong id="${name}like">${photo_like}명</strong>이 좋아합니다.</h4>
                                             <p><b><strong>${login_user}</strong></b></p>
-                                            <input onclick="see_comment()" type="button" id="all-comment" style="color: #747577; background-color: white; border: none;" value="댓글 모두 보기">
+                                            <input onclick="comment_list(${i})" type="button" id="all-comment" style="color: #747577; background-color: white; border: none;" value="댓글 모두 보기">
                                         </div>
                                         <div id="comment-box">
                                             <input type="text" id="comment-text" placeholder="댓글 달기..." />
@@ -174,7 +174,7 @@ function post_comment(index) {
     $.ajax({
         type: "POST",
         url: "/index_page/comment",
-        data: {comment_give: $('#comment-text').val(),post_give: post_img , user_id_give: user_name},
+        data: {comment_give: $('#comment-text').val(),post_give: post_img , user_id_give: user_name, num_give: index},
         success: function (response) {
             console.log(response)
         }
@@ -182,13 +182,13 @@ function post_comment(index) {
 }
 
 // 댓글 가져오기
-function comment_list() {
+function comment_list(index) {
     $.ajax({
         type: "GET",
         url: "/index_page/comment",
         data: {},
         success: function (response) {
-            let rows = response['comments']['container'][0]['comment'];
+            let rows = response['comments']['container'][index]['comment'];
 
             for (let i = 0; i < rows.length; i++) {
 
