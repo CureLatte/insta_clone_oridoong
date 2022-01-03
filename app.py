@@ -24,8 +24,18 @@ SECRET_KEY = 'TEST'
 # 홈 페이지
 @app.route('/')  # token 획득을 확인
 def login_page():
-    return render_template('login.html')
+    # return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('index.html')
 
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+
+    return render_template('login.html')
 
 ##################################################
 # index.html(메인페이지)
