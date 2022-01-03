@@ -1,44 +1,19 @@
-// $('textarea:first').click(function () {
-//     $t = $(this).val().replace(/<br\s*\/?>/img, "x");
-//     $(this).html($t)
-// });
-//
-// var fileInput = document.querySelector("#id-photo");
-//
-// fileInput.addEventListener('change', handleImage, false);
-// var canvas = document.getElementById('imageCanvas');
-// var ctx = canvas.getContext('2d');
-//
-// function handleImage(e) {
-//     var reader = new FileReader();
-//     reader.onload = function (event) {
-//         var img = new Image();
-//
-//         img.onload = function () {
-//             canvas.width = 300;
-//             canvas.height = 300;
-//             ctx.drawImage(img, 0, 0, 300, 300);
-//         };
-//         img.src = event.target.result;
-//
-//     };
-//     reader.readAsDataURL(e.target.files[0]);
-// }
-
-
-
-
 function posting() {
     let photo = $('#input_writing_image')[0].files[0]
     let desc = $('#desc').val()
     let form_data = new FormData()
 
+
     if(typeof photo === "undefined")
-        alert("이미지을 넣어 주세요")
-        return
+        return alert("이미지을 넣어 주세요")
+
 
     form_data.append("photo_give", photo)
     form_data.append("desc_give", desc)
+
+
+
+
 
     $.ajax({
         type: "POST",
