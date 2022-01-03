@@ -24,8 +24,18 @@ SECRET_KEY = 'TEST'
 # 홈 페이지
 @app.route('/')  # token 획득을 확인
 def login_page():
-    return render_template('login.html')
+    # return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('index.html')
 
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+
+    return render_template('login.html')
 
 ##################################################
 # index.html(메인페이지)
@@ -45,8 +55,12 @@ def index_page_poster_get():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         all_photo = list(db.post_content.find({}, {'_id': False}))
-        all_user = list(db.user.find({}, {'_id': False}))[0:5]
+        all_user = list(db.user.find({}, {'_id': False}))[0:6]
         random.shuffle(all_user)
+
+        for a in range(0, 5):
+            if (all_user[a]["user_id"] == user_info["user_id"]):
+                del all_user[a]
 
         user_remove = []
 
@@ -80,22 +94,40 @@ def index_page_poster_get():
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
+        user_id = request.form["user_name_id_give"]
+        get_name = db.user.find_one({"user_id": user_id})
+        name = get_name["name"]
+
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        user_id = request.form["user_name_id_give"]
-        updatestmt = ({"user_id": user_info['user_id']},
-                      {
-                          "$push": {"follow":
-                              {
-                                  "user_id": user_id,
-                                  "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                              }
-                          }
-                      }
-                      )
+        loggedin_user = user_info["user_id"]
+        loggedin_name = user_info["name"]
 
-        db.user.update_one(*updatestmt)
-        print(updatestmt)
+        update_follow = ({"user_id": user_info['user_id']},
+                         {
+                             "$push": {"follow":
+                                 {
+                                     "user_id": user_id,
+                                     "name": name,
+                                     "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                 }
+                             }
+                         }
+                         )
+        update_follower = ({"user_id": user_id},
+                           {
+                               "$push": {"follower":
+                                   {
+                                       "user_id": loggedin_user,
+                                       "name": loggedin_name,
+                                       "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                   }
+                               }
+                           }
+                           )
+
+        db.user.update_one(*update_follow)
+        db.user.update_one(*update_follower)
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -107,7 +139,8 @@ def indexPagePost():
 def header_profile_info():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+    user_info = db.user.find_one(
+        {"user_id": payload['user_id']}, {'_id': False})
     return jsonify({'user_info': user_info})
 
 
@@ -127,10 +160,12 @@ def redirect_my_profile():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']}, {'_id': False})
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
         return redirect(url_for('profile_main_page', user_name=user_info['name']))
     except:
         return redirect(url_for('login_page'))
+
 
 @app.route('/profile_main/<user_name>')
 def profile_main_page(user_name):
@@ -143,7 +178,8 @@ def profile_main_page(user_name):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         check_user = db.user.find_one({"name": user_name}, {'_id': False})
-        check_user_feed = db.post_content.find_one({"user_id": check_user['user_id']}, {'_id': False})
+        check_user_feed = db.post_content.find_one(
+            {"user_id": check_user['user_id']}, {'_id': False})
         if check_user['user_id'] == user_info['user_id'] and check_user_feed is not None:
             return render_template('profile_main.html', user=user_info, check=True, feed=check_user_feed)
         elif check_user['user_id'] != user_info['user_id'] and check_user_feed is not None:
@@ -183,7 +219,8 @@ def move_addpage():
 @app.route('/my_feed/<user>')
 def load_my_feed(user):
     user_check = db.user.find_one({'name': user}, {'_id': False})
-    feed_check = db.post_content.find_one({'user_id': user_check['user_id']}, {'_id': False})
+    feed_check = db.post_content.find_one(
+        {'user_id': user_check['user_id']}, {'_id': False})
     print(feed_check)
     if feed_check is None:
         return render_template('has_not_feed.html')
@@ -338,10 +375,10 @@ def find_pwd():
     id_receive = request.form['find_id']
     nickname_receive = request.form['find_nickname']
 
-    if db.user.find_one({'user_id':id_receive}) and db.user.find_one({'user_name':nickname_receive}):
+    if db.user.find_one({'user_id': id_receive}) and db.user.find_one({'user_name': nickname_receive}):
         return jsonify({'msg': '확인 되었습니다.'})
     else:
-        return jsonify({'msg':'등록된 회원정보가 없습니다.'})
+        return jsonify({'msg': '등록된 회원정보가 없습니다.'})
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
@@ -464,7 +501,8 @@ def new_writing():
             'like_user': []
         }
 
-        db.post_content.update_one({'user_id': user_info['user_id']}, {'$addToSet': {'container': container_content}})
+        db.post_content.update_one({'user_id': user_info['user_id']}, {
+            '$addToSet': {'container': container_content}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:

@@ -265,6 +265,10 @@ li {
   }
   .recommend ul li p {
     font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 190px;
     color: #8f8f8f;
     padding-top: 4px;
   }
