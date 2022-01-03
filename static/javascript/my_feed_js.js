@@ -20,3 +20,33 @@ function like(data) {
 function like_test(){
 
 }
+
+function poster_remove(obj) {
+    Swal.fire({
+        title: '정말로 삭제 하시겠습니까?',
+        text: "다시 되돌릴 수 없습니다. 신중하세요.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '확인',
+        cancelButtonColor: '#d33',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let photo = document.querySelectorAll(".image_box img")[obj.alt].src;
+            photo = photo.split("/");
+            photo = photo[photo.length - 1];
+
+            $.ajax({
+                type: "POST",
+                url: "/poster_remove",
+                data: {"photo": photo},
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        }
+    })
+
+
+}
