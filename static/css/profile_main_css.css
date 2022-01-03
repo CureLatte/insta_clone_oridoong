@@ -76,6 +76,24 @@ body {
   font-size: 28px;
 }
 
+
+.my_container .info_container .info_row:nth-child(1) .edit_profile{
+  width : 80px;
+  height : 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.my_container .info_container .info_row:nth-child(1) .more_profile{
+  width : 80px;
+  height : 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
 .my_container .info_container .info_row:nth-child(1) .edit_profile button {
   width: 80px;
   height: 30px;
@@ -84,11 +102,7 @@ body {
   border: 1px solid lightgray;
 }
 
-.my_container
-  .info_container
-  .info_row:nth-child(1)
-  .edit_profile
-  button:hover {
+.my_container .info_container .info_row:nth-child(1) .edit_profile button:hover {
   background-color: whitesmoke;
 }
 
@@ -103,11 +117,7 @@ body {
   cursor: pointer;
 }
 
-.my_container
-  .info_container
-  .info_row:nth-child(1)
-  .more_profile
-  button:hover {
+.my_container .info_container .info_row:nth-child(1) .more_profile button:hover {
   background-color: whitesmoke;
 }
 .my_container .info_container .info_row p {
@@ -125,7 +135,27 @@ body {
 }
 
 .my_container .info_container .info_row:nth-child(2) {
-  font-size: 17px;
+  width :100%;
+  height : 20px;
+}
+
+.my_container .info_container .info_row:nth-child(2) .content_count{
+  width : 80px;
+  height : 20px;
+
+}
+
+.my_container .info_container .info_row:nth-child(2) .followr_count{
+  width : 80px;
+  height : 20px;
+
+
+}
+
+.my_container .info_container .info_row:nth-child(2) .follow_count{
+  width : 80px;
+  height : 20px;
+  text-align: right;
 }
 
 .my_container .info_container .info_row_more {
@@ -199,7 +229,6 @@ body {
   font-size: 16px;
   display: inline-block;
   padding-top: 15px;
-  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
 }
