@@ -1,97 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Orimstagram</title>
     <link rel="stylesheet" href="../static/css/profile_main_css.css">
     <link rel="stylesheet" href="../static/css/no.css">
     <link rel="stylesheet" href="../static/css/common.css">
-    <link rel="stylesheet" href="../static/css/like_history_css.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="../static/javascript/profile_main_js.js"></script>
     <script src="../static/javascript/common_js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
 </head>
+
 <body>
-{% include 'common.html' %}
-<div class="wrap">
-    <div class="main_wrap">
-        <div class="my_container">
-            <div class="profile_container">
-                <div class="profile_picture">
-                    {% if user['avatar'] == '' %}
-                    {% set file = '../static/images/user/profile_init.png'  %}
-                    {% else %}
-                    {% set file = '../static/images/user/' + user['avatar'] %}
-                    {% endif %}
-                    <img id="avatar" src="{{ file }}">
-                </div>
-            </div>
-            <div class="info_container">
-                <div class="info_row">
-                    <div class="nickname" id="nickname">
-                        <p>{{ user['user_name'] }}</p>
-                    </div>
-                    {% if check == True %}
-                    <div class="edit_profile" id="edit_button">
-                        <button onclick="move_edit()"> 프로필 편집 </button>
-                    </div>
-                    {% endif %}
-                    <div class="more_profile">
-                        <button onclick="more()"> 더보기 </button>
-                    </div>
-                </div>
-                <div class="info_row">
-                    <div class="content_count">
-                        <p>게시글 {{ feed['container']|length }}</p>
-                    </div>
-                    <div class="follower_count">
-                        <p>팔로워 {{ user['follower']|length }}</p>
-                    </div>
-                    <div class="follow_count">
-                        <p>팔로우 {{ user['follow']|length }}</p>
-                    </div>
-                </div>
-
-                <div class="info_row_more" id="more_info">
-                    <div style="width: 300px; height : 0px; border:1px solid grey; margin-bottom: 20px;"></div>
-                    <div class="info_email" id="email">
-                        <p>Email : {{ user['email'] }}</p>
-                    </div>
-                    <div class="info_gender" id="gender">
-                        {% if user['gender'] == 'female' %}
-                        <p>gender : 여</p>
-                        {% else  %}
-                        <p>gender : 남</p>
+    {% include 'common.html' %}
+    <div class="wrap">
+        <div class="main_wrap">
+            <div class="my_container">
+                <div class="profile_container">
+                    <div class="profile_picture">
+                        {% if user['avatar'] == '' %}
+                        {% set file = '../static/images/user/profile_init.png' %}
+                        {% else %}
+                        {% set file = '../static/images/user/' + user['avatar'] %}
                         {% endif %}
+                        <img id="avatar" src="{{ file }}">
+                    </div>
+                </div>
+                <div class="info_container">
+                    <div class="info_row">
+                        <div class="nickname" id="nickname">
+                            <p>{{ user['user_name'] }}</p>
+                        </div>
+                        {% if check == True %}
+                        <div class="edit_profile" id="edit_button">
+                            <button onclick="move_edit()"> 프로필 편집 </button>
+                        </div>
+                        {% endif %}
+                        <div class="more_profile">
+                            <button onclick="more()"> 더보기 </button>
+                        </div>
+                    </div>
+                    <div class="info_row">
+                        <div class="content_count">
+                            <p>게시글 <strong>{{ feed['container']|length }}</strong></p>
+                        </div>
+                        <div class="follower_count">
+                            <p>팔로워 <strong>{{ user['follower']|length }}</strong></p>
+                        </div>
+                        <div class="follow_count">
+                            <p>팔로우 <strong></strong>{{ user['follow']|length }}</strong></p>
+                        </div>
                     </div>
 
-                    <div class="info_phone" id="phone_number">
-                        <p>Phone : {{ user['phone_number'] }}</p>
+                    <div class="info_row_more" id="more_info">
+                        <div style="width: 300px; height : 0px; border:1px solid grey; margin-bottom: 20px;"></div>
+                        <div class="info_email" id="email">
+                            <p>Email : {{ user['email'] }}</p>
+                        </div>
+                        <div class="info_gender" id="gender">
+                            {% if user['gender'] == 'female' %}
+                            <p>gender : 여</p>
+                            {% else %}
+                            <p>gender : 남</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="info_phone" id="phone_number">
+                            <p>Phone : {{ user['phone_number'] }}</p>
+                        </div>
+                        <div
+                            style="width: 300px; height : 0px; border:1px solid grey;margin-top: 20px; margin-bottom: 20px;">
+                        </div>
                     </div>
-                    <div style="width: 300px; height : 0px; border:1px solid grey;margin-top: 20px; margin-bottom: 20px;"></div>
+                    <div class="info_row">
+                        <div class="info_name" id="name">
+                            <p>{{ user['name'] }}</p>
+                        </div>
+                        <div class="info_bio" id="bio">
+                            <p>{{ user['bio'] }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="info_row">
-                    <div class="info_name" id="name">
-                        <p>{{ user['name'] }}</p>
-                    </div>
-                    <div class="info_bio" id="bio">
-                        <p>{{ user['bio'] }}</p>
-                    </div>
-               </div>
             </div>
-        </div>
-        {% set total = feed['container']|length %}
-        {% set rows = total//3 %}
-        <div class="content_container">
-            <div class="content_wrapper">
-                {% for i in range(rows+1) %}
-                <div class="content_row">
-                    {% for k in range(3) %}
-                    {% if i*3+k < total %}
-                    {% set filepath = '../static/images/post-contents/'+ feed['container'][i*3+k]['photo'] %}
-                    {% set urlpath = '/my_feed/'+ user['name'] %}
-                    <div class="content">
-                        <a href="{{ urlpath }}"><img src="{{ filepath }}"></a>
+            {% set total = feed['container']|length %}
+            {% if total == 0%}
+            <div class="content_container">
+                <div class="no_content_box">
+                    <p>현재 게시글이 없습니다!</p>
+                </div>
+            </div>
+            {% else %}
+            {% set rows = total//3 %}
+            <div class="content_container">
+                <div class="se_post">
+                    <span><i class="fal fa-th"></i>게시물</span>
+                </div>
+                <div class="content_wrapper">
+                    {% for i in range(rows+1) %}
+                    <div class="content_row">
+                        {% for k in range(3) %}
+                        {% if i*3+k < total %} {% set filepath='../static/images/post-contents/' +
+                            feed['container'][i*3+k]['photo'] %} {% set urlpath='/my_feed/' + user['name'] %} <div
+                            class="content">
+                            <a href="{{ urlpath }}"><img src="{{ filepath }}"></a>
                     </div>
                     {% else %}
                     <div class="none_content">
@@ -102,7 +119,9 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
-</div>
+    </div>
 </body>
+
 </html>

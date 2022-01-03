@@ -1,124 +1,136 @@
 body {
-    background-color: #f5f5f5;
-    width: 350px;
+  background-color: #f5f5f5;
+  width: 400px;
 }
 
 #container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 44px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 85px;
 }
 
 /* html 공간 만드는 부분 */
 #sign-up-container {
-    width: 350px;
-    height: 600px;
-    margin: 30px auto 0 auto;
-    border: 1px solid lightgray;
-    background-color: white;
+  width: 400px;
+  margin: 30px auto 0 auto;
+  padding: 20px 0 40px 0;
+  border: 1px solid lightgray;
+  background-color: white;
 }
 
 /* container 에서 margin 주고 실질적으로 이미지 및 데이터 들어가는 부분*/
 #sign-up-container #sign-up-wrapper {
-    margin: 20px 40px 0 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 268px;
-
+  margin: 20px 40px 0 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 315px;
 }
 
 #sign-up-container #sign-up-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-    padding-bottom: 10px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid lightgray;
-
+  padding-bottom: 15px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid lightgray;
 }
 
 #sign-up-wrapper #sign-up-header > p {
-    font-size: 18px;
-    font-weight: 400;
-    color: gray;
-    text-align: center;
-    margin: 10px 0;
+  font-size: 18px;
+  word-break: keep-all;
+  font-weight: 400;
+  color: gray;
+  text-align: center;
+  margin-top: 10px;
 }
 
 #title > p {
-    margin: 10px 0;
-    font-size: 45px;
+  margin: 0;
+  font-size: 45px;
 }
 
 #sign-up-container #sign-up-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
 }
 
 #sign-up-container #sign-up-body > input {
-    margin-top: 25px;
-    height: 30px;
-    border-radius: 4px;
-    background-color: #0095f6;
+  margin-top: 35px;
+  height: 35px;
+  border-radius: 4px;
+  background-color: #93d1fb;
+  /* 
+  디폴트 상태 이 색 써주세요
+  border: none;
+  color: #fff;
+  background-color: #93d1fb;
+  */
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper {
-    width: 268px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  width: 268px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper input {
-    margin-top: 10px;
-    height: 35px;
-    width: 268px;
+  margin-top: 20px;
+  height: 40px;
+  width: 100%;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper > select {
-    margin-top: 10px;
-    height: 35px;
+  margin-top: 20px;
+  height: 35px;
 }
 
 /* 중복확인 yes or no 이미지 */
 #sign-up-wrapper #sign-up-body #input-wrapper img {
-    position: fixed;
-    margin: -32px 236px;
-    width: 30px;
-    display: none;
-    height: 30px;
+  position: fixed;
+  margin: -32px 236px;
+  width: 30px;
+  display: none;
+  height: 30px;
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper .yes-image {
-    filter: invert(65%);
+  filter: invert(65%);
 }
 
 #sign-up-wrapper #sign-up-body #input-wrapper .no-image {
-    filter: invert(40%) sepia(30%) saturate(3000%) hue-rotate(0deg);
+  filter: invert(40%) sepia(30%) saturate(3000%) hue-rotate(0deg);
 }
 
 /* sign-up-footer */
 #sign-up-footer-container {
-    width: 350px;
-    height: 80px;
-    margin: 10px auto;
-    border: 1px solid lightgray;
-    background-color: white;
+  width: 400px;
+  height: 75px;
+  margin-top: 20px;
+  border: 1px solid lightgray;
+  background-color: white;
 }
 
 #sign-up-footer-container #footer-button-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
 }
 
 #sign-up-footer-container #footer-button-wrapper > p {
-    margin-right: 5px;
+  margin-right: 5px;
+  font-size: 13px;
+  color: #232323;
+}
+
+#sign-up-footer-container #footer-button-wrapper a {
+  color: #0095f6;
+  font-size: 13px;
 }

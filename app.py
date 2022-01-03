@@ -24,8 +24,18 @@ SECRET_KEY = 'TEST'
 # 홈 페이지
 @app.route('/')  # token 획득을 확인
 def login_page():
-    return render_template('login.html')
+    # return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('index.html')
 
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+
+    # return render_template('login.html')
 
 ##################################################
 # index.html(메인페이지)
@@ -33,7 +43,16 @@ def login_page():
 
 @app.route('/index_page')
 def index_page():
-    return render_template('index.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('index.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+    # return render_template('index.html')
 
 
 @app.route('/index_page/post', methods=['GET'])
@@ -45,22 +64,33 @@ def index_page_poster_get():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         all_photo = list(db.post_content.find({}, {'_id': False}))
-        all_user = list(db.user.find({}, {'_id': False}))[0:5]
+        all_user = list(db.user.find({}, {'_id': False}))[0:6]
         random.shuffle(all_user)
 
-        login_user = 0
+        for a in range(0, 5):
+            if (all_user[a]["user_id"] == user_info["user_id"]):
+                del all_user[a]
+
+        user_remove = []
 
         for i, photo in enumerate(all_photo):
             if photo['user_id'] == user_info['user_id']:
-                login_user = i
+                user_remove.append(i)
+                continue
+
+            if len(photo['container']) == 0:
+                user_remove.append(i)
                 continue
 
             photo_user = db.user.find_one(
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
+            photo['user_name'] = photo_user['user_name']
             photo['avatar'] = photo_user['avatar']
 
-        del all_photo[login_user]
+        if len(user_remove):
+            for user_index in reversed(user_remove):
+                del all_photo[user_index]
 
         return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
 
@@ -74,45 +104,64 @@ def index_page_poster_get():
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
-        user_id = request.form["user_name_id_give"]
-        get_name = db.user.find_one({"user_id": user_id})
-        name = get_name["name"]
+        # 팔로우 유저 user_id, name
+        follow_to_user_id = None
+        follow_to_user_name = request.form["user_name_id_give"]
+
+        # 로그인 유저 user_id, name
+        login_user_id = None
+        login_user_name = None
+
+        # 팔로우 확인
+        follow_check = request.form["follow"]
 
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']})
-        loggedin_user = user_info["user_id"]
-        loggedin_name = user_info["name"]
+        user_info = list(db.user.find({"$or": [{"user_id": payload["user_id"]}, {"user_name": follow_to_user_name}]},
+                                      {"_id": False, "user_id": 1, "user_name": 1}))
+        for user in user_info:
+            if user['user_name'] == follow_to_user_name:
+                follow_to_user_id = user['user_id']
+            else:
+                login_user_id = user['user_id']
+                login_user_name = user['user_name']
 
-        update_follow = ({"user_id": user_info['user_id']},
-                         {
-            "$push": {"follow":
-                      {
-                          "user_id": user_id,
-                          "name": name,
-                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                      }
-                      }
-        }
-        )
-        update_follower = ({"user_id": user_id},
-                           {
-            "$push": {"follower":
-                      {
-                          "user_id": loggedin_user,
-                          "name": loggedin_name,
-                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                      }
-                      }
-        }
-        )
+        today = datetime.datetime.now()
+        today_time = today.strftime('%Y-%m-%d %OH:%OM:%OS')
 
-        db.user.update_one(*update_follow)
-        db.user.update_one(*update_follower)
+        # 팔로우 경우
+        follow = {
+            "user_id": follow_to_user_id,
+            "user_name": follow_to_user_name,
+            "follow_time": today_time
+        }
+
+        follower = {
+            "user_id": login_user_id,
+            "user_name": login_user_name,
+            "follower_time": today_time
+        }
+
+        if follow_check == "팔로우":
+            db.user.update_one({"user_id": login_user_id}, {"$addToSet": {"follow": follow}})
+            db.user.update_one({"user_id": follow_to_user_id}, {"$addToSet": {"follower": follower}})
+        else:
+            db.user.update_one({"user_id": login_user_id}, {"$pull": {"follow": {"user_id": follow_to_user_id}}})
+            db.user.update_one({"user_id": follow_to_user_id}, {"$pull": {"follower": {"user_id": login_user_id}}})
+
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/index_page/header/profile')
+def header_profile_info():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.user.find_one(
+        {"user_id": payload['user_id']}, {'_id': False})
+    return jsonify({'user_info': user_info})
 
 
 @app.route('/login', methods=['POST'])
@@ -126,24 +175,38 @@ def login_check():
 
 ################################################################
 # 프로필 메인 페이지
-@app.route('/profile_main/<name>')
-def profile_main_page(name):
+@app.route('/profile_main/my')
+def redirect_my_profile():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one(
+            {"user_id": payload['user_id']}, {'_id': False})
+        return redirect(url_for('profile_main_page', user_name=user_info['name']))
+    except:
+        return redirect(url_for('login_page'))
 
+
+@app.route('/profile_main/<user_name>')
+def profile_main_page(user_name):
+    if user_name == 'undefined':
+        return render_template('has_not_feed.html')
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
-
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
-        if name == user_info['name']:
-            user_my_feed = db.post_content.find_one({"user_id": payload['user_id']},{'_id':False})
-            return render_template('profile_main.html', user=user_info, check=True, feed=user_my_feed)
+        check_user = db.user.find_one({"name": user_name}, {'_id': False})
+        check_user_feed = db.post_content.find_one(
+            {"user_id": check_user['user_id']}, {'_id': False})
+        if check_user['user_id'] == user_info['user_id'] and check_user_feed is not None:
+            return render_template('profile_main.html', user=user_info, check=True, feed=check_user_feed)
+        elif check_user['user_id'] != user_info['user_id'] and check_user_feed is not None:
+            user_other = db.user.find_one({"name": user_name})
+            return render_template('profile_main.html', user=user_other, check=False, feed=check_user_feed)
         else:
-            user_other = db.user.find_one({"name": name})
-            user_other_feed = db.post_content.find_one(
-                {"user_id": user_other['user_id']})
-            return render_template('profile_main.html', user=user_other, check=False, feed=user_other_feed)
+            return render_template('has_not_feed.html')
 
         # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
@@ -151,14 +214,6 @@ def profile_main_page(name):
     except jwt.exceptions.DecodeError:
         # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
-
-
-@app.route('/profile_main/')
-def redirect_main_profile():
-    token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    user_info = db.user.find_one({"user_id": payload['user_id']})
-    return redirect(url_for('profile_main_page', name=user_info['name']))
 
 
 @app.route('/profile_main/load_info', methods=['POST'])
@@ -181,18 +236,19 @@ def move_addpage():
 
 
 # 개인 피드 확인
-@app.route('/my_feed/<name>')
-def load_my_feed(name):
-    user = db.user.find_one({'name': name}, {'_id': False})
-    my_feed = db.post_content.find_one(
-        {'user_id': user['user_id']}, {'_id': False})
-    return render_template('my_feed.html', user=user, feed=my_feed)
+@app.route('/my_feed/<user>')
+def load_my_feed(user):
+    user_check = db.user.find_one({'name': user}, {'_id': False})
+    feed_check = db.post_content.find_one({'user_id': user_check['user_id']}, {'_id': False})
+    if feed_check is None:
+        return render_template('has_not_feed.html')
+    else:
+        return render_template('my_feed.html', user=user_check, feed=feed_check)
 
 
-# 메인페이지 복사본 API
-@app.route('/profile_test_main')
-def profile_test_11():
-    return render_template('base_test.html')
+@app.route('/my_feed/None')
+def cant_find_feed():
+    return render_template('has_not_feed.html')
 
 
 # follow_test API
@@ -203,6 +259,8 @@ def profile_test_load_follow():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
+        print(user_info)
+
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -210,12 +268,29 @@ def profile_test_load_follow():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
+@app.route('/profile_test_main/follow/delete', methods=['POST'])
+def delete_follow_alert():
+    follow_index = request.form['index']
+    print(follow_index)
+
+    return
+
+
 #####################################################################
 
 # 프로필 편집 페이지
 @app.route('/edit_profile')
 def edit_profile():
-    return render_template('edit_profile.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('edit_profile.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+    # return render_template('edit_profile.html')
 
 
 @app.route('/edit_profile_get', methods=["GET"])
@@ -335,25 +410,24 @@ def change():
 @app.route('/change_pwd/find-pwd', methods=['POST'])
 def find_pwd():
     id_receive = request.form['find_id']
-    nickname_receive = request.form['find_nickname']
+    email_receive = request.form['find_email']
 
-    find_id = list(db.user.find({'user_id'}, {'_id': False}))
-    find_nickname = list(db.user.find({'user_name'}, {'_id': False}))
-
-    return jsonify({'msg': '확인 되었습니다.'})
+    if db.user.find_one({'user_id': id_receive}) and db.user.find_one({'email': email_receive}):
+        return jsonify({'msg': '확인 되었습니다.'})
+    else:
+        return jsonify({'msg': '등록된 회원정보가 없습니다.'})
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
 def update_pwd():
-    pwd_receive = request.form['new_pwd']
     id_receive = request.form['find_id']
+    new_pwd_receive = request.form['give_new_pwd']
 
-    pw_hash = hashlib.sha256(pwd_receive.encode('utf-8')).hexdigest()
+    pw_hash = hashlib.sha256(new_pwd_receive.encode('utf-8')).hexdigest()
 
     db.user.update_one({'user_id': id_receive}, {'$set': {'pwd': pw_hash}})
 
     return jsonify({'msg': '비밀번호가 변경 되었습니다.'})
-
 
 # 회원 가입 페이지
 @app.route('/sign_up')
@@ -389,7 +463,16 @@ def sign_up_save():
     user_dict_receive['follower'] = []
     user_dict_receive['follow'] = []
 
+    post_content_dict = {
+        'user_id': user_dict_receive['user_id'],
+        'container': []
+    }
+
+    # user 테이블 생성
     db.user.insert_one(user_dict_receive)
+
+    # post_content 테이블 생성
+    db.post_content.insert_one(post_content_dict)
 
     return jsonify({'msg': '회원가입 완료'})
 
@@ -398,9 +481,21 @@ def sign_up_save():
 @app.route('/main/user_like', methods=["POST"])
 def main_user_like():
     photo = request.form['photo']
-    like = request.form['like']
+    like_count = request.form['like_count']
+    login_user = request.form['login_user']
+    like = login_user.split(',')[1]
+    login_user = login_user.split(',')[0]
+
+    if bool(int(like)):
+        db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+            '$addToSet': {'container.$.like_user': login_user}})
+    else:
+        db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
+            '$pull': {'container.$.like_user': login_user}})
+
     db.post_content.update_one({'container': {'$elemMatch': {'photo': photo}}}, {
-                               '$set': {'container.$.like': int(like)}})
+        '$set': {'container.$.like': int(like_count)}})
+
     user_post = db.post_content.find_one(
         {"container": {"$elemMatch": {"photo": photo}}}, {'_id': False})
 
@@ -410,7 +505,16 @@ def main_user_like():
 ##########################글작성 페이지########################################
 @app.route("/writing_new")
 def writing():
-    return render_template('writing_new.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('writing_new.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+    # return render_template('writing_new.html')
 
 
 @app.route("/writing_new", methods=["POST"])
@@ -422,6 +526,10 @@ def new_writing():
 
         desc_receive = request.form['desc_give']
         photo = request.files['photo_give']
+        if desc_receive == "":
+            desc_receive = ""
+        else:
+            desc_receive = desc_receive
 
         extension = photo.filename.split('.')[-1]
         today = datetime.datetime.now()
@@ -430,27 +538,16 @@ def new_writing():
         save_to = f'static/images/post-contents/{filename}'
         photo.save(save_to)
 
-
-        post_con = {
+        container_content = {
             'desc': desc_receive,
-            'photo': f'{filename}',
+            'photo': filename,
             'comment': [],
             'like': 0,
-        }
-        container = [post_con]
-
-        doc = {
-            'user_id': user_info["user_id"],
-            "container": container,
+            'like_user': []
         }
 
-        # print(doc)
-        db.post_content.insert_one(doc)
-
-        # pre_desc = db.post_content.find_one({'user_id':user_info["user_id"]},{'container':1 , '_id':False})
-        # pre_desc = pre_desc["container"][0]['desc']
-        # db.post_content.update_one({'user_id': user_info["user_id"], 'container':{'$elemMatch':{'desc':pre_desc}}}, {'$set': {'container.$.desc': desc_receive, 'container.$.photo':filename}})
-
+        db.post_content.update_one({'user_id': user_info['user_id']}, {
+            '$addToSet': {'container': container_content}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
@@ -459,8 +556,26 @@ def new_writing():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
+# 포스터 삭제
+@app.route("/poster_remove", methods=["POST"])
+def poster_remove():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {"user_id": 1, "_id": False})
+        photo = request.form["photo"]
+
+        db.post_content.update_one({"user_id": user_info["user_id"]}, {"$pull": {"container": {'photo': photo}}})
+
+        return jsonify()
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
 # 회원 탈퇴
-@ app.route('/sign_out', methods=['GET'])
+@app.route('/sign_out', methods=['GET'])
 def sign_out():
     # 쿠키에서 토큰 가져옴
     token_receive = request.cookies.get('mytoken')
@@ -471,9 +586,7 @@ def sign_out():
             {"user_id": payload['user_id']}, {'_id': False})
         db.user.delete_one({'user_id': user_info['user_id']})
         db.post_content.delete_many({'user_id': user_info['user_id']})
-
-        return jsonify({'msg': '회원탈퇴 완료!'})
-
+        return jsonify()
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
