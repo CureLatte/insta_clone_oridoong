@@ -138,6 +138,25 @@ def indexPagePost():
 
         db.user.update_one(*update_follow)
         db.user.update_one(*update_follower)
+
+
+        # 팔로우 누른 사람에게 알림이 가도록 설정 DB : feed창으로 연결
+        update_feed = ({"user_id": user_id},
+                           {
+                               "$push": {"feed":
+                                   {
+                                       "user_id": loggedin_user,
+                                       "avatar": user_info["avatar"],
+                                       "name": loggedin_name,
+                                       "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                   }
+                               }
+                           }
+                           )
+
+        print('test', user_info["avatar"])
+
+        db.user.update_one(*update_feed)
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -249,11 +268,21 @@ def profile_test_load_follow():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
+        print(user_info)
+
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/profile_test_main/follow/delete', methods=['POST'])
+def delete_follow_alert():
+    follow_index = request.form['index']
+    print(follow_index)
+
+    return
 
 
 #####################################################################
