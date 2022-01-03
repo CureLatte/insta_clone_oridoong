@@ -376,13 +376,14 @@ def edit_profile_get():
 def edit_profile_post():
     token_receive = request.cookies.get('mytoken')
 
+
     try:
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
-        user_info['username'] = user_info['user_name']
-        name_receive = request.form["name_receive"]
+        name_receive = request.form['name_receive']
+        print(name_receive)
         username_receive = request.form['username_receive']
         email_receive = request.form['email_receive']
         phone_number_receive = request.form['phone_number_receive']
