@@ -106,7 +106,10 @@ def index_page_poster_get():
             for user_index in reversed(user_remove):
                 del all_photo[user_index]
 
-        return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
+        print('all_photo : ', all_photo)
+        print('user_info', user_info['name'])
+
+        return jsonify(dumps([{'all_photo': all_photo}, user_info['name'], all_user]))
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -395,7 +398,7 @@ def edit_profile_post():
 
         filename = f'{file_receive}'
         print(filename, file_receive)
-        save_to = f'/home/ubuntu/oriddong/static/images/user/{filename}'
+        save_to = f'../static/images/user/{filename}'
         file_receive.save(save_to)
 
         del user_info['pwd']
@@ -603,7 +606,7 @@ def new_writing():
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
         filename = f'{mytime}.{extension}'
-        save_to = f'/home/ubuntu/oriddong/static/images/post-contents/{filename}'
+        save_to = f'../static/images/post-contents/{filename}'
 
         photo.save(save_to)
 

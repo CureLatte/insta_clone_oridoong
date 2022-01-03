@@ -12,7 +12,7 @@ function edit_profile() {
             let user_avatar = user_info["avatar"]
             var jbSplit = user_avatar.split('\\');
             var get_user_avarar = jbSplit[jbSplit.length - 1]
-            var def_user_avatar_url = "/static/images/user/" + get_user_avarar
+            var def_user_avatar_url = "../static/images/user/" + get_user_avarar
             document.getElementById("preview_image").src = def_user_avatar_url
 
             $.each(user_info, function (index, obj) {
