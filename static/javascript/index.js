@@ -53,6 +53,14 @@ $(document).ready(function () {
                         
                                         <div class="comment">
                                             <h4><strong>${login_user}</strong>님 외 <strong id="${name}like">${photo_like}명</strong>이 좋아합니다.</h4>
+                                            <p><b><strong>${login_user}</strong></b></p>
+                                            <input onclick="see_comment()" type="button" id="all-comment" style="color: #747577; background-color: white; border: none;" value="댓글 모두 보기">
+                                        </div>
+                                        <div id="comment-box">
+                                            <input type="text" id="comment-text" placeholder="댓글 달기..." />
+                                            <input onclick="post_comment(${i})" type="button" id="comment-post" value="게시">
+                                            <div id="comment-list">
+                                            </div>
                                         </div>
                                     </section>
                                 </div>
@@ -144,4 +152,47 @@ function like(data) {
 // 헤더 홈 버튼
 function profile_main(obj) {
     window.location.href = '/profile_main/' + obj.alt;
+}
+
+// 댓글 온오프 버튼
+function see_comment() {
+    if ($("#comment-list").css('display') == 'none') {
+        $("#comment-list").show();
+    }else {
+        $("#comment-list").hide();
+    }
+}
+
+// 댓글 작성
+function post_comment(index) {
+    let user_name = document.querySelectorAll(".post-left-wrapper p")[index].textContent
+    let post_img = document.querySelectorAll(".image_box")[index].style.backgroundImage.replace(/^url\(['"](.+)['"]\)/, '$1').split("/")
+    post_img = post_img[post_img.length-1]
+
+    $.ajax({
+        type: "POST",
+        url: "/index_page/comment",
+        data: {comment_give: $('#comment-text').val(),post_give: post_img , user_id_give: user_name},
+        success: function (response) {
+            console.log(response)
+        }
+    })
+}
+
+// 댓글 가져오기
+function comment_list() {
+    $.ajax({
+        type: "GET",
+        url: "/index_page/comment",
+        data: {},
+        success: function (response) {
+            let rows = response['comments']['container'][0]['comment'];
+
+            for (let i = 0; i < rows.length; i++) {
+
+
+
+            }
+        }
+    })
 }
