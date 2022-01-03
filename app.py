@@ -37,7 +37,6 @@ def login_page():
 
     return render_template('login.html')
 
-
 ##################################################
 # index.html(메인페이지)
 
