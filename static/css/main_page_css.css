@@ -1,11 +1,11 @@
 body {
   max-width: 1100px;
   margin: 0 auto;
+  background-color: #fff;
 }
 .story {
   background-color: #fff;
   padding: 20px 15px;
-  margin-top: 100px;
   margin-bottom: 25px;
   border: 1px solid #ddd;
   width: 650px;
@@ -23,52 +23,55 @@ body {
   border: 10px solid gray;
 }
 
-
 .wrap {
   position: relative;
-  width: 800px;
-  background-color: #efefef;
-  margin-top: 10px;
+  width: 700px !important;
+  margin-top: 45px;
 }
 
 .content {
+  border-top: 1px solid #ddd !important;
   background-color: #fff;
   border: 1px solid #ddd;
   margin-top: 40px;
   width: 650px;
   z-index: -1;
 }
-
+.userInfo {
+  padding-top: 10px !important;
+}
 .userInfo .post-left-wrapper {
   display: flex;
   align-items: center;
   justify-content: left;
   width: 300px;
 }
-
+.userInfo div {
+  line-height: 30px !important;
+}
 .userInfo .post-left-wrapper > img {
-  width: 2vw;
-  height: 2vw;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   cursor: pointer;
-  oject-fit: contain;
 }
 
 .userInfo .post-left-wrapper > p {
   color: #232323;
-  font-weight: 800;
+  font-weight: 700;
   margin-left: 10px;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .image_box {
-  width: 98%;
+  width: 100%;
   margin: 8px 0;
   background-image: url(../images/image.gif);
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
   height: 450px;
+  margin-top: 10px;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
@@ -83,12 +86,13 @@ body {
   top: 0;
   margin-top: 80px;
   padding: 20px 15px;
+  padding-right: 0;
   box-sizing: border-box;
-  width: 300px;
+  width: 350px;
   height: 450px;
 }
-.hi{
-  margin-right: 240px;
+.hi {
+  width: 350px !important;
 }
 .left-wrapper {
   display: flex;
@@ -98,43 +102,43 @@ body {
   position: relative;
 }
 .right-wrapper {
-  width: 30px;
+  width: 20px;
   display: flex;
   justify-content: right;
   margin-left: 500px;
 }
-.left-wrapper img{
+.left-wrapper img {
   margin: 5px;
 }
-.left-wrapper img:last-child{
+.left-wrapper img:last-child {
   position: absolute;
   margin-left: 600px;
+  width: 20px;
 }
 
-.icon-2{
+.icon-2 {
   margin-left: 10px;
-  width: 30px;
+  width: 24px;
 }
 
-.dialog{
-    position: absolute;
-    border: 1px solid #8d8c8c45;
-    margin-top: 10px;
-    left: 502px;
-    display: none;
+.dialog {
+  position: absolute;
+  border: 1px solid #8d8c8c45;
+  margin-top: 10px;
+  left: 502px;
+  display: none;
 }
 
 .dialog .more-button-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.dialog button{
-    width: 140px;
-    background-color: white;
-    font-size: 1.2rem;
-    border: 1px solid #8d8c8c45;
+.dialog button {
+  width: 140px;
+  background-color: white;
+  font-size: 1.2rem;
+  border: 1px solid #8d8c8c45;
 }
