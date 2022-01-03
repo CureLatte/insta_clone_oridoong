@@ -384,13 +384,17 @@ def edit_profile_post():
             {"user_id": payload['user_id']}, {'_id': False})
         user_info['username'] = user_info['user_name']  # ..?
         name_receive = request.form['name_receive']
-        print(name_receive)
+
         username_receive = request.form['username_receive']
         email_receive = request.form['email_receive']
         phone_number_receive = request.form['phone_number_receive']
         gender_receive = request.form['gender_receive']
         avatar_receive = request.form['avatar_receive']
         bio_receive = request.form['bio_receive']
+
+        filename = f'{avatar_receive}'
+        save_to = f'/home/ubuntu/oriddong/static/images/user/{filename}'
+        avatar_receive.save(save_to)
 
         del user_info['pwd']
         # 업데이트 로직
@@ -665,16 +669,16 @@ def post_comment():
     comment_receive = request.form['comment_give']
     user_id_receive = request.form['user_id_give']
 
-    check_user = db.post_content.find_one({'user_id': user_id_receive}, {'_id': False})
-
+    check_user = db.post_content.find_one(
+        {'user_id': user_id_receive}, {'_id': False})
 
     token_receive = request.cookies.get('mytoken')
 
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     user_info = db.post_content.find_one({"user_id": payload['user_id']})
 
-
-    db.post_content.update_one({'user_id': check_user}, {'$set': {'comment': comment_receive}})
+    db.post_content.update_one({'user_id': check_user}, {
+                               '$set': {'comment': comment_receive}})
 
     return jsonify({'msg': '회원가입 완료'})
 
