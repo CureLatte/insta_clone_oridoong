@@ -1,130 +1,182 @@
 main {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .is-hidden {
-    display: none;
+  display: none;
 }
 
 #container {
-    background-color: white;
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  background-color: white;
+  display: flex;
+  justify-content: center;
 }
 
+.btn-example {
+  margin-top: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #00376b;
+}
+#container #log_button {
+  margin-bottom: 70px;
+  position: relative;
+}
+#container #log_button:before {
+  content: "";
+  height: 1px;
+  background-color: rgb(201, 201, 201);
+  width: 100%;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+  position: absolute;
+}
+
+#container .common_btn {
+  border: none;
+  height: 45px;
+  margin: 20px 0;
+  width: 250px;
+  height: 35px;
+}
 #phone-img {
-    width: 450px;
-    height: 618px;
-    background-image: url("../images/iphone.png");
+  width: 450px;
+  height: 618px;
+  background-image: url("../images/iphone.png");
 }
 
 .slide {
-    display: flex;
-    list-style: none;
-    flex-direction: column;
-    width: 240px;
-    margin: 100px 151px;
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+  width: 240px;
+  margin: 100px 151px;
 }
-.slide ul{position:relative;}
-.slide li{position:absolute;left:0;right:0;top:0;bottom:0;opacity:0;animation:fade 12s infinite;}
-.slide li:nth-child(1){animation-delay:0s}
-.slide li:nth-child(2){animation-delay:3s}
-.slide li:nth-child(3){animation-delay:6s}
-.slide li:nth-child(4){animation-delay:9s}
+.slide ul {
+  position: relative;
+}
+.slide li {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  animation: fade 12s infinite;
+}
+.slide li:nth-child(1) {
+  animation-delay: 0s;
+}
+.slide li:nth-child(2) {
+  animation-delay: 3s;
+}
+.slide li:nth-child(3) {
+  animation-delay: 6s;
+}
+.slide li:nth-child(4) {
+  animation-delay: 9s;
+}
 @keyframes fade {
-    0% {opacity:0;}
-    5% {opacity:1;}
-    25% {opacity:1;}
-    30% {opacity:0;}
-    100% {opacity:0;}
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 #sign-in-up {
-    width: 350px;
-    margin-top: 30px;
+  width: 350px;
+  margin-top: 30px;
 }
 
 #sign-in-box {
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border: 1px solid lightgray;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid lightgray;
 }
 
 #sign-in-box > p {
-    font-size: 45px;
+  font-size: 45px;
 }
 
 #sign-in-box #log-box {
-    display: flex;
-    flex-direction: column;
-    margin-top: 80px;
-    width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  width: 250px;
 }
 
 #log-box > input {
-    margin-top: 10px;
-    width: 250px;
-    height: 40px;
+  margin-top: 10px;
+  width: 250px;
+  height: 40px;
 }
 
 #log-box > p {
-    color: red;
-    font-size: 12px;
+  color: red;
+  font-size: 12px;
 }
 
 #help-box {
-    width: 250px;
-    height: 50px;
-    padding-top: 30px;
+  width: 250px;
+  height: 50px;
+  padding-top: 30px;
 }
 
 #help-box > p {
-    color: red;
-    font-size: 12px;
-}
-
-#sign-in-box #log_button {
-    margin-top: 20px;
-    width: 250px;
-    height: 30px;
+  color: red;
+  font-size: 12px;
 }
 
 #sign-up-box {
-    display: flex;
-    margin-top: 10px;
-    padding: 20px;
-    justify-content: center;
-    border: 1px solid lightgray;
-    font-size: 13px;
+  display: flex;
+  margin-top: 10px;
+  padding: 20px;
+  justify-content: center;
+  border: 1px solid lightgray;
+  font-size: 13px;
 }
 
-#facebook-button{
-    padding: 15px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: 700;
-    border: 0;
-    text-align: center;
-    text-decoration: none;
-    background-color: unset;
-
+#facebook-button {
+  cursor: pointer;
+  color: #00376b;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 0;
+  text-align: center;
+  text-decoration: none;
+  background-color: unset;
 }
 #facebook-button img {
-    margin-top: 10px;
-    margin-right: 5px;
-    height: 17px;
+  transform: translateY(2px);
+  height: 15px;
+  width: 15px;
 }
 
 #pwd-find {
-    margin-top: 15px;
-    background-color: white;
+  margin-top: 15px;
+  background-color: white;
 }
 
-#border-line{
-    margin-top: 15px;
+#border-line {
+  margin-top: 15px;
 }
