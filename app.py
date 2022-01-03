@@ -382,6 +382,7 @@ def edit_profile_post():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
+        user_info['username'] = user_info['user_name']  #..?
         name_receive = request.form['name_receive']
         print(name_receive)
         username_receive = request.form['username_receive']
