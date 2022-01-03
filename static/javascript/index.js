@@ -14,6 +14,7 @@ $(document).ready(function () {
                 let photo = rows[i]['container'][0]['photo'];
                 let photo_like = rows[i]['container'][0]['like'];
                 let avatar = rows[i]['avatar'];
+                let user_name = rows[i]['user_name']
                 let name = rows[i]['name'];
                 let like_user = rows[i]['container'][0]['like_user']
 
@@ -36,7 +37,7 @@ $(document).ready(function () {
                                         <div class="userInfo">
                                             <div class="post-left-wrapper">
                                                 <img src="static/images/user/${avatar}" onclick="profile_main(this)" alt="${name}"/>
-                                                <p>${name}</p>
+                                                <p>${user_name}</p>
                                             </div>
                                             <div class="is_pointer">
                                                 <img src="../static/images/more@3x.png"">
@@ -52,7 +53,6 @@ $(document).ready(function () {
                         
                                         <div class="comment">
                                             <h4><strong>${login_user}</strong>님 외 <strong id="${name}like">${photo_like}명</strong>이 좋아합니다.</h4>
-                                            <span>2시간 전</span>
                                         </div>
                                     </section>
                                 </div>
@@ -103,7 +103,7 @@ function follow(obj) {
         success: function (response) {
             alert(response["msg"])
         }
-    })
+    });
 }
 
 
