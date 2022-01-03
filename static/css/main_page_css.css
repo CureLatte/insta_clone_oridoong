@@ -1,7 +1,7 @@
 body {
   max-width: 1100px;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #fafafa;
 }
 .story {
   background-color: #fff;
@@ -84,7 +84,7 @@ body {
 .recommend {
   position: fixed;
   top: 0;
-  margin-top: 80px;
+  margin-top: 100px;
   padding: 20px 15px;
   padding-right: 0;
   box-sizing: border-box;
@@ -120,6 +120,16 @@ body {
   margin-left: 10px;
   width: 24px;
 }
+.errspan {
+  float: left;
+  transform: translate(13px, -8px);
+  margin-right: 6px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+  width: 20px;
+  color: rgba(66, 80, 114, 0.4);
+}
 
 .dialog {
   position: absolute;
@@ -141,4 +151,8 @@ body {
   background-color: white;
   font-size: 1.2rem;
   border: 1px solid #8d8c8c45;
+}
+
+.content:nth-of-type(1) {
+  margin-top: 70px !important;
 }

@@ -164,28 +164,28 @@ def indexPagePost():
         update_feed = ({"user_id": follow_to_user_id},
                        {
                            "$push": {"feed":
-                                     {
-                                         "user_id": login_user_id,
-                                         "avatar": user_all_info["avatar"],
-                                         "name": user_all_info["name"],
-                                         "follow_time": today_time
-                                     }
-                                     }
-        }
-        )
+                               {
+                                   "user_id": login_user_id,
+                                   "avatar": user_all_info["avatar"],
+                                   "name": user_all_info["name"],
+                                   "follow_time": today_time
+                               }
+                           }
+                       }
+                       )
 
         db.user.update_one(*update_feed)
 
         if follow_check == "팔로우":
             db.user.update_one({"user_id": login_user_id}, {
-                               "$addToSet": {"follow": follow}})
+                "$addToSet": {"follow": follow}})
             db.user.update_one({"user_id": follow_to_user_id}, {
-                               "$addToSet": {"follower": follower}})
+                "$addToSet": {"follower": follower}})
         else:
             db.user.update_one({"user_id": login_user_id}, {
-                               "$pull": {"follow": {"user_id": follow_to_user_id}}})
+                "$pull": {"follow": {"user_id": follow_to_user_id}}})
             db.user.update_one({"user_id": follow_to_user_id}, {
-                               "$pull": {"follower": {"user_id": login_user_id}}})
+                "$pull": {"follower": {"user_id": login_user_id}}})
 
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
@@ -319,14 +319,14 @@ def delete_follow_alert():
         update_feed = ({"user_id": payload['user_id']},
                        {
                            "$pull": {"feed":
-                                     {
-                                         "user_id": t['user_id'],
-                                         "avatar": t['avatar'],
-                                         "name": t['name'],
-                                         "follow_time": t['follow_time']
-                                     }
-                                     }
-        })
+                               {
+                                   "user_id": t['user_id'],
+                                   "avatar": t['avatar'],
+                                   "name": t['name'],
+                                   "follow_time": t['follow_time']
+                               }
+                           }
+                       })
         db.user.update_one(*update_feed)
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
@@ -635,11 +635,11 @@ def poster_remove():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']}, {
-                                     "user_id": 1, "_id": False})
+            "user_id": 1, "_id": False})
         photo = request.form["photo"]
 
         db.post_content.update_one({"user_id": user_info["user_id"]}, {
-                                   "$pull": {"container": {'photo': photo}}})
+            "$pull": {"container": {'photo': photo}}})
 
         return jsonify()
     except jwt.ExpiredSignatureError:
@@ -673,25 +673,39 @@ def sign_out():
 def post_comment():
     comment_receive = request.form['comment_give']
     user_id_receive = request.form['user_id_give']
+<<<<<<< HEAD
+    post_receive = request.form['post_give']
+    num_receive = request.form['num_give']
+=======
 
     check_user = db.post_content.find_one(
         {'user_id': user_id_receive}, {'_id': False})
+>>>>>>> 927a431f1828ff7bf25273d080a1435f5da52be9
 
     token_receive = request.cookies.get('mytoken')
 
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    user_info = db.post_content.find_one({"user_id": payload['user_id']})
+    user_info = db.post_content.find_one({"user_id": payload['user_id']})['user_id']
 
+<<<<<<< HEAD
+    db.post_content.update_one({'photo': post_receive} and {'user_id': user_id_receive},
+                               {'$set': {'container.'+str(num_receive)+'.comment': comment_receive} and {'container.'+str(num_receive)+'.comment_user': user_info}})
+
+    return jsonify({'msg': '완료'})
+=======
     db.post_content.update_one({'user_id': check_user}, {
                                '$set': {'comment': comment_receive}})
 
     return jsonify({'msg': '회원가입 완료'})
+>>>>>>> 927a431f1828ff7bf25273d080a1435f5da52be9
 
 
 # 댓글 가져오기
 @app.route("/index_page/comment", methods=["GET"])
 def comment_list():
-    all_comment = list(db.post_content.find({}, {'_id': False}))
+    post_receive = request.form['post_give']
+
+    all_comment = list(db.post_content.find({'photo': post_receive}, {'_id': False}))
 
     return jsonify({'comments': all_comment})
 

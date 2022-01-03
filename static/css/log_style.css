@@ -15,7 +15,16 @@ main {
   display: flex;
   justify-content: center;
 }
-
+.errspan {
+  float: left;
+  transform: translate(13px, -8px);
+  margin-right: 6px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+  width: 17px;
+  color: rgba(66, 80, 114, 0.4);
+}
 .btn-example {
   margin-top: 9px;
   font-size: 12px;
@@ -25,6 +34,7 @@ main {
 #container #log_button {
   margin-bottom: 70px;
   position: relative;
+  margin-top: 30px;
 }
 #container #log_button:before {
   content: "";
@@ -98,10 +108,13 @@ main {
     opacity: 0;
   }
 }
-
+.logo img {
+  width: 120px;
+  display: inline-block;
+}
 #sign-in-up {
   width: 350px;
-  margin-top: 30px;
+  margin-top: 17px;
 }
 
 #sign-in-box {
@@ -114,35 +127,41 @@ main {
 }
 
 #sign-in-box > p {
+  width: 120px;
   font-size: 45px;
+  padding-top: 20px;
 }
 
 #sign-in-box #log-box {
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
   width: 250px;
 }
 
 #log-box > input {
   margin-top: 10px;
+  padding-left: 42px;
   width: 250px;
   height: 40px;
 }
 
 #log-box > p {
   color: red;
+  text-align: center;
+  margin-top: 10px;
   font-size: 12px;
 }
 
 #help-box {
   width: 250px;
   height: 50px;
-  padding-top: 20px;
+  padding-top: 7px;
 }
 
 #help-box > p {
   color: red;
+  word-break: keep-all;
+  text-align: center;
   font-size: 12px;
 }
 

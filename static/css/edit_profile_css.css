@@ -14,6 +14,17 @@ a {
   margin-top: 25px;
   box-shadow: 0px 5px 5px 5px rgb(235, 235, 235);
 }
+.errspan {
+  float: left;
+  margin-left: 133px;
+  transform: translate(0px, -1px);
+  margin-right: 6px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+  width: 20px;
+  color: rgba(66, 80, 114, 0.4);
+}
 
 .image_container {
   display: flex;
@@ -81,6 +92,7 @@ a {
   width: 450px;
   box-sizing: border-box;
   padding: 10px 20px;
+  padding-left: 40px;
   background-color: #e1e4ec;
 }
 

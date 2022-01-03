@@ -6,7 +6,7 @@ body {
   width: 720px;
   height: auto;
   margin: 0 auto;
-  padding: 60px 10px 0 10px;
+  padding: 90px 10px 0 10px;
   max-width: 720px;
 }
 
@@ -43,7 +43,7 @@ body {
 }
 
 .my_container .info_container {
-  margin: 30px 70px 10px 10px;
+  margin: 5px 70px 10px 40px;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -76,23 +76,21 @@ body {
   font-size: 28px;
 }
 
-
-.my_container .info_container .info_row:nth-child(1) .edit_profile{
-  width : 80px;
-  height : 70px;
+.my_container .info_container .info_row:nth-child(1) .edit_profile {
+  width: 80px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.my_container .info_container .info_row:nth-child(1) .more_profile{
-  width : 80px;
-  height : 70px;
+.my_container .info_container .info_row:nth-child(1) .more_profile {
+  width: 80px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
 
 .my_container .info_container .info_row:nth-child(1) .edit_profile button {
   width: 80px;
@@ -102,7 +100,11 @@ body {
   border: 1px solid lightgray;
 }
 
-.my_container .info_container .info_row:nth-child(1) .edit_profile button:hover {
+.my_container
+  .info_container
+  .info_row:nth-child(1)
+  .edit_profile
+  button:hover {
   background-color: whitesmoke;
 }
 
@@ -117,7 +119,11 @@ body {
   cursor: pointer;
 }
 
-.my_container .info_container .info_row:nth-child(1) .more_profile button:hover {
+.my_container
+  .info_container
+  .info_row:nth-child(1)
+  .more_profile
+  button:hover {
   background-color: whitesmoke;
 }
 .my_container .info_container .info_row p {
@@ -135,26 +141,23 @@ body {
 }
 
 .my_container .info_container .info_row:nth-child(2) {
-  width :100%;
-  height : 20px;
+  width: 100%;
+  height: 20px;
 }
 
-.my_container .info_container .info_row:nth-child(2) .content_count{
-  width : 80px;
-  height : 20px;
-
+.my_container .info_container .info_row:nth-child(2) .content_count {
+  width: 80px;
+  height: 20px;
 }
 
-.my_container .info_container .info_row:nth-child(2) .followr_count{
-  width : 80px;
-  height : 20px;
-
-
+.my_container .info_container .info_row:nth-child(2) .followr_count {
+  width: 80px;
+  height: 20px;
 }
 
-.my_container .info_container .info_row:nth-child(2) .follow_count{
-  width : 80px;
-  height : 20px;
+.my_container .info_container .info_row:nth-child(2) .follow_count {
+  width: 80px;
+  height: 20px;
   text-align: right;
 }
 

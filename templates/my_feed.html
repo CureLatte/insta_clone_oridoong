@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../static/css/my_feed_css.css">
     <link rel="stylesheet" href="../static/css/like_history_css.css">
     <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -27,42 +28,42 @@
 </head>
 
 <body>
-{% include 'common.html' %}
+    {% include 'common.html' %}
 
-<div class="wrap">
-    {% set feed_count = feed['container']|length %}
-    {% for content in feed['container']|reverse %}
-    <div class="content">
-        <div class="con">
-            <div class="userInfo">
-                {% set profile_url = '/profile_main/'+ user['name'] %}
-                <a href="{{ profile_url }}">
-                    <h4>{{ user['user_name'] }}</h4>
-                </a>
-                <div class="post_more">
-                    <img onclick="poster_remove(this)" src="../static/images/more@3x.png" alt="{{ i }}">
+    <div class="wrap">
+        {% set feed_count = feed['container']|length %}
+        {% for content in feed['container']|reverse %}
+        <div class="content">
+            <div class="con">
+                <div class="userInfo">
+                    {% set profile_url = '/profile_main/'+ user['name'] %}
+                    <a href="{{ profile_url }}">
+                        <h4>{{ user['user_name'] }}</h4>
+                    </a>
+                    <div class="post_more">
+                        <img onclick="poster_remove(this)" src="../static/images/more@3x.png" alt="{{ i }}">
+                    </div>
                 </div>
-            </div>
-            <div class="image_box">
+                <div class="image_box">
                     {% set filepath = '../static/images/post-contents/'+ content['photo'] %}
-                <img src="{{ filepath }}" alt="">
-            </div>
-            <div class="row_icons">
-                <div class="left-wrapper">
-                    <div class="img_box">
-                        <img onclick="like_test()" src="../static/images/like@3x.png" alt="1">
+                    <img src="{{ filepath }}" alt="">
+                </div>
+                <div class="row_icons">
+                    <div class="left-wrapper">
+                        <div class="img_box">
+                            <img onclick="like_test()" src="../static/images/like@3x.png" alt="1">
+                        </div>
+                        <div class="img_box">
+                            <img src="../static/images/comment@3x.png" alt="1">
+                        </div>
+                        <div class="img_box">
+                            <img src="../static/images/dm@3x.png" alt="1">
+                        </div>
                     </div>
-                    <div class="img_box">
-                        <img src="../static/images/comment@3x.png" alt="1">
-                    </div>
-                    <div class="img_box">
-                        <img src="../static/images/dm@3x.png" alt="1">
+                    <div class="right-wrapper">
+                        <img src="../static/images/favorite@3x.png" alt="1">
                     </div>
                 </div>
-                <div class="right-wrapper">
-                    <img  src="../static/images/favorite@3x.png" alt="1">
-                </div>
-            </div>
             </div>
             <div class="comment">
                 <h4><strong>최진우</strong>님 외 562명이 좋아합니다.</h4>
@@ -70,8 +71,8 @@
                 <span>2시간 전</span>
             </div>
         </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 
 </body>
 
