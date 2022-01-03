@@ -24,6 +24,17 @@ SECRET_KEY = 'TEST'
 # 홈 페이지
 @app.route('/')  # token 획득을 확인
 def login_page():
+    # return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('index.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+
     return render_template('login.html')
 
 
@@ -80,7 +91,7 @@ def index_page_poster_get():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
-@ app.route('/index_page/post', methods=['POST'])
+@app.route('/index_page/post', methods=['POST'])
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
@@ -95,26 +106,26 @@ def indexPagePost():
 
         update_follow = ({"user_id": user_info['user_id']},
                          {
-            "$push": {"follow":
-                      {
-                          "user_id": user_id,
-                          "name": name,
-                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                      }
-                      }
-        }
-        )
+                             "$push": {"follow":
+                                 {
+                                     "user_id": user_id,
+                                     "name": name,
+                                     "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                 }
+                             }
+                         }
+                         )
         update_follower = ({"user_id": user_id},
                            {
-            "$push": {"follower":
-                      {
-                          "user_id": loggedin_user,
-                          "name": loggedin_name,
-                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                      }
-                      }
-        }
-        )
+                               "$push": {"follower":
+                                   {
+                                       "user_id": loggedin_user,
+                                       "name": loggedin_name,
+                                       "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                   }
+                               }
+                           }
+                           )
 
         db.user.update_one(*update_follow)
         db.user.update_one(*update_follower)
@@ -365,10 +376,10 @@ def find_pwd():
     id_receive = request.form['find_id']
     nickname_receive = request.form['find_nickname']
 
-    if db.user.find_one({'user_id':id_receive}) and db.user.find_one({'user_name':nickname_receive}):
+    if db.user.find_one({'user_id': id_receive}) and db.user.find_one({'user_name': nickname_receive}):
         return jsonify({'msg': '확인 되었습니다.'})
     else:
-        return jsonify({'msg':'등록된 회원정보가 없습니다.'})
+        return jsonify({'msg': '등록된 회원정보가 없습니다.'})
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
@@ -492,7 +503,7 @@ def new_writing():
         }
 
         db.post_content.update_one({'user_id': user_info['user_id']}, {
-                                   '$addToSet': {'container': container_content}})
+            '$addToSet': {'container': container_content}})
 
         return jsonify({'msg': '등록완료'})
     except jwt.ExpiredSignatureError:
