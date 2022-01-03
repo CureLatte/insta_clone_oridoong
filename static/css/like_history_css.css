@@ -2,12 +2,12 @@
     position: absolute;
     background-color: white;
     width : 500px;
-    height: 350px;
     top: 70px;
     right: 30px;
     border: 1px solid gray;
     border-radius: 10px;
     display: none;
+
 }
 
 .like_history_container .like_history_wrapper{
@@ -16,7 +16,6 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-
 }
 
 .like_history_row{

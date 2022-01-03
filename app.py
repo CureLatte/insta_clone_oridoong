@@ -35,7 +35,7 @@ def login_page():
     except jwt.exceptions.DecodeError:
         return render_template('login.html')
 
-    return render_template('login.html')
+    # return render_template('login.html')
 
 ##################################################
 # index.html(메인페이지)
@@ -43,7 +43,16 @@ def login_page():
 
 @app.route('/index_page')
 def index_page():
-    return render_template('index.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('index.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+    # return render_template('index.html')
 
 
 @app.route('/index_page/post', methods=['GET'])
@@ -250,6 +259,8 @@ def profile_test_load_follow():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
+        print(user_info)
+
         return jsonify({'data': user_info})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -257,12 +268,29 @@ def profile_test_load_follow():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
+@app.route('/profile_test_main/follow/delete', methods=['POST'])
+def delete_follow_alert():
+    follow_index = request.form['index']
+    print(follow_index)
+
+    return
+
+
 #####################################################################
 
 # 프로필 편집 페이지
 @app.route('/edit_profile')
 def edit_profile():
-    return render_template('edit_profile.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('edit_profile.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+    # return render_template('edit_profile.html')
 
 
 @app.route('/edit_profile_get', methods=["GET"])
@@ -477,7 +505,16 @@ def main_user_like():
 ##########################글작성 페이지########################################
 @app.route("/writing_new")
 def writing():
-    return render_template('writing_new.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        if jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256']):
+            return render_template('writing_new.html')
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('login.html')
+    # return render_template('writing_new.html')
 
 
 @app.route("/writing_new", methods=["POST"])
