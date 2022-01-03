@@ -12,7 +12,7 @@ function edit_profile() {
             let user_avatar = user_info["avatar"]
             var jbSplit = user_avatar.split('\\');
             var get_user_avarar = jbSplit[jbSplit.length - 1]
-            var def_user_avatar_url = "/static/images/user/" + get_user_avarar
+            var def_user_avatar_url = "../static/images/user/" + get_user_avarar
             document.getElementById("preview_image").src = def_user_avatar_url
 
             $.each(user_info, function (index, obj) {
@@ -45,6 +45,7 @@ function save_update_profile() {
     let phone_number = $("#phone_number").val()
     let gender = $("#gender").val();
     let avatar = $("#input_image").val();
+    let file = $('#file')[0].files[0]
     let bio = $("#bio").val();
     //아바타 부분 url split   
     var jb_split = avatar.split('\\');
@@ -52,7 +53,6 @@ function save_update_profile() {
 
     console.log("Asdgasdhgg")
     if (avatar == "") {
-        console.log("if란다");
         var hi = $("#preview_image").attr('src');
         hoho = hi.split('/');
         hihi = hoho[hoho.length - 1];
@@ -67,6 +67,7 @@ function save_update_profile() {
                 "phone_number_receive": phone_number,
                 "gender_receive": gender,
                 "avatar_receive": hihi,
+                "file_receive": file,
                 "bio_receive": bio,
             },
             success: function (response) {
@@ -76,7 +77,6 @@ function save_update_profile() {
         });
     }
     else {
-        console.log("eles란다")
         $.ajax({
             type: "POST",
             url: "/edit_profile",
@@ -87,6 +87,7 @@ function save_update_profile() {
                 "phone_number_receive": phone_number,
                 "gender_receive": gender,
                 "avatar_receive": get_user_avarar,
+                "file_receive": file,
                 "bio_receive": bio,
             },
             success: function (response) {

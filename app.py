@@ -1,12 +1,13 @@
 import hashlib
 import datetime
 import random
-from typing import Container
 import certifi
 import jwt
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from bson.json_util import dumps
+import os
+
 
 ca = certifi.where()
 
@@ -105,7 +106,10 @@ def index_page_poster_get():
             for user_index in reversed(user_remove):
                 del all_photo[user_index]
 
-        return jsonify([{'all_photo': all_photo}, user_info['name'], all_user])
+        print('all_photo : ', all_photo)
+        print('user_info', user_info['name'])
+
+        return jsonify(dumps([{'all_photo': all_photo}, user_info['name'], all_user]))
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
@@ -382,14 +386,20 @@ def edit_profile_post():
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
         user_info['username'] = user_info['user_name']  # ..?
+
+        file_receive = request.form['file_receive']
         name_receive = request.form['name_receive']
-        print(name_receive)
         username_receive = request.form['username_receive']
         email_receive = request.form['email_receive']
         phone_number_receive = request.form['phone_number_receive']
         gender_receive = request.form['gender_receive']
         avatar_receive = request.form['avatar_receive']
         bio_receive = request.form['bio_receive']
+
+        filename = f'{file_receive}'
+        print(filename, file_receive)
+        save_to = f'../static/images/user/{filename}'
+        file_receive.save(save_to)
 
         del user_info['pwd']
         # 업데이트 로직
@@ -596,7 +606,8 @@ def new_writing():
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
         filename = f'{mytime}.{extension}'
-        save_to = f'static/images/post-contents/{filename}'
+        save_to = f'../static/images/post-contents/{filename}'
+
         photo.save(save_to)
 
         container_content = {
@@ -662,18 +673,31 @@ def sign_out():
 def post_comment():
     comment_receive = request.form['comment_give']
     user_id_receive = request.form['user_id_give']
+<<<<<<< HEAD
     post_receive = request.form['post_give']
     num_receive = request.form['num_give']
+=======
+
+    check_user = db.post_content.find_one(
+        {'user_id': user_id_receive}, {'_id': False})
+>>>>>>> 927a431f1828ff7bf25273d080a1435f5da52be9
 
     token_receive = request.cookies.get('mytoken')
 
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     user_info = db.post_content.find_one({"user_id": payload['user_id']})['user_id']
 
+<<<<<<< HEAD
     db.post_content.update_one({'photo': post_receive} and {'user_id': user_id_receive},
                                {'$set': {'container.'+str(num_receive)+'.comment': comment_receive} and {'container.'+str(num_receive)+'.comment_user': user_info}})
 
     return jsonify({'msg': '완료'})
+=======
+    db.post_content.update_one({'user_id': check_user}, {
+                               '$set': {'comment': comment_receive}})
+
+    return jsonify({'msg': '회원가입 완료'})
+>>>>>>> 927a431f1828ff7bf25273d080a1435f5da52be9
 
 
 # 댓글 가져오기

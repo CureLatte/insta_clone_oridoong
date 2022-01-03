@@ -4,8 +4,13 @@ $(document).ready(function () {
         url: "/index_page/post",
         data: {},
         success: function (response) {
-            let rows = response[0]['all_photo'];
-            let login_user = response[1];
+            let a =JSON.parse(response)
+
+            let rows = a[0]['all_photo'];
+            let login_user = a[1];
+            console.log(rows)
+            console.log(login_user)
+            console.log(rows.length)
             let index = 0;
 
             document.getElementById('user-home').alt = login_user;

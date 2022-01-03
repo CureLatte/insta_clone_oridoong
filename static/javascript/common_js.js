@@ -126,6 +126,7 @@ function load_user_info_profile() {
 
 function more_logout() {
     $.removeCookie('mytoken');
-    alert('로그아웃!')
-    window.location.href = '/'
+    alert('로그아웃 됩니다!')
+
+    window.location.href = 'http://oristagram.shop/'
 }
