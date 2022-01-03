@@ -23,8 +23,8 @@ $(document).ready(function () {
 
                 temp_image_html = `<img src="../static/images/like@3x.png" onclick="like(this)" alt="${name},${photo}">`;
 
-                    for(let i = 0; i < like_user.length; i++) {
-                        if(like_user[i] === login_user){
+                    for (let i = 0; i < like_user.length; i++) {
+                        if (like_user[i] === login_user) {
                             temp_image_html = `<img src="../static/images/like@4x.png" onclick="like(this)" alt="${name},${photo}">`;
                             break;
                         }
@@ -69,27 +69,22 @@ $(document).ready(function () {
                     index++;
                 }
             }
-        }
-    });
-    $.ajax({
-        type: "GET",
-        url: "/index_page/post",
-        data: {},
-        success: function (response) {
-            user_id = response[2];
 
-            for (var i = 0; i < user_id.length; i++) {
-                let user = user_id[i]["user_id"]
+            let user_id = response[2];
+            for(let i = 0; i < user_id.length; i++) {
+                let user_name = user_id[i]["user_name"]
                 let user_bio = user_id[i]["bio"]
+                let avata = user_id[i]["avatar"]
                 let temp_html = ``;
                 temp_html = `
                                     <ul>
                                         <li>
                                             <div>
-                                                <h5>${user}</h5>
+                                                <img src="/static/images/user/${avata}")
+                                                <h5>${user_name}</h5>
                                                 <p>${user_bio}</p>
                                             </div>
-                                            <span onclick="follow(this)" name="${user}">
+                                            <span onclick="follow(this)" name="${user_name}">
                                                 팔로우
                                             </span>
                                         </li>
@@ -97,17 +92,24 @@ $(document).ready(function () {
                                     `
                 $(".recommend").append(temp_html)
             }
-
         }
     });
 })
 
 function follow(obj) {
-    var name_by_id = obj.getAttribute('name');
+    let name_by_id = obj.getAttribute('name');
+    let follow = obj.innerText;
+
+    if(follow === "팔로우"){
+        obj.innerText = "팔로우 취소"
+    } else {
+        obj.innerText = "팔로우"
+    }
+
     $.ajax({
         type: "POST",
         url: "/index_page/post",
-        data: { "user_name_id_give": name_by_id },
+        data: {"user_name_id_give": name_by_id, "follow": follow},
         success: function (response) {
             alert(response["msg"])
         }

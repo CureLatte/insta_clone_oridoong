@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (insta_clone_oridoong)" project-jdk-type="Python SDK" />
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (oriddongddong)" project-jdk-type="Python SDK" />
+>>>>>>> 23d45d4af1c03eef7dd8d5de4c2df25870483cc2
 </project>

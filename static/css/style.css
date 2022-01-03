@@ -269,7 +269,7 @@ li {
   .recommend ul li {
     position: relative;
   }
-  .recommend ul li div:before {
+  .recommend ul li div img {
     position: absolute;
     content: "";
     left: 0;
@@ -277,7 +277,6 @@ li {
     transform: translateY(-50%);
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("../images/8.jpeg");
     width: 35px;
     height: 35px;
     border-radius: 50%;
