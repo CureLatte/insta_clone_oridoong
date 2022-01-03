@@ -65,12 +65,24 @@ def index_page_poster_get():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']})
         all_photo = list(db.post_content.find({}, {'_id': False}))
-        all_user = list(db.user.find({}, {'_id': False}))[0:6]
+        all_user = list(db.user.find({}, {'_id': False}))
+
+        login_follow_user = db.user.find_one({"user_id": user_info["user_id"]},
+                                             {"_id": False, "follow": 1})
+
+        for remove_user in login_follow_user["follow"]:
+            for i, users in enumerate(all_user):
+                if user_info['user_id'] == users['user_id']:
+                    del all_user[i]
+                    continue
+                elif remove_user['user_id'] == users['user_id']:
+                    del all_user[i]
+                    break
+
         random.shuffle(all_user)
 
-        for a in range(0, 5):
-            if (all_user[a]["user_id"] == user_info["user_id"]):
-                del all_user[a]
+        if len(all_user) > 5:
+            all_user = all_user[:5]
 
         user_remove = []
 
