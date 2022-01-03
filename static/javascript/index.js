@@ -63,14 +63,16 @@ $(document).ready(function () {
             }
 
             let user_id = response[2];
-            for(var i = 0; i < user_id.length; i++) {
+            for(let i = 0; i < user_id.length; i++) {
                 let user_name = user_id[i]["user_name"]
                 let user_bio = user_id[i]["bio"]
+                let avata = user_id[i]["avatar"]
                 let temp_html = ``;
                 temp_html = `
                                     <ul>
                                         <li>
                                             <div>
+                                                <img src="/static/images/user/${avata}")
                                                 <h5>${user_name}</h5>
                                                 <p>${user_bio}</p>
                                             </div>
