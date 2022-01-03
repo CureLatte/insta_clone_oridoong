@@ -338,10 +338,10 @@ def find_pwd():
     id_receive = request.form['find_id']
     nickname_receive = request.form['find_nickname']
 
-    find_id = list(db.user.find({'user_id'}, {'_id': False}))
-    find_nickname = list(db.user.find({'user_name'}, {'_id': False}))
-
-    return jsonify({'msg': '확인 되었습니다.'})
+    if db.user.find_one({'user_id':id_receive}) and db.user.find_one({'user_name':nickname_receive}):
+        return jsonify({'msg': '확인 되었습니다.'})
+    else:
+        return jsonify({'msg':'등록된 회원정보가 없습니다.'})
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
