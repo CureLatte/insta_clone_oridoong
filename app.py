@@ -95,40 +95,50 @@ def index_page_poster_get():
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
-        user_id = request.form["user_name_id_give"]
-        get_name = db.user.find_one({"user_id": user_id})
-        name = get_name["name"]
+        # 팔로우 유저 user_id, name
+        follow_to_user_id = None
+        follow_to_user_name = request.form["user_name_id_give"]
+
+        # 로그인 유저 user_id, name
+        login_user_id = None
+        login_user_name = None
+
+        # 팔로우 확인
+        follow_check = request.form["follow"]
 
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"user_id": payload['user_id']})
-        loggedin_user = user_info["user_id"]
-        loggedin_name = user_info["name"]
+        user_info = list(db.user.find({"$or": [{"user_id": payload["user_id"]}, {"user_name": follow_to_user_name}]},
+                                      {"_id": False, "user_id": 1, "user_name": 1}))
+        for user in user_info:
+            if user['user_name'] == follow_to_user_name:
+                follow_to_user_id = user['user_id']
+            else:
+                login_user_id = user['user_id']
+                login_user_name = user['user_name']
 
-        update_follow = ({"user_id": user_info['user_id']},
-                         {
-                             "$push": {"follow":
-                                 {
-                                     "user_id": user_id,
-                                     "name": name,
-                                     "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                 }
-                             }
-                         }
-                         )
-        update_follower = ({"user_id": user_id},
-                           {
-                               "$push": {"follower":
-                                   {
-                                       "user_id": loggedin_user,
-                                       "name": loggedin_name,
-                                       "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                   }
-                               }
-                           }
-                           )
+        today = datetime.datetime.now()
+        today_time = today.strftime('%Y-%m-%d %OH:%OM:%OS')
 
-        db.user.update_one(*update_follow)
-        db.user.update_one(*update_follower)
+        # 팔로우 경우
+        follow = {
+            "user_id": follow_to_user_id,
+            "user_name": follow_to_user_name,
+            "follow_time": today_time
+        }
+
+        follower = {
+            "user_id": login_user_id,
+            "user_name": login_user_name,
+            "follower_time": today_time
+        }
+
+        if follow_check == "팔로우":
+            db.user.update_one({"user_id": login_user_id}, {"$addToSet": {"follow": follow}})
+            db.user.update_one({"user_id": follow_to_user_id}, {"$addToSet": {"follower": follower}})
+        else:
+            db.user.update_one({"user_id": login_user_id}, {"$pull": {"follow": {"user_id": follow_to_user_id}}})
+            db.user.update_one({"user_id": follow_to_user_id}, {"$pull": {"follower": {"user_id": login_user_id}}})
+
         return jsonify({'msg': 'DB등록 완료!'})
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
