@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=D:\oriddong\venv"
+set "VIRTUAL_ENV=C:\Users\HO\Documents\insta_clone_oridoong\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
