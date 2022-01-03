@@ -66,6 +66,7 @@ def index_page_poster_get():
             photo_user = db.user.find_one(
                 {'user_id': photo['user_id']}, {'_id': False})
             photo['name'] = photo_user['name']
+            photo['user_name'] = photo_user['user_name']
             photo['avatar'] = photo_user['avatar']
 
         if len(user_remove):
@@ -80,7 +81,7 @@ def index_page_poster_get():
         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
-@ app.route('/index_page/post', methods=['POST'])
+@app.route('/index_page/post', methods=['POST'])
 def indexPagePost():
     token_receive = request.cookies.get('mytoken')
     try:
@@ -95,26 +96,26 @@ def indexPagePost():
 
         update_follow = ({"user_id": user_info['user_id']},
                          {
-            "$push": {"follow":
-                      {
-                          "user_id": user_id,
-                          "name": name,
-                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                      }
-                      }
-        }
-        )
+                             "$push": {"follow":
+                                 {
+                                     "user_id": user_id,
+                                     "name": name,
+                                     "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                 }
+                             }
+                         }
+                         )
         update_follower = ({"user_id": user_id},
                            {
-            "$push": {"follower":
-                      {
-                          "user_id": loggedin_user,
-                          "name": loggedin_name,
-                          "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                      }
-                      }
-        }
-        )
+                               "$push": {"follower":
+                                   {
+                                       "user_id": loggedin_user,
+                                       "name": loggedin_name,
+                                       "follow_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                   }
+                               }
+                           }
+                           )
 
         db.user.update_one(*update_follow)
         db.user.update_one(*update_follower)
@@ -379,10 +380,10 @@ def find_pwd():
     id_receive = request.form['find_id']
     nickname_receive = request.form['find_nickname']
 
-    if db.user.find_one({'user_id':id_receive}) and db.user.find_one({'user_name':nickname_receive}):
+    if db.user.find_one({'user_id': id_receive}) and db.user.find_one({'user_name': nickname_receive}):
         return jsonify({'msg': '확인 되었습니다.'})
     else:
-        return jsonify({'msg':'등록된 회원정보가 없습니다.'})
+        return jsonify({'msg': '등록된 회원정보가 없습니다.'})
 
 
 @app.route('/change_pwd/update-pwd', methods=['POST'])
@@ -506,9 +507,27 @@ def new_writing():
         }
 
         db.post_content.update_one({'user_id': user_info['user_id']}, {
-                                   '$addToSet': {'container': container_content}})
+            '$addToSet': {'container': container_content}})
 
         return jsonify({'msg': '등록완료'})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+# 포스터 삭제
+@app.route("/poster_remove", methods=["POST"])
+def poster_remove():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"user_id": payload['user_id']}, {"user_id": 1, "_id": False})
+        photo = request.form["photo"]
+
+        db.post_content.update_one({"user_id": user_info["user_id"]}, {"$pull": {"container": {'photo': photo}}})
+
+        return jsonify()
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -527,9 +546,7 @@ def sign_out():
             {"user_id": payload['user_id']}, {'_id': False})
         db.user.delete_one({'user_id': user_info['user_id']})
         db.post_content.delete_many({'user_id': user_info['user_id']})
-
-        return jsonify({'msg': '회원탈퇴 완료!'})
-
+        return jsonify()
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
