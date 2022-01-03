@@ -383,8 +383,9 @@ def edit_profile_post():
         user_info = db.user.find_one(
             {"user_id": payload['user_id']}, {'_id': False})
         user_info['username'] = user_info['user_name']  # ..?
-        name_receive = request.form['name_receive']
 
+        file_receive = request.form['file_receive']
+        name_receive = request.form['name_receive']
         username_receive = request.form['username_receive']
         email_receive = request.form['email_receive']
         phone_number_receive = request.form['phone_number_receive']
@@ -392,9 +393,10 @@ def edit_profile_post():
         avatar_receive = request.form['avatar_receive']
         bio_receive = request.form['bio_receive']
 
-        filename = f'{avatar_receive}'
+        filename = f'{file_receive}'
+        print(filename, file_receive)
         save_to = f'/home/ubuntu/oriddong/static/images/user/{filename}'
-        avatar_receive.save(save_to)
+        file_receive.save(save_to)
 
         del user_info['pwd']
         # 업데이트 로직
