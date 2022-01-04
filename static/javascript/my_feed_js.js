@@ -22,6 +22,7 @@ function like_test(){
 }
 
 function poster_remove(obj) {
+
     Swal.fire({
         title: '정말로 삭제 하시겠습니까?',
         text: "다시 되돌릴 수 없습니다. 신중하세요.",
@@ -33,7 +34,10 @@ function poster_remove(obj) {
         cancelButtonText: '취소'
     }).then((result) => {
         if (result.isConfirmed) {
+            let test = document.querySelectorAll(".image_box img")[obj.alt]
+            console.log(test)
             let photo = document.querySelectorAll(".image_box img")[obj.alt].src;
+
             photo = photo.split("/");
             photo = photo[photo.length - 1];
 

@@ -107,9 +107,6 @@ def index_page_poster_get():
             for user_index in reversed(user_remove):
                 del all_photo[user_index]
 
-        print('all_photo : ', all_photo)
-        print('user_info', user_info['name'])
-
         return jsonify(dumps([{'all_photo': all_photo}, user_info['name'], all_user]))
 
     except jwt.ExpiredSignatureError:
@@ -400,7 +397,8 @@ def edit_profile_post():
         filename = f'{file_receive}'
         print(filename, file_receive)
         save_to = f'/static/images/user/{filename}'
-
+        test = os.path(__file__)
+        print(test)
         file_receive.save(save_to)
 
         del user_info['pwd']
@@ -466,7 +464,7 @@ def api_login():
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         # token을 줍니다.
-        return jsonify({'result': 'success', 'token': token})
+        return jsonify({'result': 'success', 'token': token.decode('utf-8')})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail'})
@@ -609,10 +607,11 @@ def new_writing():
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
         filename = f'{mytime}.{extension}'
         save_to = f'/static/images/post-contents/{filename}'
+
         test = os.path.abspath(__file__)
+        print(test)
         parent_path = Path(test).parent
         abs_path = str(parent_path) + save_to
-        print(abs_path)
 
         photo.save(abs_path)
 
@@ -637,7 +636,9 @@ def new_writing():
 # 포스터 삭제
 @app.route("/poster_remove", methods=["POST"])
 def poster_remove():
+    print('remove on')
     token_receive = request.cookies.get('mytoken')
+
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"user_id": payload['user_id']}, {
