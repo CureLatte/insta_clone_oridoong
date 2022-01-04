@@ -49,7 +49,7 @@
   transform: translateY(-50%);
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("/static/images/8.jpeg");
+  background-image: url("/static/images/user/profile_init.png");
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -273,7 +273,7 @@ li {
   transform: translateY(-50%);
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("../images/8.jpeg");
+  background-image: url("../images/user/profile_init.png");
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;

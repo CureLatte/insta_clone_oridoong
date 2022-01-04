@@ -674,7 +674,6 @@ def sign_out():
         # 만약 해당 token이 올바르게 디코딩되지 않는다면, 아래와 같은 코드를 실행합니다.
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-
 # 댓글 작성
 @app.route("/index_page/comment", methods=["POST"])
 def post_comment():
@@ -688,21 +687,22 @@ def post_comment():
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     user_info = db.post_content.find_one({"user_id": payload['user_id']})['user_id']
 
-    db.post_content.update_one({'photo': post_receive} and {'user_id': user_id_receive},
-                               {'$set': {'container.'+ str(num_receive)+'.comment': comment_receive} and {'container.'+str(num_receive)+'.comment_user': user_info}})
+    db.post_content.update_one({'container': {'$elemMatch': {'photo': post_receive}}}, {
+        '$addToSet': {'container.$.comment_user': user_info} and {'container.$.comment': comment_receive}})
 
     return jsonify({'msg': '완료'})
 
 
 # 댓글 가져오기
-@app.route("/index_page/comment", methods=["GET"])
+@app.route("/index_page/comment_list", methods=["POST"])
 def comment_list():
     post_receive = request.form['post_give']
 
-    all_comment = list(db.post_content.find({'photo': post_receive}, {'_id': False}))
+    all_comment = list(db.post_content.find({'container': {'$elemMatch': {'photo': post_receive}}}))
 
-    return jsonify({'comments': all_comment})
+    print(all_comment)
 
+    return jsonify({'data': dumps(all_comment)})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)

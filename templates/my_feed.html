@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="image_box">
-                    {% set filepath = '../static/images/post-contents/'+ feed['container'][i]['photo'] %}
+                    {% set filepath = '../static/images/post-contents/'+ feed['container'][feed_count-i-1]['photo'] %}
                     <img src="{{ filepath }}" alt="{{ i }}">
                 </div>
                 <div class="row_icons">

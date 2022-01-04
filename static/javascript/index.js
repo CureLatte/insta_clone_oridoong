@@ -161,24 +161,15 @@ function profile_main(obj) {
 }
 
 // 댓글 온오프 버튼
-function see_comment() {
-    if ($("#comment-list").css('display') == 'none') {
-        $("#comment-list").show();
-    } else {
-        $("#comment-list").hide();
-    }
-}
-
-// 댓글 작성
 function post_comment(index) {
     let user_name = document.querySelectorAll(".post-left-wrapper p")[index].textContent
     let post_img = document.querySelectorAll(".image_box")[index].style.backgroundImage.replace(/^url\(['"](.+)['"]\)/, '$1').split("/")
-    post_img = post_img[post_img.length - 1]
+    post_img = post_img[post_img.length-1]
 
     $.ajax({
         type: "POST",
         url: "/index_page/comment",
-        data: { comment_give: $('#comment-text').val(), post_give: post_img, user_id_give: user_name, num_give: index },
+        data: {comment_give: $('#comment-text').val(),post_give: post_img , user_id_give: user_name, num_give: index},
         success: function (response) {
             console.log(response)
         }
@@ -187,16 +178,31 @@ function post_comment(index) {
 
 // 댓글 가져오기
 function comment_list(index) {
+        if ($("#comment-list").css('display') == 'none') {
+        $("#comment-list").show();
+    }else {
+        $("#comment-list").hide();
+       $("#comment-list").empty();
+    }
+
+    let post_img = document.querySelectorAll(".image_box")[index].style.backgroundImage.replace(/^url\(['"](.+)['"]\)/, '$1').split("/")
+    post_img = post_img[post_img.length-1]
+
+
     $.ajax({
-        type: "GET",
-        url: "/index_page/comment",
-        data: {},
+        type: "POST",
+        url: "/index_page/comment_list",
+        data: {post_give: post_img},
         success: function (response) {
-            let rows = response['comments']['container'][index]['comment'];
+            let rows =  JSON.parse(response['data'])
 
             for (let i = 0; i < rows.length; i++) {
+                let comments_user = rows[0]['container'][index]['comment_user'][i]
+                let comments = rows[0]['container'][index]['comment'][i]
 
+                temp_html = `<p><b>${comments_user}</b>${comments}</p>`
 
+                $("#comment-list").append(temp_html);
 
             }
         }
