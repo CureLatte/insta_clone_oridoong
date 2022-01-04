@@ -673,31 +673,18 @@ def sign_out():
 def post_comment():
     comment_receive = request.form['comment_give']
     user_id_receive = request.form['user_id_give']
-<<<<<<< HEAD
     post_receive = request.form['post_give']
     num_receive = request.form['num_give']
-=======
-
-    check_user = db.post_content.find_one(
-        {'user_id': user_id_receive}, {'_id': False})
->>>>>>> 927a431f1828ff7bf25273d080a1435f5da52be9
 
     token_receive = request.cookies.get('mytoken')
 
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     user_info = db.post_content.find_one({"user_id": payload['user_id']})['user_id']
 
-<<<<<<< HEAD
     db.post_content.update_one({'photo': post_receive} and {'user_id': user_id_receive},
-                               {'$set': {'container.'+str(num_receive)+'.comment': comment_receive} and {'container.'+str(num_receive)+'.comment_user': user_info}})
+                               {'$set': {'container.'+ str(num_receive)+'.comment': comment_receive} and {'container.'+str(num_receive)+'.comment_user': user_info}})
 
     return jsonify({'msg': '완료'})
-=======
-    db.post_content.update_one({'user_id': check_user}, {
-                               '$set': {'comment': comment_receive}})
-
-    return jsonify({'msg': '회원가입 완료'})
->>>>>>> 927a431f1828ff7bf25273d080a1435f5da52be9
 
 
 # 댓글 가져오기
