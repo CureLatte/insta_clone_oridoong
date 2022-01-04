@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from bson.json_util import dumps
 import os
+from pathlib import Path
 
 
 ca = certifi.where()
@@ -398,7 +399,8 @@ def edit_profile_post():
 
         filename = f'{file_receive}'
         print(filename, file_receive)
-        save_to = f'../static/images/user/{filename}'
+        save_to = f'/static/images/user/{filename}'
+
         file_receive.save(save_to)
 
         del user_info['pwd']
@@ -606,9 +608,13 @@ def new_writing():
         today = datetime.datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
         filename = f'{mytime}.{extension}'
-        save_to = f'../static/images/post-contents/{filename}'
+        save_to = f'/static/images/post-contents/{filename}'
+        test = os.path.abspath(__file__)
+        parent_path = Path(test).parent
+        abs_path = str(parent_path) + save_to
+        print(abs_path)
 
-        photo.save(save_to)
+        photo.save(abs_path)
 
         container_content = {
             'desc': desc_receive,

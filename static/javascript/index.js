@@ -8,9 +8,7 @@ $(document).ready(function () {
 
             let rows = a[0]['all_photo'];
             let login_user = a[1];
-            console.log(rows)
-            console.log(login_user)
-            console.log(rows.length)
+
             let index = 0;
 
             document.getElementById('user-home').alt = login_user;
@@ -76,7 +74,7 @@ $(document).ready(function () {
                 }
             }
 
-            let user_id = response[2];
+            let user_id = a[2];
             for (let i = 0; i < user_id.length; i++) {
                 let user_name = user_id[i]["user_name"]
                 let user_bio = user_id[i]["bio"]
