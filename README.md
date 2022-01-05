@@ -525,6 +525,9 @@
 * ~~팔로워 수 넣기~~
 * ~~자기소개 넣기~~
 
+[img]('static/image/usr/profile_init.jpg')
+
+
 ***
 
 #### 이성오
